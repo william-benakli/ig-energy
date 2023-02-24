@@ -1,4 +1,10 @@
 package vue;
 
-public final class EditorJPanel {
+import javax.swing.*;
+
+public final class EditorJPanel extends JPanel {
+
+    EditorJPanel(){
+
+    }
 }

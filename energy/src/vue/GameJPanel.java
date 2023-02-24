@@ -1,4 +1,7 @@
 package vue;
 
-public final class GameJPanel {
+import javax.swing.*;
+
+public final class GameJPanel extends JPanel {
+
 }

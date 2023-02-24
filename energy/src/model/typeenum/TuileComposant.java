@@ -1,13 +1,10 @@
 package model.typeenum;
 
-public enum TuileComposant implements EnumAbs{
+public enum TuileComposant {
 
-    CARRE{
-    },
-
-    HEXAGONAL{
-
-    };
+    AUCUN(),
+    WIFI(),
+    LUMIERE();
 
     TuileComposant(){
 

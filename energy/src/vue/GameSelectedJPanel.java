@@ -7,8 +7,6 @@ import javax.swing.*;
 public final class GameSelectedJPanel extends JPanel {
 
     public GameSelectedJPanel(FenetreJFrame jFrame) {
-
-
         this.add(GraphiqueBuilder.createJbutton("Retour", e -> {
             jFrame.goBackPanel();
             jFrame.update();

@@ -1,7 +1,6 @@
 package vue;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Stack;
 
 public final class FenetreJFrame extends JFrame {
@@ -9,7 +8,6 @@ public final class FenetreJFrame extends JFrame {
     /**
      * FenetreJFrame est la page principal de l'application
      */
-
 
     private Stack<JPanel> panelView = new Stack<>();
 
