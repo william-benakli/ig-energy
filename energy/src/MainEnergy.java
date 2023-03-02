@@ -83,9 +83,15 @@ public class MainEnergy {
                        throw new ParseException("Erreur à la ligne", positionLine);
                    }
                }
+
             } else if (s.charAt(0) >= 48 && s.charAt(0) <= 57) {
                 //TODO: Ajouter des liens à un objet
             } else throw new ParseException("Erreur à la ligne", positionLine);
+        }
+
+        if(currComposant!=null){
+            level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
+            listConnexion.clear();
         }
     }
 

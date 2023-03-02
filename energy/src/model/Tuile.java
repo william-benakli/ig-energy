@@ -5,6 +5,7 @@ import model.typeenum.ImageEnum;
 import model.typeenum.TuileComposant;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class Tuile {
     /**
@@ -32,10 +33,14 @@ public abstract class Tuile {
                 '}';
     }
 
-    /**
-     * Fonction qui va rotate les elements du tableau
-     *
-     */
+    public abstract void rotate();
+    public abstract ArrayList<Integer> getListConnexion() ;
+
+
+        /**
+         * Fonction qui va rotate les elements du tableau
+         *
+         */
 
 
 }
