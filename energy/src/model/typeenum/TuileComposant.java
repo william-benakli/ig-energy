@@ -1,12 +1,12 @@
 package model.typeenum;
 
+import java.awt.*;
+
 public enum TuileComposant {
 
     AUCUN(),
     WIFI(),
-    LUMIERE();
-
-    TuileComposant(){
-
-    }
+    WAY(),
+    ENERGY,
+    LIGHT;
 }

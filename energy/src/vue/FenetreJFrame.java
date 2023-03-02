@@ -1,5 +1,7 @@
 package vue;
 
+import model.Level;
+
 import javax.swing.*;
 import java.util.Stack;
 
@@ -11,11 +13,11 @@ public final class FenetreJFrame extends JFrame {
 
     private Stack<JPanel> panelView = new Stack<>();
 
-    public FenetreJFrame(){
+    public FenetreJFrame(Level level){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
-        panelView.push(new MenuJPanel(this));
+        panelView.push(new MenuJPanel(this, level));
         update();
         pack();
     }

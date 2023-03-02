@@ -20,13 +20,11 @@ public final class Level {
 
         for (int i = 0; i < weight ; i++) {
             ArrayList<Tuile> verticalTuile = new ArrayList<>();
-            for (int j = 0; j < height; j++) {
-               // verticalTuile.add(new Tuile(DirHexa.AUCUN, x   ));
-            }
             plateau.add(verticalTuile);
         }
     }
 
+    public void addTuile(int x, Tuile tuile){this.plateau.get(x).add(tuile);}
     public void setTuileAt(int x, int y, Tuile tuile){
         this.plateau.get(x).set(y, tuile);
     }

@@ -6,24 +6,30 @@ import model.typeenum.TuileComposant;
 
 import java.awt.image.BufferedImage;
 
-public final class Tuile {
+public abstract class Tuile {
     /**
      *
      * Class Tuile:
      *
      */
 
-    private TuileComposant typeTuile;
-    private DirectionInterface direction;
-    private BufferedImage directionImage, typeComposantImage;
-    private BufferedImage finalImage;
-
-    public  Tuile(TuileComposant typeTuile, int ... pos){
-
-    }
+    protected TuileComposant typeTuile;
+    protected ConstructorBufferedTuile finalImage;
 
     public BufferedImage getImage() {
         return finalImage;
+    }
+
+    public TuileComposant getComposant() {
+        return typeTuile;
+    }
+
+    @Override
+    public String toString() {
+        return "Tuile{" +
+                "typeTuile=" + typeTuile +
+                ", finalImage=" + finalImage +
+                '}';
     }
 
     /**
