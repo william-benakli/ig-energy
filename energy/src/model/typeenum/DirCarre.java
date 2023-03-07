@@ -3,9 +3,9 @@ package model.typeenum;
 public enum DirCarre implements DirectionInterface{
 
     NORD(0),
-    OUEST(90),
+    EST(90),
     SUD(180),
-    EST(270);
+    OUEST(270);
 
     private int deg;
 
@@ -15,6 +15,21 @@ public enum DirCarre implements DirectionInterface{
 
     DirCarre(int deg){
         this.deg = deg;
+    }
+
+    @Override
+    public int getSize() {
+        return values().length;
+    }
+
+    @Override
+    public int getPosition() {
+        return ordinal();
+    }
+
+    @Override
+    public DirectionInterface[] getValues() {
+        return values();
     }
 
 }

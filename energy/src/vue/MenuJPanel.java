@@ -66,7 +66,6 @@ public final class MenuJPanel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             System.out.println("tuile " + tuile.toString());
-            tuile.rotate();
             repaint();
         }
 

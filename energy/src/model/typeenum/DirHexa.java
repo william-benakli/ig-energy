@@ -19,4 +19,20 @@ public enum DirHexa implements DirectionInterface{
         this.deg = deg;
     }
 
+    @Override
+    public int getSize() {
+        return values().length;
+    }
+
+    @Override
+    public int getPosition() {
+        return ordinal();
+    }
+
+    @Override
+    public DirectionInterface[] getValues() {
+        return values();
+    }
+
+
 }

@@ -1,13 +1,8 @@
 package model;
 
-import model.typeenum.DirectionInterface;
-import model.typeenum.ImageEnum;
-import model.typeenum.TuileComposant;
-import model.typeenum.TuileShape;
+import model.typeenum.*;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Map;
 
 public class Tuile {
     /**
@@ -17,24 +12,25 @@ public class Tuile {
      */
 
     private final TuileComposant composant;
-    private final ArrayList<DirectionInterface> list_direction;
+    private DirectionInterface direction;
+    private boolean connexionBoolean[];
     private final TuileShape shape;
     private boolean isActivated;
 
 
     private ConstructorBufferedTuile finalImage;
 
-    public class Builder{
+    public static class Builder{
         private TuileComposant composant;
-        private ArrayList<DirectionInterface> list_direction;
+        private DirectionInterface direction;
         private TuileShape shape;
 
         public Builder composantTuile(TuileComposant composant){
             this.composant = composant;
             return this;
         }
-        public Builder directionTuile(ArrayList<DirectionInterface> list_direction){
-            this.list_direction = list_direction;
+        public Builder directionTuile(DirectionInterface direction){
+            this.direction = direction;
             return this;
         }
         public Builder shapeTuile(TuileShape shape){
@@ -50,29 +46,42 @@ public class Tuile {
     private Tuile(Builder builder){
         this.shape = builder.shape;
         this.composant = builder.composant;
-        this.list_direction = builder.list_direction;
+        this.direction = builder.direction;
         if(composant ==  TuileComposant.ENERGY) this.isActivated = true;
         else this.isActivated = false;
+        connexionBoolean = new boolean[builder.direction.getSize()];
     }
 
     public BufferedImage getImage() {
         return finalImage;
     }
 
-    public void addDirectionPos(DirectionInterface directionInterface){
-        list_direction.add(directionInterface);
-    }
-
     public TuileComposant getComposant() {
         return composant;
     }
 
-    @Override
-    public String toString() {
-        return "Tuile{" + "typeTuile=" + composant + ", finalImage=" + finalImage + '}';
+    public void rotation(){
+        this.direction = direction.rotation();
     }
 
-    public void rotate(){
+    @Override
+    public String toString() {
+        return "Tuile{" + "typeTuile=" + composant + ", finalImage=" + finalImage + "direction=" +  direction + '}' ;
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println(" ----------------- ");
+        Tuile tcarre = new Builder().composantTuile(TuileComposant.ENERGY)
+                .shapeTuile(TuileShape.CARRE)
+                .directionTuile(DirCarre.NORD).build();
+        Tuile tHexa = new Builder().composantTuile(TuileComposant.ENERGY).shapeTuile(TuileShape.HEXA).directionTuile(DirHexa.NORD).build();
+        System.out.println("tuile carre " + tcarre);
+        System.out.println("tuile hexa " + tHexa);
+        tcarre.rotation();
+        tHexa.rotation();
+        System.out.println("tuile carre " + tcarre);
+        System.out.println("tuile hexa " + tHexa);
 
     }
 

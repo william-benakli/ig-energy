@@ -68,7 +68,7 @@ public class MainEnergy {
                 System.out.println(s + "avant switch(s)");
 
                 if(currComposant!=null){
-                    level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
+               //     level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
                    // level.addTuile();
                     listConnexion.clear();
                 }
@@ -88,7 +88,7 @@ public class MainEnergy {
         }
 
         if(currComposant!=null){
-            level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
+         //   level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
             listConnexion.clear();
         }
     }
