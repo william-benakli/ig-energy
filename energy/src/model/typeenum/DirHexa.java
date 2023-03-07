@@ -2,11 +2,21 @@ package model.typeenum;
 
 public enum DirHexa implements DirectionInterface{
 
-    NORD(),
-    NORD_EST(),
-    SUD_EST(),
-    SUD(),
-    SUD_OUEST(),
-    NORD_OUEST();
+    NORD(0),
+    NORD_EST(30),
+    SUD_EST(60),
+    SUD(90),
+    SUD_OUEST(150),
+    NORD_OUEST(320);
+
+    private int deg;
+
+    private int getDegres(){
+        return deg;
+    }
+
+    DirHexa(int deg){
+        this.deg = deg;
+    }
 
 }

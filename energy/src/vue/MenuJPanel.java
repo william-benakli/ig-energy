@@ -2,19 +2,11 @@ package vue;
 
 import model.Level;
 import model.Tuile;
-import model.TuileCarre;
-import model.TuileVide;
-import model.typeenum.ImageEnum;
-import model.typeenum.TuileComposant;
-import model.typeenum.TuileShape;
-import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.util.ArrayList;
 
 public final class MenuJPanel extends JPanel {
 
@@ -57,8 +49,6 @@ public final class MenuJPanel extends JPanel {
 
         CaseJPanel(Tuile tuile){
             this.tuile = tuile;
-            System.out.println("tuile " + tuile.toString());
-            System.out.println( "CaseJpanel" + tuile.getListConnexion().size());
 
             this.setPreferredSize(new Dimension(120, 120));
             this.setMaximumSize(new Dimension(120, 120));
@@ -75,7 +65,6 @@ public final class MenuJPanel extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-            System.out.println(tuile.getListConnexion().size());
             System.out.println("tuile " + tuile.toString());
             tuile.rotate();
             repaint();

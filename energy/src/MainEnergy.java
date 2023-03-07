@@ -1,12 +1,7 @@
 import model.Level;
-import model.Tuile;
-import model.TuileCarre;
-import model.TuileVide;
-import model.typeenum.ImageEnum;
 import model.typeenum.TuileComposant;
 import vue.FenetreJFrame;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -74,11 +69,12 @@ public class MainEnergy {
 
                 if(currComposant!=null){
                     level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
+                   // level.addTuile();
                     listConnexion.clear();
                 }
 
                 switch (s) {
-                    case "." -> currComposant = TuileComposant.AUCUN;
+                    case "." -> currComposant = TuileComposant.EMPTY;
                     case "S" -> currComposant = TuileComposant.ENERGY;
                     case "L" -> currComposant = TuileComposant.LIGHT;
                     case "W" -> currComposant = TuileComposant.WIFI;
