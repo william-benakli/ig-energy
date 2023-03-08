@@ -1,5 +1,8 @@
 import model.Level;
+import model.Tuile;
+import model.typeenum.DirHexa;
 import model.typeenum.TuileComposant;
+import model.typeenum.TuileShape;
 import vue.FenetreJFrame;
 
 import java.io.File;
@@ -13,43 +16,42 @@ public class MainEnergy {
 
 
     public static void main(String[] args) {
-
-
-        Level niveau_1 = null;
         try {
-            niveau_1 = parseLineToLevel("ressource/level/level1.nrg");
+            Level niveau_1 = parseLineToLevel("ressource/level/level1.nrg");
+            new FenetreJFrame(niveau_1);
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable.");
+        }catch (ParseException parse){
+            System.out.println(parse);
         }
-
-        new FenetreJFrame(niveau_1);
-
     }
 
 
-    static Level parseLineToLevel(String levelName) throws FileNotFoundException {
+    static Level parseLineToLevel(String levelName) throws FileNotFoundException, ParseException {
        // int niveauLevel = Integer.parseInt(levelName.replace("level", "").replace(".nrg", "").toLowerCase().trim());
 
         final File file = new File(levelName);
         final Scanner scanner = new Scanner(file);
 
         String firstLine = scanner.nextLine();
-        String arrayLine[] = firstLine.split(" ");
+        String[] arrayLine = firstLine.split(" ");
 
+        System.out.print(arrayLine[0]);
+        System.out.print(arrayLine[1]);
+        System.out.print(arrayLine[2] +" ");
         System.out.println(Arrays.toString(arrayLine));
-        System.out.println(arrayLine[0]);
-        System.out.println(arrayLine[1]);
 
-        Level level = new Level(0, Integer.parseInt(arrayLine[0]), Integer.parseInt(arrayLine[1]));
+        if(! (arrayLine[2].equalsIgnoreCase("S") || arrayLine[2].equalsIgnoreCase("H")))
+            throw new ParseException("Erreur à la ligne", 0);
 
-        try {
-            int positionLine = 0;
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                parseLine(line, ++positionLine, level);
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        TuileShape shape = arrayLine[2].equalsIgnoreCase("S") ? TuileShape.CARRE : TuileShape.HEXA;
+        System.out.println(shape);
+        Level level = new Level(0, Integer.parseInt(arrayLine[0]), Integer.parseInt(arrayLine[1]), shape);
+
+        int positionLine = 0;
+        while (scanner.hasNextLine()) {
+            final String line = scanner.nextLine();
+            parseLine(line, ++positionLine, level);
         }
 
         scanner.close();
@@ -58,19 +60,24 @@ public class MainEnergy {
 
     private static void parseLine(String line, int positionLine, Level level) throws ParseException {
         String[] arrayLine = line.split(" ");
+        int compteurColonne = 0;
 
         TuileComposant currComposant = null;
-        ArrayList<Integer> listConnexion = new ArrayList<Integer>();
+        ArrayList<Integer> listEdge = new ArrayList<>();
 
         for (String s : arrayLine) {
             if ((s.charAt(0) >= 65 && s.charAt(0) <= 90) || s.charAt(0) == 46) {
-                //TODO: Contruire un nouvel objet
-                System.out.println(s + "avant switch(s)");
-
                 if(currComposant!=null){
-               //     level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
-                   // level.addTuile();
-                    listConnexion.clear();
+
+                    Tuile tuile = new Tuile.Builder()
+                            .composantTuile(currComposant)
+                            .shapeTuile(level.getTypeTuilePlateau())
+                            .build();
+                    for (Integer i:listEdge) tuile.setEdgeBoolean(i, true);
+                    tuile.update();
+                    level.setTuileAt(compteurColonne, (positionLine - 1), tuile);
+                    compteurColonne++;
+                    listEdge.clear();
                 }
 
                 switch (s) {
@@ -79,18 +86,27 @@ public class MainEnergy {
                     case "L" -> currComposant = TuileComposant.LIGHT;
                     case "W" -> currComposant = TuileComposant.WIFI;
                     default -> throw new ParseException("Erreur à la ligne", positionLine);
-               }
+                }
 
             } else if (s.charAt(0) >= 48 && s.charAt(0) <= 57) {
-                //TODO: Ajouter des liens à un objet
-                listConnexion.add(Integer.parseInt(s));
+                final int edge = Integer.parseInt(s);
+                listEdge.add(edge);
             } else throw new ParseException("Erreur à la ligne", positionLine);
         }
 
         if(currComposant!=null){
-         //   level.addTuile((positionLine - 1), new TuileCarre(currComposant, new ArrayList<>(listConnexion)));
-            listConnexion.clear();
+            System.out.println(compteurColonne + "  cmp colonne");
+
+            Tuile tuile = new Tuile.Builder()
+                    .composantTuile(currComposant)
+                    .shapeTuile(level.getTypeTuilePlateau())
+                    .build();
+            level.getPlateau()[compteurColonne][(positionLine - 1)] = tuile;
+            for (Integer i:listEdge) tuile.setEdgeBoolean(i, true);
+            tuile.update();
         }
     }
+
+
 
 }

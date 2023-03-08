@@ -1,4 +1,4 @@
-package model.typeenum;
+package vue.utils;
 
 
 import controler.Controller;

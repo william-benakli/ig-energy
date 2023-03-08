@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public final class MenuJPanel extends JPanel {
 
@@ -18,6 +20,7 @@ public final class MenuJPanel extends JPanel {
     Level level;
     public MenuJPanel(FenetreJFrame jFrame, Level level){
         this.level = level;
+        System.out.println("nouvelle " + Arrays.toString(level.getPlateau()[0][0].getEdge()));
 
         /*this.add(GraphiqueBuilder.createJbutton("Jouer", e ->{
             jFrame.addStackPanel(new GameSelectedJPanel(jFrame));
@@ -37,7 +40,7 @@ public final class MenuJPanel extends JPanel {
         for (int i = 0; i < level.getWeight(); i++) {
             for (int j = 0; j < level.getHeight(); j++) {
              //   System.out.println("on passe ici");
-                add(new CaseJPanel(level.getPlateau().get(i).get(j)));
+                add(new CaseJPanel(level.getPlateau()[j][i]));
             }
         }
 
@@ -66,6 +69,8 @@ public final class MenuJPanel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             System.out.println("tuile " + tuile.toString());
+            tuile.rotation();
+            tuile.update();
             repaint();
         }
 

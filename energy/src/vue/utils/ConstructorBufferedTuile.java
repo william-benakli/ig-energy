@@ -1,17 +1,18 @@
-package model;
+package vue.utils;
 
-import model.typeenum.ImageEnum;
 import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ConstructorBufferedTuile extends BufferedImage {
 
 
-    public ConstructorBufferedTuile(TuileShape type, TuileComposant composant, ArrayList<Integer> pos) {
+    public ConstructorBufferedTuile(TuileShape type, TuileComposant composant, boolean [] edge) {
         super(120, 120, BufferedImage.TYPE_INT_ARGB);
         Graphics g = super.getGraphics();
         g.setColor(Color.BLACK);
@@ -36,20 +37,14 @@ public class ConstructorBufferedTuile extends BufferedImage {
         }
 
         g.drawImage(type.getImage(), 0, 0, null);
-        System.out.println( " AVANT FORT " + pos.size());
-        for (int position: pos){
-            Graphics2D graphics2d = (Graphics2D) g;
-            graphics2d.rotate(Math.toRadians(position*90), 60, 60);
-            graphics2d.drawImage(ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
+        for (int i = 0; i < edge.length; i++){
+            if(edge[i]){
+                Graphics2D graphics2d = (Graphics2D) g;
+                graphics2d.rotate(Math.toRadians(i*90), 60, 60);
+                graphics2d.drawImage(ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
+            }
         }
 
         g.dispose();
-        System.out.println( " APRES FORT " + pos.size());
-
-    }
-
-    public void rotate() {
-        Graphics2D graphics2D = (Graphics2D) getGraphics();
-        graphics2D.rotate(Math.toRadians(90), 60, 60);
     }
 }
