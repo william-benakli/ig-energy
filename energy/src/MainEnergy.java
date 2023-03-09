@@ -1,6 +1,5 @@
 import model.Level;
 import model.Tuile;
-import model.typeenum.DirHexa;
 import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
 import vue.FenetreJFrame;
@@ -9,7 +8,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class MainEnergy {
@@ -21,14 +19,13 @@ public class MainEnergy {
             new FenetreJFrame(niveau_1);
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable.");
-        }catch (ParseException parse){
-            System.out.println(parse);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
 
     static Level parseLineToLevel(String levelName) throws FileNotFoundException, ParseException {
-       // int niveauLevel = Integer.parseInt(levelName.replace("level", "").replace(".nrg", "").toLowerCase().trim());
 
         final File file = new File(levelName);
         final Scanner scanner = new Scanner(file);
@@ -36,12 +33,7 @@ public class MainEnergy {
         String firstLine = scanner.nextLine();
         String[] arrayLine = firstLine.split(" ");
 
-        System.out.print(arrayLine[0]);
-        System.out.print(arrayLine[1]);
-        System.out.print(arrayLine[2] +" ");
-        System.out.println(Arrays.toString(arrayLine));
-
-        if(! (arrayLine[2].equalsIgnoreCase("S") || arrayLine[2].equalsIgnoreCase("H")))
+        if (!(arrayLine[2].equalsIgnoreCase("S") || arrayLine[2].equalsIgnoreCase("H")))
             throw new ParseException("Erreur à la ligne", 0);
 
         TuileShape shape = arrayLine[2].equalsIgnoreCase("S") ? TuileShape.CARRE : TuileShape.HEXA;
@@ -67,19 +59,7 @@ public class MainEnergy {
 
         for (String s : arrayLine) {
             if ((s.charAt(0) >= 65 && s.charAt(0) <= 90) || s.charAt(0) == 46) {
-                if(currComposant!=null){
-
-                    Tuile tuile = new Tuile.Builder()
-                            .composantTuile(currComposant)
-                            .shapeTuile(level.getTypeTuilePlateau())
-                            .build();
-                    for (Integer i:listEdge) tuile.setEdgeBoolean(i, true);
-                    tuile.update();
-                    level.setTuileAt(compteurColonne, (positionLine - 1), tuile);
-                    compteurColonne++;
-                    listEdge.clear();
-                }
-
+                if (currComposant != null) addTuile(positionLine, level, compteurColonne++, currComposant, listEdge);
                 switch (s) {
                     case "." -> currComposant = TuileComposant.EMPTY;
                     case "S" -> currComposant = TuileComposant.ENERGY;
@@ -87,26 +67,23 @@ public class MainEnergy {
                     case "W" -> currComposant = TuileComposant.WIFI;
                     default -> throw new ParseException("Erreur à la ligne", positionLine);
                 }
-
-            } else if (s.charAt(0) >= 48 && s.charAt(0) <= 57) {
-                final int edge = Integer.parseInt(s);
-                listEdge.add(edge);
-            } else throw new ParseException("Erreur à la ligne", positionLine);
+            } else if (s.charAt(0) >= 48 && s.charAt(0) <= 57) listEdge.add(Integer.parseInt(s));
+            else throw new ParseException("Erreur à la ligne", positionLine);
         }
 
-        if(currComposant!=null){
-            System.out.println(compteurColonne + "  cmp colonne");
-
-            Tuile tuile = new Tuile.Builder()
-                    .composantTuile(currComposant)
-                    .shapeTuile(level.getTypeTuilePlateau())
-                    .build();
-            level.getPlateau()[compteurColonne][(positionLine - 1)] = tuile;
-            for (Integer i:listEdge) tuile.setEdgeBoolean(i, true);
-            tuile.update();
-        }
+        if (currComposant != null)
+            addTuile(positionLine, level, compteurColonne, currComposant, listEdge);
     }
 
-
+    private static void addTuile(int positionLine, Level level, int compteurColonne, TuileComposant currComposant, ArrayList<Integer> listEdge) {
+        Tuile tuile = new Tuile.Builder()
+                .composantTuile(currComposant)
+                .shapeTuile(level.getTypeTuilePlateau())
+                .build();
+        level.setTuileAt(compteurColonne, (positionLine - 1), tuile);
+        for (Integer i : listEdge) tuile.setEdgeBoolean(i, true);
+        tuile.update();
+        listEdge.clear();
+    }
 
 }
