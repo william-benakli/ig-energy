@@ -1,16 +1,13 @@
 package vue;
 
 import model.Level;
-import model.Tuile;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.ImageObserver;
-import java.util.Arrays;
 
-public final class MenuJPanel extends JPanel {
+public final class MenuJPanel extends JPanel implements MouseListener {
 
     /**
      *
@@ -20,7 +17,8 @@ public final class MenuJPanel extends JPanel {
 
     public MenuJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
-        setPreferredSize(new Dimension(level.getWidth()*120, level.getHeight()*120));
+        addMouseListener(this);
+        setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
     }
 
     @Override
@@ -35,14 +33,51 @@ public final class MenuJPanel extends JPanel {
             for (int col = 0; col < level.getHeight(); col++) {
                 g.drawImage(
                         level.getPlateau()[col][row].getImage(),
-                        row * size + (getSize().height - ((level.getHeight()) * size)) / 2,
-                        col * size + (getSize().width - ((level.getWidth()) * size)) / 2,
+                        row * size + (getSize().width - ((level.getWidth()) * size)) / 2,
+                        col * size + (getSize().height - ((level.getHeight()) * size)) / 2,
                         size,
                         size,
                         this
                 );
             }
         }
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int x = e.getX();
+        int y = e.getY();
+
+        int height = getSize().width / (level.getWidth());
+        int width = getSize().height / (level.getHeight());
+
+        int size = Math.min(width, height);
+
+        int deducX = (x - (getSize().width - ((level.getWidth()) * size)) / 2) / size;
+        int deducY = (y - ((getSize().height - ((level.getHeight()) * size)) / 2)) / size;
+
+        level.getPlateau()[deducY][deducX].rotation();
+        repaint();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
 
     }
 

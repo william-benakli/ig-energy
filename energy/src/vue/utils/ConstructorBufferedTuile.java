@@ -5,7 +5,6 @@ import model.typeenum.TuileShape;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 public class ConstructorBufferedTuile extends BufferedImage {
 
@@ -36,7 +35,6 @@ public class ConstructorBufferedTuile extends BufferedImage {
 
         g.drawImage(type.getImage(), 0, 0, null);
         if (composant == TuileComposant.EMPTY) {
-            System.out.println("---" + Arrays.toString(edge));
             for (int i = 0; i < edge.length; i++) {
                 if (edge[i]) {
                     Graphics2D graphics2d = (Graphics2D) g.create();

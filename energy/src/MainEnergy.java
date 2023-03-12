@@ -37,7 +37,6 @@ public class MainEnergy {
             throw new ParseException("Erreur à la ligne", 0);
 
         TuileShape shape = arrayLine[2].equalsIgnoreCase("S") ? TuileShape.CARRE : TuileShape.HEXA;
-        System.out.println(shape);
         Level level = new Level(0, Integer.parseInt(arrayLine[0]), Integer.parseInt(arrayLine[1]), shape);
 
         int positionLine = 0;
