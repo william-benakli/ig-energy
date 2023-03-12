@@ -3,6 +3,7 @@ package vue;
 import model.Level;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Stack;
 
 public final class FenetreJFrame extends JFrame {
@@ -18,6 +19,7 @@ public final class FenetreJFrame extends JFrame {
         setVisible(true);
         setLocationRelativeTo(null);
         panelView.push(new MenuJPanel(this, level));
+        setBackground(Color.BLACK);
         update();
         pack();
     }

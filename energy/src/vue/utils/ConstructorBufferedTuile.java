@@ -53,7 +53,7 @@ public class ConstructorBufferedTuile extends BufferedImage {
                 if (edge[i]) {
                     Graphics2D graphics2d = (Graphics2D) g.create();
                     graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
-                    graphics2d.drawImage(ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
+                    graphics2d.drawImage((composant != TuileComposant.ENERGY) ? ImageEnum.SQUARE_OFF_Line_COMPOSANT.getImage() : ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
                 }
             }
         }

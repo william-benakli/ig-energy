@@ -7,46 +7,46 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.lang.reflect.Array;
+import java.awt.image.ImageObserver;
 import java.util.Arrays;
 
 public final class MenuJPanel extends JPanel {
 
     /**
      *
-     *
      */
 
     Level level;
-    public MenuJPanel(FenetreJFrame jFrame, Level level){
+
+    public MenuJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
-        System.out.println("nouvelle " + Arrays.toString(level.getPlateau()[0][0].getEdge()));
+        setPreferredSize(new Dimension(level.getHeight()*120, level.getWidth()*120));
+    }
 
-        /*this.add(GraphiqueBuilder.createJbutton("Jouer", e ->{
-            jFrame.addStackPanel(new GameSelectedJPanel(jFrame));
-            jFrame.update();
-        }));
-        this.add(GraphiqueBuilder.createJbutton("Parametre", e ->{
-            jFrame.addStackPanel(new SettingsJPanel(jFrame));
-            jFrame.update();
-        }));*/
-    //    setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        //  setAlignmentX(Component.CENTER_ALIGNMENT);
+    @Override
+    public void paintComponent(Graphics g) {
 
-     //   add(new GameJPanel(level));
-        this.setBackground(Color.BLACK);
+        int height = getSize().width / (level.getHeight());
+        int width = getSize().height / (level.getWidth());
 
-        setLayout(new GridLayout(level.getWeight(), level.getHeight()));
-        for (int i = 0; i < level.getWeight(); i++) {
-            for (int j = 0; j < level.getHeight(); j++) {
-             //   System.out.println("on passe ici");
-                add(new CaseJPanel(level.getPlateau()[j][i]));
+        int size = Math.min(width, height);
+
+        for (int row = 0; row < level.getHeight(); row++) {
+            for (int col = 0; col < level.getWidth(); col++) {
+                g.drawImage(
+                        level.getPlateau()[row][col].getImage(),
+                        row * size + (getSize().height - ((level.getWidth()) * size)) / 2,
+                        col * size + (getSize().width - ((level.getHeight()) * size)) / 2,
+                        size,
+                        size,
+                        this
+                );
             }
         }
 
     }
 
-    class CaseJPanel extends JPanel implements MouseListener {
+    /*class CaseJPanel extends JPanel implements MouseListener {
 
         private Tuile tuile;
 
@@ -93,5 +93,5 @@ public final class MenuJPanel extends JPanel {
         public void mouseExited(MouseEvent mouseEvent) {
 
         }
-    }
+    }*/
 }

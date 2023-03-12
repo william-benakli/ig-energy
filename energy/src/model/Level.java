@@ -10,13 +10,13 @@ public final class Level {
     private Tuile[][] plateau;
     private int idLevel;
     private Joueur j;
-    private int weight, height;
+    private int width, height;
     private TuileShape typeTuilePlateau;
 
-    public Level(int idLevel, int weight, int height, TuileShape typeTuilePlateau){
-        this.plateau = new Tuile[height][weight];
+    public Level(int idLevel, int width, int height, TuileShape typeTuilePlateau){
+        this.plateau = new Tuile[height][width];
         this.idLevel = idLevel;
-        this.weight = weight;
+        this.width = width;
         this.height = height;
         this.typeTuilePlateau = typeTuilePlateau;
     }
@@ -24,8 +24,8 @@ public final class Level {
     public void setTuileAt(int i, int j, Tuile tuile){
         this.plateau[i][j] = tuile;
     }
-    public int getWeight() {
-        return weight;
+    public int getWidth() {
+        return width;
     }
     public int getHeight(){
         return height;
