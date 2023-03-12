@@ -13,7 +13,7 @@ public final class Level {
     private int width, height;
     private TuileShape typeTuilePlateau;
 
-    public Level(int idLevel, int width, int height, TuileShape typeTuilePlateau){
+    public Level(int idLevel, int height, int width, TuileShape typeTuilePlateau){
         this.plateau = new Tuile[height][width];
         this.idLevel = idLevel;
         this.width = width;

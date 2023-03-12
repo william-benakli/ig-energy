@@ -20,23 +20,23 @@ public final class MenuJPanel extends JPanel {
 
     public MenuJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
-        setPreferredSize(new Dimension(level.getHeight()*120, level.getWidth()*120));
+        setPreferredSize(new Dimension(level.getWidth()*120, level.getHeight()*120));
     }
 
     @Override
     public void paintComponent(Graphics g) {
 
-        int height = getSize().width / (level.getHeight());
-        int width = getSize().height / (level.getWidth());
+        int height = getSize().width / (level.getWidth());
+        int width = getSize().height / (level.getHeight());
 
         int size = Math.min(width, height);
 
-        for (int row = 0; row < level.getHeight(); row++) {
-            for (int col = 0; col < level.getWidth(); col++) {
+        for (int row = 0; row < level.getWidth(); row++) {
+            for (int col = 0; col < level.getHeight(); col++) {
                 g.drawImage(
-                        level.getPlateau()[row][col].getImage(),
-                        row * size + (getSize().height - ((level.getWidth()) * size)) / 2,
-                        col * size + (getSize().width - ((level.getHeight()) * size)) / 2,
+                        level.getPlateau()[col][row].getImage(),
+                        row * size + (getSize().height - ((level.getHeight()) * size)) / 2,
+                        col * size + (getSize().width - ((level.getWidth()) * size)) / 2,
                         size,
                         size,
                         this

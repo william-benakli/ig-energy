@@ -15,7 +15,7 @@ public class MainEnergy {
 
     public static void main(String[] args) {
         try {
-            Level niveau_1 = parseLineToLevel("ressource/level/level1.nrg");
+            Level niveau_1 = parseLineToLevel("ressource/level/level5.nrg");
             new FenetreJFrame(niveau_1);
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable.");
@@ -80,7 +80,7 @@ public class MainEnergy {
                 .composantTuile(currComposant)
                 .shapeTuile(level.getTypeTuilePlateau())
                 .build();
-        level.setTuileAt(compteurColonne, (positionLine - 1), tuile);
+        level.setTuileAt((positionLine - 1), compteurColonne, tuile);
         for (Integer i : listEdge) tuile.setEdgeBoolean(i, true);
         tuile.update();
         listEdge.clear();
