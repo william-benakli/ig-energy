@@ -1,6 +1,7 @@
 package vue;
 
 import model.Level;
+import model.typeenum.TuileShape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,27 +19,51 @@ public final class MenuJPanel extends JPanel implements MouseListener {
     public MenuJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
         addMouseListener(this);
-        setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
+        if (level.getTypeTuilePlateau() == TuileShape.CARRE)
+            setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
+        else
+            setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
     }
 
     @Override
     public void paintComponent(Graphics g) {
-
         int height = getSize().width / (level.getWidth());
         int width = getSize().height / (level.getHeight());
-
         int size = Math.min(width, height);
 
-        for (int row = 0; row < level.getWidth(); row++) {
-            for (int col = 0; col < level.getHeight(); col++) {
-                g.drawImage(
-                        level.getPlateau()[col][row].getImage(),
-                        row * size + (getSize().width - ((level.getWidth()) * size)) / 2,
-                        col * size + (getSize().height - ((level.getHeight()) * size)) / 2,
-                        size,
-                        size,
-                        this
-                );
+        if (level.getTypeTuilePlateau() == TuileShape.CARRE) {
+            for (int row = 0; row < level.getWidth(); row++) {
+                for (int col = 0; col < level.getHeight(); col++) {
+                    int x = row * size + (getSize().width - ((level.getWidth()) * size)) / 2;
+                    int y = col * size + (getSize().height - ((level.getHeight()) * size)) / 2;
+                    g.drawImage(
+                            level.getPlateau()[col][row].getImage(),
+                            x,
+                            y,
+                            size,
+                            size,
+                            this
+                    );
+                }
+            }
+        } else {
+            for (int row = 0; row < level.getWidth(); row++) {
+                for (int col = 0; col < level.getHeight(); col++) {
+                    int x = row * size + (getSize().width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2;
+                    int y = col * size + (getSize().height - ((level.getHeight()) * size)) / 2 + size / 3;
+                    System.out.println(size);
+                    if (row % 2 == 0 || col < level.getHeight() - 1) {
+                        if (row % 2 == 1) y += (size / 2 - size / 12);
+                        g.drawImage(
+                                level.getPlateau()[col][row].getImage(),
+                                x - (size / 4) * row,
+                                y - (size / 7) * col,
+                                size,
+                                size,
+                                this
+                        );
+                    }
+                }
             }
         }
 
@@ -54,8 +79,20 @@ public final class MenuJPanel extends JPanel implements MouseListener {
 
         int size = Math.min(width, height);
 
-        int deducX = (x - (getSize().width - ((level.getWidth()) * size)) / 2) / size;
-        int deducY = (y - ((getSize().height - ((level.getHeight()) * size)) / 2)) / size;
+        int deducX, deducY;
+        if (level.getTypeTuilePlateau()==TuileShape.CARRE){
+            deducX = (x - (getSize().width - ((level.getWidth()) * size)) / 2) / size;
+            deducY = (y - ((getSize().height - ((level.getHeight()) * size)) / 2)) / size;
+        }else{
+            //TODO : rotate
+            /*int rowX = (x - (getSize().width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2) / size;
+            int colY = (y - ((getSize().height - ((level.getHeight()) * size)) / 2 + size / 3)) / size;
+            System.out.println(" rowX "+rowX+" colY "+colY);
+            deducX = (rowX * size + (getSize().width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2) - (size / 4) * rowX;
+            deducY = (colY * size + (getSize().height - ((level.getHeight()) * size)) / 2 + size / 3) - (size / 7) * colY;*/
+            deducX = 0;
+            deducY = 0;
+        }
 
         level.getPlateau()[deducY][deducX].rotation();
         repaint();
