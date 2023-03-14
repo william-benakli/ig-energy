@@ -34,5 +34,9 @@ public enum DirHexa implements DirectionInterface{
         return values();
     }
 
+    @Override
+    public int getPosJFromPos(DirectionInterface directionInterface, int column){
+        return 1;
+    }
 
 }

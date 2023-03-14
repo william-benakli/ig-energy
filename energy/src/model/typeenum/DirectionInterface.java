@@ -12,18 +12,6 @@ public interface DirectionInterface {
         return getValues()[(this.getPosition() + 1) % getSize()];
     }
 
-    default int getPosIFromPos(DirectionInterface directionInterface) {
-        return 0;
-    }
-
-    default int getPosJFromPos(DirectionInterface directionInterface) {
-        return 0;
-    }
-
-    /**
-     *
-     * rotation en utilisant les trucs de enum cardinal
-     *
-     */
+    int getPosJFromPos(DirectionInterface directionInterface, int column);
 
 }

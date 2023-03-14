@@ -1,6 +1,6 @@
 package model.typeenum;
 
-public enum DirCarre implements DirectionInterface{
+public enum DirCarre implements DirectionInterface {
 
     NORD(0),
     EST(90),
@@ -9,11 +9,11 @@ public enum DirCarre implements DirectionInterface{
 
     private int deg;
 
-    private int getDegres(){
+    private int getDegres() {
         return deg;
     }
 
-    DirCarre(int deg){
+    DirCarre(int deg) {
         this.deg = deg;
     }
 
@@ -32,4 +32,8 @@ public enum DirCarre implements DirectionInterface{
         return values();
     }
 
+    @Override
+    public int getPosJFromPos(DirectionInterface directionInterface, int column) {
+        return 0;
+    }
 }
