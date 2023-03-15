@@ -15,7 +15,7 @@ public class MainEnergy {
 
     public static void main(String[] args) {
         try {
-            Level niveau_1 = parseLineToLevel("ressource/level/level5.nrg");
+            Level niveau_1 = parseLineToLevel("ressource/level/level8.nrg");
             new FenetreJFrame(niveau_1);
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable.");

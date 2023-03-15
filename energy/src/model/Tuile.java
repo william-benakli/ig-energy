@@ -49,6 +49,7 @@ public class Tuile {
     //TODO changer la rotation avec decalage
     public void rotation() {
         this.direction = direction.rotation();
+        //int decalage = (direction.getSize() - direction.getPosition() )% 6;
 
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
         for (int i = edgeBoolean.length - 1; i > 0; i--)

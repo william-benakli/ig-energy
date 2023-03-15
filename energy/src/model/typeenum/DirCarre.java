@@ -8,7 +8,6 @@ public enum DirCarre implements DirectionInterface {
     OUEST(270);
 
     private int deg;
-
     private int getDegres() {
         return deg;
     }
