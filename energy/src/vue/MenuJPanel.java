@@ -30,6 +30,7 @@ public final class MenuJPanel extends JPanel implements MouseListener {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g.clearRect(0, 0, level.getWidth() * 120, level.getHeight() * 120);
+        list.clear();
         int height = getSize().width / (level.getWidth());
         int width = getSize().height / (level.getHeight());
         int size = Math.min(width, height);
