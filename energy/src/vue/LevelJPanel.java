@@ -17,9 +17,9 @@ public class LevelJPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        for(int i = 0; i < level.getWeight(); i ++){
+        for(int i = 0; i < level.getWidth(); i ++){
             for(int j = 0; j < level.getHeight(); j ++){
-                g.drawImage(level.getPlateau().get(i).get(j).getImage(), i*120, j*120, this);
+                g.drawImage(level.getPlateau()[i][j].getImage(), i*120, j*120, this);
             }
         }
     }

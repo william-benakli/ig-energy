@@ -4,9 +4,9 @@ import java.awt.*;
 
 public enum TuileComposant {
 
-    AUCUN(),
-    WIFI(),
+    EMPTY(),
     WAY(),
-    ENERGY,
-    LIGHT;
+    WIFI(),
+    ENERGY(),
+    LIGHT();
 }

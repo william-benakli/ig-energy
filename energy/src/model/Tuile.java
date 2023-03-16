@@ -1,46 +1,86 @@
 package model;
 
-import model.typeenum.DirectionInterface;
-import model.typeenum.ImageEnum;
-import model.typeenum.TuileComposant;
+import model.typeenum.*;
+import vue.utils.ConstructorBufferedTuile;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
-public abstract class Tuile {
+public class Tuile {
     /**
-     *
      * Class Tuile:
-     *
      */
 
-    protected TuileComposant typeTuile;
-    protected ConstructorBufferedTuile finalImage;
+    private final TuileComposant composant;
+    private final TuileShape shape;
+    private DirectionInterface direction;
+    private ConstructorBufferedTuile finalImage;
+    private boolean edgeBoolean[];
+    private boolean isActivated;
+
+    private Tuile(Builder builder) {
+        this.shape = builder.shape;
+        this.composant = builder.composant;
+        this.isActivated = (composant == TuileComposant.ENERGY);
+        if (shape == TuileShape.HEXA) direction = DirHexa.NORD;
+        else direction = DirCarre.NORD;
+        edgeBoolean = new boolean[direction.getSize()];
+    }
+
+    public boolean[] getEdge() {
+        return edgeBoolean;
+    }
+
+    public void setEdgeBoolean(int pos, boolean value) {
+        edgeBoolean[pos] = value;
+    }
+
+    public void update() {
+        this.finalImage = new ConstructorBufferedTuile(shape, composant, edgeBoolean);
+    }
 
     public BufferedImage getImage() {
         return finalImage;
     }
 
     public TuileComposant getComposant() {
-        return typeTuile;
+        return composant;
+    }
+
+    //TODO changer la rotation avec decalage
+    public void rotation() {
+        this.direction = direction.rotation();
+        //int decalage = (direction.getSize() - direction.getPosition() )% 6;
+
+        boolean tmp = edgeBoolean[edgeBoolean.length - 1];
+        for (int i = edgeBoolean.length - 1; i > 0; i--)
+            edgeBoolean[i] = edgeBoolean[i - 1];
+        edgeBoolean[0] = tmp;
+
+        update();
     }
 
     @Override
     public String toString() {
-        return "Tuile{" +
-                "typeTuile=" + typeTuile +
-                ", finalImage=" + finalImage +
-                '}';
+        return "Tuile{" + "typeTuile=" + composant + ", finalImage=" + finalImage + "direction=" + direction + '}';
     }
 
-    public abstract void rotate();
-    public abstract ArrayList<Integer> getListConnexion() ;
+    public static class Builder {
+        private TuileComposant composant;
+        private TuileShape shape;
 
+        public Builder composantTuile(TuileComposant composant) {
+            this.composant = composant;
+            return this;
+        }
 
-        /**
-         * Fonction qui va rotate les elements du tableau
-         *
-         */
+        public Builder shapeTuile(TuileShape shape) {
+            this.shape = shape;
+            return this;
+        }
 
+        public Tuile build() {
+            return new Tuile(this);
+        }
+    }
 
 }

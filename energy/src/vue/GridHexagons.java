@@ -74,6 +74,7 @@ public class GridHexagons extends JPanel {
             g2d.setStroke(bs3);
             Polygon focusedHexagon = getHexagon(focusedHexagonLocation.x,
                     focusedHexagonLocation.y);
+
             g2d.draw(focusedHexagon);
         }
     }
@@ -89,6 +90,7 @@ public class GridHexagons extends JPanel {
         hexagon.addPoint(x, y + (int) (1.5 * side));
         return hexagon;
     }
+
     public static void main(final String[] args) {
         Runnable gui = new Runnable() {
             public void run() {

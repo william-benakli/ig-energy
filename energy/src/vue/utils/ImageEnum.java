@@ -1,4 +1,4 @@
-package model.typeenum;
+package vue.utils;
 
 
 import controler.Controller;
@@ -28,13 +28,17 @@ public enum ImageEnum {
     HEXAGON_OFF_Line_COMPOSANT(3, 2),
     HEXAGON_OFF_ARC(4, 2),
     HEXAGON_OFF_LINE(5, 2),
+
+    HEXAGON_OFF_LINE_LONG(6, 2),
     HEXAGON_ON_HEXAGON_EMPTY(3, 3),
     HEXAGON_ON_COMPOSANT_ENERGY(3, 4),
     HEXAGON_ON_COMPOSANT_WIFI(4, 4),
     HEXAGON_ON_COMPOSANT_LAMP(5, 4),
     HEXAGON_ON_Line_COMPOSANT(3, 5),
     HEXAGON_ON_ARC(4, 5),
-    HEXAGON_ON_LINE(5, 5);
+    HEXAGON_ON_LINE(5, 5),
+
+    HEXAGON_ON_LINE_LONG(6, 5);
 
     private BufferedImage image;
 
