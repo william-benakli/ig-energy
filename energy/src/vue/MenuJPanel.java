@@ -17,12 +17,17 @@ public final class MenuJPanel extends JPanel implements MouseListener {
 
     private Level level;
     private ArrayList<Geometrie> list = new ArrayList<Geometrie>();
-
+    private JButton goBack;
 
     public MenuJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
         addMouseListener(this);
         setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
+        this.goBack = new JButton("Quitter");
+        this.goBack.addActionListener(actionEvent -> {
+            jFrame.goBackPanel();
+            jFrame.update();
+        });
     }
 
     @Override

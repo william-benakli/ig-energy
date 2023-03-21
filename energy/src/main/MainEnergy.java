@@ -1,3 +1,5 @@
+package main;
+
 import model.Level;
 import model.Tuile;
 import model.typeenum.TuileComposant;
@@ -16,7 +18,7 @@ public class MainEnergy {
     public static void main(String[] args) {
         try {
             Level niveau_1 = parseLineToLevel("ressource/level/level8.nrg");
-            new FenetreJFrame(niveau_1);
+            new FenetreJFrame();
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable.");
         } catch (ParseException e) {
@@ -25,7 +27,7 @@ public class MainEnergy {
     }
 
 
-    static Level parseLineToLevel(String levelName) throws FileNotFoundException, ParseException {
+   public static Level parseLineToLevel(String levelName) throws FileNotFoundException, ParseException {
 
         final File file = new File(levelName);
         final Scanner scanner = new Scanner(file);

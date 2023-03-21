@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.plaf.ButtonUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public final class GraphiqueBuilder {
 
@@ -21,4 +23,30 @@ public final class GraphiqueBuilder {
         return jButton;
     }
 
+    public static JTextField createTextField(int border){
+        final JTextField textField = new JTextField();
+        textField.setBorder(BorderFactory.createBevelBorder(border));
+        return textField;
+    }
+
+    public static JTextField createTextField(String placeHolder){
+        final JTextField textField = new JTextField(placeHolder);
+        textField.setForeground(Color.gray);
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent focusEvent) {
+                textField.setText("");
+                textField.setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent focusEvent) {
+                if(textField.getText().isEmpty()){
+                    textField.setForeground(Color.gray);
+                    textField.setText(placeHolder);
+                }
+            }
+        });
+        return textField;
+    }
 }
