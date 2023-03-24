@@ -45,7 +45,7 @@ public final class MenuJPanel extends JPanel implements MouseListener {
                 for (int col = 0; col < level.getHeight(); col++) {
                     int x = row * size + (getSize().width - ((level.getWidth()) * size)) / 2;
                     int y = col * size + (getSize().height - ((level.getHeight()) * size)) / 2;
-                    g.drawImage(
+                    g2d.drawImage(
                             level.getPlateau()[col][row].getImage(),
                             x,
                             y,

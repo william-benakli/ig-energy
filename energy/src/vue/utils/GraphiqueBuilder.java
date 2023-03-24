@@ -23,6 +23,14 @@ public final class GraphiqueBuilder {
         return jButton;
     }
 
+    public static JButton createJbutton(String text){
+        final JButton jButton = new JButton();
+        jButton.setText(text);
+        jButton.setPreferredSize(new Dimension(200, 75));
+        jButton.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(1)));
+        return jButton;
+    }
+
     public static JTextField createTextField(int border){
         final JTextField textField = new JTextField();
         textField.setBorder(BorderFactory.createBevelBorder(border));
