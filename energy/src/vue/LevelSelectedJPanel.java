@@ -2,9 +2,14 @@ package vue;
 
 import main.MainEnergy;
 import model.Level;
+import vue.fancycomposant.FancyJButton;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -17,26 +22,28 @@ public final class LevelSelectedJPanel extends JPanel {
     private JLabel pseudo;
     private ArrayList<JButton> levelButton;
     private FenetreJFrame parent;
+    private JPanel panelLevelSelector;
 
     public LevelSelectedJPanel(FenetreJFrame parent, String pseudoname) {
-
-        this.pseudo = new JLabel("Bienvenue dans energy " + pseudoname);
+        this.setPreferredSize(new Dimension(1280, 720));
+        this.setBackground(new Color(12, 12, 12));
+        this.pseudo = new JLabel("Bienvenue dans energy ");
         this.add(pseudo);
         this.levelButton = new ArrayList<>();
         this.parent =parent;
-        this.add(GraphiqueBuilder.createJbutton("Retour", e -> {
-            parent.goBackPanel();
-            parent.update();
-        }));
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         try {
             chargeLevel("ressource/level");
         } catch (FileNotFoundException e) {
             System.out.println("Fichier introuvable");
         }
-        for(JButton buttons: levelButton){
-            this.add(buttons);
-        }
+        this.add(GraphiqueBuilder.createFancyJbutton("Retour", e -> {
+            parent.goBackPanel();
+            parent.update();
+        }));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size()/2, 3, new Color(12, 12, 12));
+        for(JButton buttons: levelButton) panelLevelSelector.add(buttons);
+        this.add(panelLevelSelector);
     }
 
     public void chargeLevel(String cheminLevel) throws FileNotFoundException {
@@ -45,7 +52,7 @@ public final class LevelSelectedJPanel extends JPanel {
         File[] liste = dir.listFiles();
         for(File item : liste){
             if(item.isFile()){
-                JButton button = new JButton(item.getName().replace(".nrg", ""));
+                FancyJButton button = new FancyJButton(item.getName().replace(".nrg", ""));
                 levelButton.add(button);
                 button.addActionListener(actionEvent -> {
                     Level niveau = null;
@@ -61,7 +68,5 @@ public final class LevelSelectedJPanel extends JPanel {
             }
         }
     }
-
-
 
 }
