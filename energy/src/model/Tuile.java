@@ -14,7 +14,7 @@ public class Tuile {
     private final TuileShape shape;
     private DirectionInterface direction;
     private ConstructorBufferedTuile finalImage;
-    private boolean edgeBoolean[];
+    private final boolean[] edgeBoolean;
     private boolean isActivated;
 
     private Tuile(Builder builder) {
