@@ -1,8 +1,8 @@
 package model.typeenum;
 
 import model.Level;
-import vue.Geometrie;
-import vue.MenuJPanel;
+import model.Geometrie;
+import vue.GameJPanel;
 import vue.utils.ImageEnum;
 
 import java.awt.*;
@@ -22,7 +22,7 @@ public enum DirCarre implements DirectionInterface {
         this.deg = deg;
     }
 
-    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, MenuJPanel menuJPanel) {
+    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, GameJPanel menuJPanel) {
         for (int row = 0; row < level.getWidth(); row++) {
             for (int col = 0; col < level.getHeight(); col++) {
                 int x = row * size + (width - ((level.getWidth()) * size)) / 2;

@@ -1,4 +1,4 @@
-package vue;
+package model;
 
 import model.Level;
 import model.typeenum.TuileComposant;

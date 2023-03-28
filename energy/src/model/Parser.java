@@ -1,4 +1,4 @@
-package vue;
+package model;
 
 import model.Level;
 import model.Tuile;
@@ -15,18 +15,7 @@ public class Parser {
 
     public Level level;
 
-    public Parser(){
-        try {
-            Level niveau_1 = parseLineToLevel("ressource/level/level8.nrg");
-            new FenetreJFrame(niveau_1);
-        } catch (FileNotFoundException e) {
-            System.out.println("Fichier introuvable.");
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    Level parseLineToLevel(String levelName) throws FileNotFoundException, ParseException {
+    public Level parseLineToLevel(String levelName) throws FileNotFoundException, ParseException {
 
         final File file = new File(levelName);
         final Scanner scanner = new Scanner(file);

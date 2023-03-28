@@ -1,15 +1,12 @@
 package vue;
 
-import main.MainEnergy;
 import model.Level;
+import model.Parser;
 import vue.fancycomposant.FancyJButton;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -28,7 +25,7 @@ public final class LevelSelectedJPanel extends JPanel {
 
     public LevelSelectedJPanel(FenetreJFrame parent, String pseudoname) {
         this.setPreferredSize(new Dimension(1280, 720));
-        this.setBackground(new Color(12, 12, 12));
+        this.setBackground(GraphiqueBuilder.blackBackGround());//new Color(12, 12, 12));
         this.pseudo = new JLabel("Bienvenue dans energy ");
         this.add(pseudo);
         this.createLevel = GraphiqueBuilder.createFancyJbutton("Creer un niveau", null);
@@ -65,15 +62,15 @@ public final class LevelSelectedJPanel extends JPanel {
                 levelButton.add(button);
                 button.addActionListener(actionEvent -> {
                     Level niveau = null;
-             /*       try {
-                        System.out.println(item.getName());
-                        niveau = main.MainEnergy.parseLineToLevel("ressource/level/" + item.getName());
-                        parent.addStackPanel(new MenuJPanel(parent, niveau));
+                    try {
+                        Parser p = new Parser();
+                        niveau = p.parseLineToLevel("ressource/level/" + item.getName());
+                        parent.addStackPanel(new GameJPanel(parent, niveau));
                         parent.update();
                     } catch (FileNotFoundException | ParseException e) {
                         e.printStackTrace();
                     }
-               */ });
+                });
             }
         }
     }

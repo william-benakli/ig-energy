@@ -1,15 +1,20 @@
 package main;
 
-import vue.Composer;
-import vue.Parser;
+import vue.FenetreJFrame;
+
+import javax.swing.*;
 
 public class MainEnergy {
 
 
     public static void main(String[] args) {
 
-        new Composer(new Parser().level);
-
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new FenetreJFrame();
+            }
+        });
     }
 
 

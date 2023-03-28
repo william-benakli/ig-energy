@@ -69,4 +69,8 @@ public final class GraphiqueBuilder {
         panel.setLayout(new GridLayout(rows, cols));
         return panel;
     }
+
+    public static Color blackBackGround() {
+        return new Color(12, 12, 12);
+    }
 }
