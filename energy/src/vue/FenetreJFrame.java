@@ -14,11 +14,11 @@ public final class FenetreJFrame extends JFrame {
 
     private Stack<JPanel> panelView = new Stack<>();
 
-    public FenetreJFrame(Level level){
+    public FenetreJFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocationRelativeTo(null);
-        panelView.push(new MenuJPanel(this, level));
+        panelView.push(new StartMenuJPanel(this));
         setBackground(Color.BLACK);
         update();
         pack();

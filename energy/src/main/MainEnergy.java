@@ -1,3 +1,5 @@
+package main;
+
 import vue.Composer;
 import vue.Parser;
 
