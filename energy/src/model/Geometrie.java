@@ -1,4 +1,4 @@
-package vue;
+package model;
 
 import java.awt.*;
 

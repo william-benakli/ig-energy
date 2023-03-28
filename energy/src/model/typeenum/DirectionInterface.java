@@ -1,15 +1,15 @@
 package model.typeenum;
 
 import model.Level;
-import vue.Geometrie;
-import vue.MenuJPanel;
+import model.Geometrie;
+import vue.GameJPanel;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public interface DirectionInterface {
 
-    static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, MenuJPanel menuJPanel) {
+    static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, GameJPanel menuJPanel) {
 
     }
 
