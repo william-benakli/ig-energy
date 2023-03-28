@@ -18,17 +18,24 @@ import java.util.ArrayList;
 
 public final class LevelSelectedJPanel extends JPanel {
 
-
     private JLabel pseudo;
     private ArrayList<JButton> levelButton;
     private FenetreJFrame parent;
     private JPanel panelLevelSelector;
+    private FancyJButton createLevel;
+    private JScrollPane paneScroll;
+
 
     public LevelSelectedJPanel(FenetreJFrame parent, String pseudoname) {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setBackground(new Color(12, 12, 12));
         this.pseudo = new JLabel("Bienvenue dans energy ");
         this.add(pseudo);
+        this.createLevel = GraphiqueBuilder.createFancyJbutton("Creer un niveau", null);
+        paneScroll = new JScrollPane(panelLevelSelector);
+        paneScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        paneScroll.setViewportBorder(BorderFactory.createEmptyBorder());
+
         this.levelButton = new ArrayList<>();
         this.parent =parent;
         try {
@@ -43,7 +50,9 @@ public final class LevelSelectedJPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size()/2, 3, new Color(12, 12, 12));
         for(JButton buttons: levelButton) panelLevelSelector.add(buttons);
+        panelLevelSelector.setBorder(BorderFactory.createLineBorder(Color.white));
         this.add(panelLevelSelector);
+        this.add(createLevel);
     }
 
     public void chargeLevel(String cheminLevel) throws FileNotFoundException {

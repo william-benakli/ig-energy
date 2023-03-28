@@ -50,8 +50,8 @@ public class StartMenuJPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-      //  if(playButton.isHover())g.drawImage(((BufferedImage) image).getSubimage(1280, 0, 1280, 720), 0, 0, getWidth(), getHeight(),this);
-       // else g.drawImage(((BufferedImage) image).getSubimage(0, 0, 1280, 720), 0, 0, getWidth(), getHeight(),this);
+        //if(playButton.isHover())g.drawImage(((BufferedImage) image).getSubimage(1280, 0, 1280, 720), 0, 0, getWidth(), getHeight(),this);
+        //else g.drawImage(((BufferedImage) image).getSubimage(0, 0, 1280, 720), 0, 0, getWidth(), getHeight(),this);
         //repaint();
     }
 }
