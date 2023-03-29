@@ -28,7 +28,9 @@ public final class FenetreJFrame extends JFrame {
         getContentPane().removeAll();
         getContentPane().add(panelView.peek());
         panelView.peek().updateUI();
+        panelView.peek().repaint();
         getContentPane().revalidate();
+        getContentPane().repaint();
     }
 
     public void addStackPanel(JPanel panel){

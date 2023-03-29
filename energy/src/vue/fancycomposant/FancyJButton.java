@@ -23,6 +23,17 @@ public class FancyJButton extends JButton implements MouseListener {
         addMouseListener(this);
     }
 
+    public FancyJButton(String text, Font font){
+        super(text);
+        this.isHover = false;
+        setBorderPainted(false);
+        setContentAreaFilled(false);
+        setFont(font);
+        setFocusPainted(false);
+        setForeground(Color.white);
+        addMouseListener(this);
+    }
+
     public FancyJButton(String text, String imagePath){
         super(text);
         this.setIcon(new ImageIcon(imagePath));
