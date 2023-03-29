@@ -73,4 +73,32 @@ public final class GraphiqueBuilder {
     public static Color blackBackGround() {
         return new Color(12, 12, 12);
     }
+
+    public static JLabel createJLabelError(String s) {
+        return createFancyJLabel(s, Color.RED, 50);
+    }
+
+    public static JLabel createFancyJLabel(String editeur_de_niveau, Color white, int value) {
+        final JLabel label = new JLabel(editeur_de_niveau);
+        label.setFont(GraphiqueBuilder.getFontCocoGose(value));
+        label.setForeground(white);
+        return label;
+    }
+
+    public static JLabel createFancyJLabel(String editeur_de_niveau, Color white, Font font) {
+        final JLabel label = new JLabel(editeur_de_niveau);
+        label.setFont(font);
+        label.setForeground(white);
+        return label;
+    }
+
+    public static Font getFontRoboto(float value) {
+        try {
+            final Font font = Font.createFont(Font.TRUETYPE_FONT, new File("ressource/fonts/Roboto-Thin.ttf")).deriveFont(value);
+            return font;
+        } catch (FontFormatException | IOException e) {
+            System.out.println("Erreur chargement des polices d'écritures");
+        }
+        return new Font(Font.SANS_SERIF,  Font.BOLD, (int) value);
+    }
 }

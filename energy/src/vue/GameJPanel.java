@@ -60,7 +60,6 @@ public final class GameJPanel extends JPanel {
                 DirCarre.paintComponent(level, getSize().width, getSize().height, size, g, list, GameJPanel.this);
             else
                 DirHexa.paintComponent(level, getSize().width, getSize().height, size, g, list, GameJPanel.this);
-
         }
 
         @Override
