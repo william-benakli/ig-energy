@@ -15,12 +15,12 @@ public class Tuile {
     private DirectionInterface direction;
     private ConstructorBufferedTuile finalImage;
     private final boolean[] edgeBoolean;
-    private boolean isActivated;
+    private boolean power;
 
     private Tuile(Builder builder) {
         this.shape = builder.shape;
         this.composant = builder.composant;
-        this.isActivated = (composant == TuileComposant.ENERGY);
+        this.power = (composant == TuileComposant.ENERGY);
         if (shape == TuileShape.HEXA) direction = DirHexa.NORD;
         else direction = DirCarre.NORD;
         edgeBoolean = new boolean[direction.getSize()];
@@ -42,6 +42,14 @@ public class Tuile {
         return finalImage;
     }
 
+    public void powerOff(){
+        if(this.composant != TuileComposant.ENERGY) this.power = false;
+    }
+    public void powerOn(){
+        this.power = false;
+    }
+
+
     public TuileComposant getComposant() {
         return composant;
     }
@@ -50,18 +58,20 @@ public class Tuile {
     public void rotation() {
         this.direction = direction.rotation();
         //int decalage = (direction.getSize() - direction.getPosition() )% 6;
-
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
         for (int i = edgeBoolean.length - 1; i > 0; i--)
             edgeBoolean[i] = edgeBoolean[i - 1];
         edgeBoolean[0] = tmp;
-
         update();
     }
 
     @Override
     public String toString() {
         return "Tuile{" + "typeTuile=" + composant + ", finalImage=" + finalImage + "direction=" + direction + '}';
+    }
+
+    public boolean isPowerOff() {
+        return (!power);
     }
 
     public static class Builder {

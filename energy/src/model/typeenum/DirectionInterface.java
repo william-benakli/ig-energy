@@ -13,20 +13,12 @@ public interface DirectionInterface {
 
     }
 
-    private static Polygon drawPolygon(int x, int y, int size) {
-        return null;
-    }
-
     int getSize();
-
     int getPosition();
-
     DirectionInterface[] getValues();
-
     default DirectionInterface rotation() {
         return getValues()[(this.getPosition() + 1) % getSize()];
     }
-
     int getPosJFromPos(DirectionInterface directionInterface, int column);
 
 }

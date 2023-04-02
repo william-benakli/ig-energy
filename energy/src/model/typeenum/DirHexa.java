@@ -122,6 +122,12 @@ public enum DirHexa implements DirectionInterface {
 
     @Override
     public int getPosJFromPos(DirectionInterface directionInterface, int column) {
+       /* switch (directionInterface){
+            case NORD ->{ return 1;}
+            case SUD -> { return -1;}
+            case NORD_OUEST  ->
+
+        }*/
         return 1;
     }
 

@@ -28,6 +28,7 @@ public final class GameJPanel extends JPanel {
 
     public GameJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
+        this.level.randomised();
         this.goback = GraphiqueBuilder.createFancyJbutton("Retour", e->{
            jFrame.goBackPanel();
            jFrame.update();
@@ -37,6 +38,10 @@ public final class GameJPanel extends JPanel {
         add(goback);
         add(boardViewGame);
         setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
+    }
+
+    public Level getLevel() {
+        return level;
     }
 
     private class BoardViewGame extends JPanel implements MouseListener {
@@ -66,8 +71,8 @@ public final class GameJPanel extends JPanel {
         public void mouseClicked(MouseEvent e) {
             for (Geometrie geo : list) {
                 if (geo.getPolygon().contains(e.getPoint())) {
-                    System.out.println("partout");
                     level.getPlateau()[geo.getDeducY()][geo.getDeducX()].rotation();
+                    level.propagation();
                     repaint();
                 }
             }

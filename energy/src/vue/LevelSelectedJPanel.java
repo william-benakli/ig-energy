@@ -1,5 +1,6 @@
 package vue;
 
+import model.Joueur;
 import model.Level;
 import model.Parser;
 import vue.editor.EditorSelectJPanel;
@@ -8,6 +9,8 @@ import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -52,8 +55,8 @@ public final class LevelSelectedJPanel extends JPanel {
         this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size()/2, 3, new Color(12, 12, 12));
         for(JButton buttons: levelButton) panelLevelSelector.add(buttons);
         panelLevelSelector.setBorder(BorderFactory.createLineBorder(Color.white));
-        this.add(createLevel);
         this.add(panelLevelSelector);
+        this.add(createLevel);
     }
 
     public void chargeLevel(String cheminLevel) throws FileNotFoundException {
@@ -62,7 +65,7 @@ public final class LevelSelectedJPanel extends JPanel {
         File[] liste = dir.listFiles();
         for(File item : liste){
             if(item.isFile()){
-                FancyJButton button = new FancyJButton(item.getName().replace(".nrg", ""), GraphiqueBuilder.getFontRoboto(50f));
+                BoxLevelJButton button = new BoxLevelJButton(item.getName().replace(".nrg", ""));
                 levelButton.add(button);
                 button.addActionListener(actionEvent -> {
                     Level niveau = null;
@@ -76,6 +79,61 @@ public final class LevelSelectedJPanel extends JPanel {
                     }
                 });
             }
+        }
+    }
+
+    private class BoxLevelJButton extends JButton implements MouseListener {
+
+
+        private boolean isHover;
+
+        BoxLevelJButton(String name){
+            this.isHover = false;
+            setBorderPainted(false);
+            setContentAreaFilled(false);
+            setFocusPainted(false);
+            setFont(GraphiqueBuilder.getFontRoboto(30f));
+            setText("<html> " + name + "<br> Temps:  </html>");
+            setForeground(Color.white);
+            setBackground(GraphiqueBuilder.blackBackGround());
+            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            addMouseListener(this);
+        }
+
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D graphics2D = (Graphics2D) g.create();
+            graphics2D.setColor(Color.white);
+            graphics2D.drawRoundRect(10, 10, getWidth()-10, getHeight()-10, 20, 20);
+            graphics2D.dispose();
+        }
+
+
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent mouseEvent) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent mouseEvent) {
+            setForeground(Color.yellow);
+        }
+
+        @Override
+        public void mouseExited(MouseEvent mouseEvent) {
+            setForeground(Color.WHITE);
         }
     }
 
