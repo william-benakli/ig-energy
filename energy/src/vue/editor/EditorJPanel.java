@@ -10,10 +10,19 @@ import java.awt.*;
 
 public class EditorJPanel extends JPanel {
 
+
+
     public EditorJPanel(FenetreJFrame parent, Level level){
         this.setBackground(new Color(12, 12, 12));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        final JPanel panelDivision = GraphiqueBuilder.createpanelBoxLayoutOpaque(false, BoxLayout.X_AXIS);
         this.add(GraphiqueBuilder.createFancyJLabel("Editeur de niveau", Color.white, 50));
-        this.add(new GameJPanel(parent, level));
+        this.add(panelDivision);
+        panelDivision.add(new EditorSelectionItemJPanel());
+        panelDivision.add(new GameJPanel(parent, level));
     }
+
+
+
 
 }

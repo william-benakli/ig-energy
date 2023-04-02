@@ -1,27 +1,21 @@
 package model;
 
-public final class Joueur {
+import java.io.Serializable;
+import java.util.HashMap;
+
+public final class Joueur implements Serializable {
 
     private String name;
-    private int points;
+    /** Cette Hasmap content l'id du level et le temps passé dessus **/
+    private HashMap<Integer, Long> progression;
+
 
     public Joueur(String name){
         this.name = name;
+        this.progression = new HashMap<>();
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public int getPoints(){
-        return points;
-    }
-
-    public void setPoints(int points){
-        this.points = points;
-    }
-
-    public void addPoints(int points){
-        this.points+=points;
     }
 }

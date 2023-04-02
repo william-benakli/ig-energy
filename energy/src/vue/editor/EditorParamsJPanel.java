@@ -14,28 +14,28 @@ import java.awt.*;
 public class EditorParamsJPanel extends JPanel {
 
 
-    private FancyJButton valider, goBack;
-    private JPanel buttonJpanel;
-    private FancyJRadioButton carrejRadio, hexajRadio;
-    private FancyJSlider longueurJslider,largerJslider;
-    private JLabel typeTuile, lenghtL, lenghtl, longueur, largeur;
-    private JPanel mainJpanel, panelTypeTuile, panelLongueur, panelLargeur;
+    private final FancyJButton goBack;
+    private final JPanel buttonJpanel;
+    private final FancyJRadioButton carrejRadio, hexajRadio;
+    private final FancyJSlider colonnesJslider,lignesJslider;
+    private final JLabel tileParam, typeTuile, lenghtLignes, lenghtColonnes, colonnes, lignes;
+    private final JPanel mainJpanel, panelTypeTuile, panelLongueur, panelLargeur;
 
 
     public EditorParamsJPanel(FenetreJFrame parent){
         this.setLayout(new GridBagLayout());
-        this.longueurJslider = new FancyJSlider(4, 1, 10);
-        this.largerJslider = new FancyJSlider(3, 1, 10);
-        this.mainJpanel = GraphiqueBuilder.createPanelGrid(4, 1, false);
+        this.colonnesJslider = new FancyJSlider(4, 1, 10);
+        this.lignesJslider = new FancyJSlider(3, 1, 10);
+        this.mainJpanel = GraphiqueBuilder.createPanelGrid(5, 1, false);
         this.panelLongueur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelLargeur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelTypeTuile = GraphiqueBuilder.createPanelGrid(1, 3, false);
-
-        this.longueur = GraphiqueBuilder.createFancyJLabel(String.valueOf(longueurJslider.getValue()), Color.white,  GraphiqueBuilder.getFontRoboto(50f));
-        this.largeur = GraphiqueBuilder.createFancyJLabel(String.valueOf(largerJslider.getValue()), Color.white, GraphiqueBuilder.getFontRoboto(50f));
+        this.tileParam = GraphiqueBuilder.createFancyJLabel("Paramètres du plateau", Color.white, 50);
+        this.colonnes = GraphiqueBuilder.createFancyJLabel(String.valueOf(lignesJslider.getValue()), Color.white,  GraphiqueBuilder.getFontRoboto(50f));
+        this.lignes = GraphiqueBuilder.createFancyJLabel(String.valueOf(colonnesJslider.getValue()), Color.white, GraphiqueBuilder.getFontRoboto(50f));
         this.typeTuile = GraphiqueBuilder.createFancyJLabel("Type tuile :", Color.white, 50);
-        this.lenghtL = GraphiqueBuilder.createFancyJLabel("Longueur :", Color.white, 50);
-        this.lenghtl = GraphiqueBuilder.createFancyJLabel("Largeur :", Color.white, 50);
+        this.lenghtLignes = GraphiqueBuilder.createFancyJLabel("Lignes :", Color.white, 50);
+        this.lenghtColonnes = GraphiqueBuilder.createFancyJLabel("Colonnes :", Color.white, 50);
 
         this.buttonJpanel = GraphiqueBuilder.createPanelGrid(1, 2, false);
         final ButtonGroup buttonGroup = new ButtonGroup();
@@ -49,43 +49,44 @@ public class EditorParamsJPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
 
         gbc.weighty = 1;
-        this.valider = GraphiqueBuilder.createFancyJbutton("Valider", e->{
-            parent.addStackPanel(new EditorJPanel(parent, new Level(largerJslider.getValue(), longueurJslider.getValue(), (hexajRadio.isSelected() ? TuileShape.HEXA :TuileShape.CARRE))));
+        final FancyJButton valider = GraphiqueBuilder.createFancyJbutton("Valider", e -> {
+            parent.addStackPanel(new EditorJPanel(parent, new Level(lignesJslider.getValue(), colonnesJslider.getValue(), (hexajRadio.isSelected() ? TuileShape.HEXA : TuileShape.CARRE))));
             parent.update();
             repaint();
         });
 
 
-        largerJslider.addChangeListener( e->{
-            largeur.setText(String.valueOf(largerJslider.getValue()));
+        lignesJslider.addChangeListener( e->{
+            lignes.setText(String.valueOf(lignesJslider.getValue()));
         });
 
-        longueurJslider.addChangeListener( e->{
-            longueur.setText(String.valueOf(longueurJslider.getValue()));
+        colonnesJslider.addChangeListener( e->{
+            colonnes.setText(String.valueOf(colonnesJslider.getValue()));
         });
 
         panelTypeTuile.add(typeTuile);
         panelTypeTuile.add(hexajRadio);
         panelTypeTuile.add(carrejRadio);
 
-        largerJslider.setPreferredSize(new Dimension(50, 120));
-        largerJslider.setMinimumSize(new Dimension(50, 120));
-        largerJslider.setMaximumSize(new Dimension(50, 120));
+        final Dimension dim = new Dimension(50, 120);
+        colonnesJslider.setPreferredSize(dim);
+        colonnesJslider.setMinimumSize(dim);
+        colonnesJslider.setMaximumSize(dim);
 
-        panelLongueur.add(lenghtl);
-        panelLongueur.add(largerJslider);
-        panelLongueur.add(longueur);
+        panelLongueur.add(lenghtLignes);
+        panelLongueur.add(lignesJslider);
+        panelLongueur.add(lignes);
 
-        panelLargeur.add(lenghtL);
-        panelLargeur.add(longueurJslider);
-        panelLargeur.add(largeur);
+        panelLargeur.add(lenghtColonnes);
+        panelLargeur.add(colonnesJslider);
+        panelLargeur.add(colonnes);
 
-
-        buttonJpanel.add(valider);
         buttonJpanel.add(goBack);
-
+        buttonJpanel.add(valider);
 
         mainJpanel.setBorder(BorderFactory.createEmptyBorder(150, 150, 150, 150));
+        tileParam.setHorizontalAlignment(JLabel.CENTER);
+        mainJpanel.add(tileParam);
         mainJpanel.add(panelTypeTuile);
         mainJpanel.add(panelLargeur);
         mainJpanel.add(panelLongueur);

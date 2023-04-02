@@ -13,6 +13,10 @@ public class FancyJRadioButton extends JRadioButton {
         this.setForeground(Color.white);
         this.setIcon(new ImageIcon(imagePath));
         this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        this.setPreferredSize(new Dimension(10, 96));
+        this.setMinimumSize(new Dimension(10, 19));
+        this.setMaximumSize(new Dimension(10, 96));
+
     }
 
 

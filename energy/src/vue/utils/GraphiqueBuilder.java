@@ -101,4 +101,11 @@ public final class GraphiqueBuilder {
         }
         return new Font(Font.SANS_SERIF,  Font.BOLD, (int) value);
     }
+
+    public static JPanel createpanelBoxLayoutOpaque(boolean opaque, int TYPE_LAYOUT) {
+        final JPanel panel = new JPanel();
+        panel.setOpaque(opaque);
+        panel.setLayout(new BoxLayout(panel, TYPE_LAYOUT));
+        return panel;
+    }
 }
