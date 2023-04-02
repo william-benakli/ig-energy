@@ -2,10 +2,10 @@ package vue;
 
 import model.Geometrie;
 import model.Level;
-import model.typeenum.DirCarre;
-import model.typeenum.DirHexa;
 import model.typeenum.TuileShape;
 import vue.fancycomposant.FancyJButton;
+import vue.typeenum.DirCarreGraphic;
+import vue.typeenum.DirHexaGraphic;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
@@ -29,9 +29,9 @@ public final class GameJPanel extends JPanel {
     public GameJPanel(FenetreJFrame jFrame, Level level) {
         this.level = level;
         this.level.randomised();
-        this.goback = GraphiqueBuilder.createFancyJbutton("Retour", e->{
-           jFrame.goBackPanel();
-           jFrame.update();
+        this.goback = GraphiqueBuilder.createFancyJbutton("Retour", e -> {
+            jFrame.goBackPanel();
+            jFrame.update();
         });
         this.boardViewGame = new BoardViewGame();
         this.setBackground(GraphiqueBuilder.blackBackGround());
@@ -62,9 +62,9 @@ public final class GameJPanel extends JPanel {
             int size = Math.min(width, height);
 
             if (level.getTypeTuilePlateau() == TuileShape.CARRE)
-                DirCarre.paintComponent(level, getSize().width, getSize().height, size, g, list, GameJPanel.this);
+                DirCarreGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, GameJPanel.this);
             else
-                DirHexa.paintComponent(level, getSize().width, getSize().height, size, g, list, GameJPanel.this);
+                DirHexaGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, GameJPanel.this);
         }
 
         @Override
