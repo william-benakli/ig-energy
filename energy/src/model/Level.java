@@ -95,10 +95,7 @@ public final class Level implements Serializable {
         if((i < 0 || i >= plateau.length) || (j < 0 || j >= plateau[i].length)) return;
 
         t.powerOn();
-        if(t.getComposant() == TuileComposant.WIFI){
-            wifiPropagation();
-
-        }
+        if(t.getComposant() == TuileComposant.WIFI) wifiPropagation();
 
 /*        for()
         //s'ils sont déjà allumé ne pas entrée dedans
@@ -117,7 +114,7 @@ public final class Level implements Serializable {
         for (int i = 0; i < plateau.length; i++) {
             for (int k = 0; k < plateau[i].length; k++) {
                 if(plateau[i][k].getComposant() == TuileComposant.WIFI){
-                    turnTuileOn(plateau[i][k], i, k);
+                    if(plateau[i][k].isPowerOff()) turnTuileOn(plateau[i][k], i, k);
                 }
             }
         }

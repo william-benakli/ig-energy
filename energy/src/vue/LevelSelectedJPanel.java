@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public final class LevelSelectedJPanel extends JPanel {
 
-    private JLabel pseudo;
     private ArrayList<JButton> levelButton;
     private FenetreJFrame parent;
     private JPanel panelLevelSelector;
@@ -26,10 +25,9 @@ public final class LevelSelectedJPanel extends JPanel {
     private JScrollPane paneScroll;
 
 
-    public LevelSelectedJPanel(FenetreJFrame parent, String pseudoname) {
+    public LevelSelectedJPanel(FenetreJFrame parent) {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setBackground(GraphiqueBuilder.blackBackGround());//new Color(12, 12, 12));
-        this.pseudo = new JLabel("Bienvenue dans energy ");
         this.createLevel = GraphiqueBuilder.createFancyJbutton("Creer un niveau", e -> {
             parent.addStackPanel(new EditorSelectJPanel(parent));
             parent.update();
@@ -57,7 +55,6 @@ public final class LevelSelectedJPanel extends JPanel {
                 120
         ));
 
-        p.add(pseudo);
         p.add(GraphiqueBuilder.createFancyJbutton("Retour", e -> {
             parent.goBackPanel();
             parent.update();

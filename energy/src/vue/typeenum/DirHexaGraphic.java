@@ -6,13 +6,14 @@ import model.typeenum.TuileComposant;
 import vue.GameJPanel;
 import vue.utils.ImageEnum;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class DirHexaGraphic implements DirectionInterfaceGraphic {
 
-    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, GameJPanel menuJPanel) {
+    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, JPanel menuJPanel) {
         for (int row = 0; row < level.getWidth(); row++) {
             for (int col = 0; col < level.getHeight(); col++) {
                 int x = row * size + (width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2 - (size / 4) * row;

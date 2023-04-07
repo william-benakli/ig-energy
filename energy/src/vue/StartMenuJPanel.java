@@ -35,7 +35,7 @@ public class StartMenuJPanel extends JPanel {
         buttonJpanel.add(userNameField);
         this.playButton = GraphiqueBuilder.createFancyJbutton("Jouer", "ressource/icon/play_game.png", e -> {
             //chargé le joueur ou le créer
-            parent.addStackPanel(new LevelSelectedJPanel(parent, "test"));
+            parent.addStackPanel(new LevelSelectedJPanel(parent));
             parent.update();
         });
         this.settingsButton = GraphiqueBuilder.createFancyJbutton("Paramètres", "ressource/icon/settings_icon.png", e -> {
