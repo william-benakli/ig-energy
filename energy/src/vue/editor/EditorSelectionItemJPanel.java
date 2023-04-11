@@ -20,9 +20,9 @@ public class EditorSelectionItemJPanel extends JPanel {
         add(new ButtonEditorImage("ressource/icon/gomme_icon.png"));
         add(new JLabel("<html> <br> </html>"));
         add(new JLabel("<html> <br> </html>"));
-        add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_WIFI.getImage()));
+        //add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_WIFI.getImage()));
         add(new ButtonEditorImage(ImageEnum.SQUARE_OFF_COMPOSANT_WIFI.getImage()));
-        add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_LAMP.getImage()));
+        //add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_LAMP.getImage()));
         add(new ButtonEditorImage(ImageEnum.SQUARE_OFF_COMPOSANT_LAMP.getImage()));
         add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage()));
         this.setOpaque(false);

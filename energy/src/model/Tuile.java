@@ -26,6 +26,9 @@ public class Tuile {
         edgeBoolean = new boolean[direction.getSize()];
     }
 
+    public DirectionInterface getDirection(){
+        return direction;
+    }
     public boolean[] getEdge() {
         return edgeBoolean;
     }
@@ -46,7 +49,7 @@ public class Tuile {
         if(this.composant != TuileComposant.ENERGY) this.power = false;
     }
     public void powerOn(){
-        this.power = false;
+        this.power = true;
     }
 
 
@@ -56,7 +59,9 @@ public class Tuile {
 
     //TODO changer la rotation avec decalage
     public void rotation() {
+        System.out.println("rotation avant " + direction);
         this.direction = direction.rotation();
+        System.out.println("rotation apres " + direction);
         //int decalage = (direction.getSize() - direction.getPosition() )% 6;
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
         for (int i = edgeBoolean.length - 1; i > 0; i--)
@@ -71,7 +76,12 @@ public class Tuile {
     }
 
     public boolean isPowerOff() {
-        return (!power);
+        return !power;
+    }
+
+    public boolean isConnected(boolean[] edge) {
+
+        return false;
     }
 
     public static class Builder {

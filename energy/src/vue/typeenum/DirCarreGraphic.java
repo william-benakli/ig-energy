@@ -53,6 +53,7 @@ public class DirCarreGraphic implements DirectionInterfaceGraphic {
                 if (edge[i]) {
                     Graphics2D graphics2d = (Graphics2D) g.create();
                     graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
+
                     if (edge[(i + 1) % edge.length]) {
                         graphics2d.drawImage(ImageEnum.SQUARE_OFF_ARC.getImage(), 0, 0, null);
                     } else if (edge[(i + 2) % edge.length]) {

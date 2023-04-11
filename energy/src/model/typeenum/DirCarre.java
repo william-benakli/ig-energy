@@ -32,9 +32,24 @@ public enum DirCarre implements DirectionInterface {
         return values();
     }
 
+
     @Override
-    public int getPosJFromPos(DirectionInterface directionInterface, int column) {
-        return 0;
+    public int getJ(int i, int j){
+        switch (this){
+            case NORD, SUD -> {return j;}
+            case EST -> {return j+1;}
+            case OUEST-> { return j-1;}
+            default -> {return 0;}
+        }
     }
 
+    @Override
+    public int getI(int i, int j){
+        switch (this){
+            case EST, OUEST -> {return i;}
+            case NORD -> {return i-1;}
+            case SUD-> { return i+1;}
+            default -> {return 0;}
+        }
+    }
 }

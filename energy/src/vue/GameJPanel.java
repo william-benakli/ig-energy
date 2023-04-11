@@ -25,6 +25,7 @@ public final class GameJPanel extends JPanel {
             jFrame.goBackPanel();
             jFrame.update();
         });
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.boardViewGame = new BoardViewGame(level, true);
         this.setBackground(GraphiqueBuilder.blackBackGround());
         add(goback);

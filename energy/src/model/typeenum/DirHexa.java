@@ -35,14 +35,24 @@ public enum DirHexa implements DirectionInterface {
     }
 
     @Override
-    public int getPosJFromPos(DirectionInterface directionInterface, int column) {
-       /* switch (directionInterface){
-            case NORD ->{ return 1;}
-            case SUD -> { return -1;}
-            case NORD_OUEST  ->
+    public int getJ(int i, int j){
+        switch (this){
+            case SUD_EST , NORD_EST -> {return j+1;}
+            case SUD_OUEST, NORD_OUEST -> { return j-1;}
+            case NORD , SUD -> {return j;}
+            default -> {return 0;}
+        }
+    }
 
-        }*/
-        return 1;
+    @Override
+    public int getI(int i, int j){
+        switch (this){
+            case NORD_EST,NORD_OUEST -> {return i -  ((j + 1) % 2); }
+            case SUD_EST,SUD_OUEST -> {return i + ((j + 1) % 2); }
+            case NORD -> {return i-1;}
+            case SUD -> {return i+1;}
+            default -> {return 0;}
+        }
     }
 
 }

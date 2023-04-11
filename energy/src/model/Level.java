@@ -1,6 +1,7 @@
 package model;
 
 
+import model.typeenum.DirectionInterface;
 import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
 
@@ -73,8 +74,8 @@ public final class Level implements Serializable {
      */
     public void propagation(){
        turnOffBoard();
-        for (int i = 0; i < plateau.length; i++) {
-            for (int j = 0; j < plateau[i].length; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 if (plateau[i][j].getComposant() == TuileComposant.ENERGY) {
                     turnTuileOn(plateau[i][j], i, j);
                 }
@@ -92,18 +93,21 @@ public final class Level implements Serializable {
      * @param j position j dans le plateau
      */
     public void turnTuileOn(Tuile t, int i, int j){
-        if((i < 0 || i >= plateau.length) || (j < 0 || j >= plateau[i].length)) return;
+            t.powerOn();
+            if(t.getComposant() == TuileComposant.WIFI) wifiPropagation();
 
-        t.powerOn();
-        if(t.getComposant() == TuileComposant.WIFI) wifiPropagation();
-
-/*        for()
-        //s'ils sont déjà allumé ne pas entrée dedans
-        Tuile neighbor = null;
-        if(neighbor.isPowerOff()){
-           // turnTuileOn(neighbor);
-        }
-*/
+            for(DirectionInterface dir :  t.getDirection().getValues()){
+                int ni = dir.getI(i, j);
+                int nj = dir.getJ(i, j);
+                if((ni >= 0 && ni < height) && (nj >= 0 && nj < height)){
+                    Tuile neighbor = plateau[ni][nj];
+                    if(t.isConnected(neighbor.getEdge()))
+                  //  if(t.getEdge() == neighbor.getDirection().getOpositeDirection()){
+                        if(neighbor.isPowerOff())turnTuileOn(neighbor, ni, nj);
+                   // }
+                }
+            }
+            t.update();
     }
 
     /**
@@ -111,10 +115,12 @@ public final class Level implements Serializable {
      * alors toutes les cases WIFI auront le comportement d'un composant ENERGY
      */
     private void wifiPropagation(){
-        for (int i = 0; i < plateau.length; i++) {
-            for (int k = 0; k < plateau[i].length; k++) {
+        for (int i = 0; i <height; i++) {
+            for (int k = 0; k < width; k++) {
                 if(plateau[i][k].getComposant() == TuileComposant.WIFI){
-                    if(plateau[i][k].isPowerOff()) turnTuileOn(plateau[i][k], i, k);
+                    if(plateau[i][k].isPowerOff()){
+                        turnTuileOn(plateau[i][k], i, k);
+                    }
                 }
             }
         }
@@ -124,11 +130,25 @@ public final class Level implements Serializable {
      * Cette fonction met toutes les tuiles en off sauf les tuiles energy
      */
     private void turnOffBoard(){
-        for (int i = 0; i < plateau.length; i++) {
-            for (int k = 0; k < plateau[i].length; k++) {
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
                 plateau[i][k].powerOff();
             }
         }
+    }
+
+    /**
+     * Cette fonction verifie que toutes les tuiles sont allumés donc une fin de parti
+     */
+    public boolean endGame(){
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
+                if(plateau[i][k].getComposant() != TuileComposant.EMPTY){
+                    if(plateau[i][k].isPowerOff())return false;
+                }
+            }
+        }
+        return true;
     }
 
     /** Setteur & G etteur **/
