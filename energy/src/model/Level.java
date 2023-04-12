@@ -7,6 +7,7 @@ import model.typeenum.TuileShape;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public final class Level implements Serializable {
@@ -31,6 +32,7 @@ public final class Level implements Serializable {
         this.height = height;
         this.typeTuilePlateau = typeTuilePlateau;
         idLevelStatic++;
+        initEmpty();
     }
 
     public Level(int height, int width, TuileShape typeTuilePlateau){
@@ -48,7 +50,8 @@ public final class Level implements Serializable {
     public void initEmpty(){
         for (int i = 0; i < height ; i++) {
             for (int j = 0; j < width; j++) {
-                plateau[i][j] = new Tuile.Builder().shapeTuile(typeTuilePlateau).composantTuile(TuileComposant.EMPTY).build();
+                Tuile t =  new Tuile.Builder().shapeTuile(typeTuilePlateau).composantTuile(TuileComposant.EMPTY).build();
+                plateau[i][j] = t;
             }
         }
     }
@@ -95,23 +98,20 @@ public final class Level implements Serializable {
      * @param j position j dans le plateau
      */
     public void turnTuileOn(Tuile t, int i, int j){
-            t.powerOn();
-            if(t.getComposant() == TuileComposant.WIFI) wifiPropagation();
-
-            for(DirectionInterface dir :  t.getDirection().getValues()){
-                int ni = dir.getI(i, j);
-                int nj = dir.getJ(i, j);
-                if((ni >= 0 && ni < height) && (nj >= 0 && nj < width)){
-                    Tuile neighbor = plateau[ni][nj];
-                    if(t.isConnected(neighbor.getEdge(), dir)){
-                        if(neighbor.isPowerOff()){
-                            System.out.println("On a au moins un voisin connecté " + neighbor.getComposant());
-                            turnTuileOn(neighbor, ni, nj);
-                        }
-                    }
+        t.powerOn();
+        if(t.getComposant() == TuileComposant.WIFI) wifiPropagation();
+        for(DirectionInterface dir :  t.getDirection().getValues()){
+            Position position = dir.getPositionIJ(i, j);
+            int ni = position.i();
+            int nj = position.j();
+            if((ni >= 0 && ni < height) && (nj >= 0 && nj < width)){
+                Tuile neighbor = plateau[ni][nj];
+                if(t.isConnected(neighbor.getEdge(), dir)){
+                    if(neighbor.isPowerOff())turnTuileOn(neighbor, ni, nj);
                 }
             }
-            t.update();
+        }
+        t.update();
     }
 
     /**

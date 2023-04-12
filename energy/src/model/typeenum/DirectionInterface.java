@@ -1,5 +1,7 @@
 package model.typeenum;
 
+import model.Position;
+
 public interface DirectionInterface {
 
     int getSize();
@@ -15,6 +17,6 @@ public interface DirectionInterface {
     default int getOpositeDirection(int v){
         return (v+(getValues().length/2))%getValues().length;
     }
-    int getI(int i, int j);
-    int getJ(int i, int j);
+
+    Position getPositionIJ(int i, int j);
 }

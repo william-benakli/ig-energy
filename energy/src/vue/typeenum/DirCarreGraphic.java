@@ -94,7 +94,7 @@ public class DirCarreGraphic implements DirectionInterfaceGraphic {
                 }
             }else{
                 BufferedImage bf;
-                if (composant == TuileComposant.WIFI) bf = ImageEnum.SQUARE_ON_COMPOSANT_WIFI.getImage();
+                if (composant == TuileComposant.WIFI) bf = ImageEnum.SQUARE_OFF_COMPOSANT_WIFI.getImage();
                 else if (composant == TuileComposant.ENERGY) bf = ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage();
                 else bf = ImageEnum.SQUARE_OFF_COMPOSANT_LAMP.getImage();
                 g.drawImage(bf, 0, 0, null);

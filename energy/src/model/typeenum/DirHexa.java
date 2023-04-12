@@ -1,5 +1,7 @@
 package model.typeenum;
 
+import model.Position;
+
 public enum DirHexa implements DirectionInterface {
 
     NORD(0),
@@ -35,24 +37,50 @@ public enum DirHexa implements DirectionInterface {
     }
 
     @Override
-    public int getJ(int i, int j){
+    public Position getPositionIJ(int i, int j){
+        int p_i = 0, p_j = 0;
         switch (this){
-            case SUD_EST , NORD_EST -> {return j+1;}
-            case SUD_OUEST, NORD_OUEST -> { return j-1;}
-            case NORD , SUD -> {return j;}
-            default -> {return 0;}
-        }
-    }
+            case NORD -> {p_i = i-1; p_j = j;}
+            case NORD_EST-> {
+                if(j%2 == 0){
+                    p_i = i-1;
+                    p_j = j+1;
+                }else{
+                    p_i = i;
+                    p_j = j+1;
+                }
+            }
+            case SUD_OUEST -> {
+                if(j%2 == 0) {
+                    p_i = i;
+                    p_j = j - 1;
+                }else{
+                    p_i = i+1;
+                    p_j = j - 1;
+                }
+            }
 
-    @Override
-    public int getI(int i, int j){
-        switch (this){
-            case NORD_EST,NORD_OUEST -> {return i -  ((j + 1) % 2); }
-            case SUD_EST,SUD_OUEST -> {return i + ((j + 1) % 2); }
-            case NORD -> {return i-1;}
-            case SUD -> {return i+1;}
-            default -> {return 0;}
+            case SUD_EST-> {
+                if(j%2 == 0){
+                    p_i = i; p_j = j+1;
+                }else{
+                    p_i = i+1; p_j = j+1;
+                }
+            }
+            case NORD_OUEST-> {
+                if(j%2 == 0) {
+                    p_i = i - 1;
+                    p_j = j - 1;
+                }else{
+                    p_i = i;
+                    p_j = j-1;
+                }
+            }
+
+            case SUD -> {p_i = i+1; p_j = j;}
+            default -> {}
         }
+        return new Position(p_i, p_j);
     }
 
 }

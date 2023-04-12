@@ -23,7 +23,7 @@ public class ConstructorBufferedTuile extends BufferedImage {
         if (type == TuileShape.CARRE)
             DirCarreGraphic.tuileImage(composant, edge,  tuile.getPower(), g);
         else if (type == TuileShape.HEXA)
-            DirHexaGraphic.tuileImage(composant, edge, tuile.getPower(),  g);
+            DirHexaGraphic.tuileImage(tuile,  g);
 
         g.dispose();
 

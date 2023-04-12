@@ -2,6 +2,7 @@ package vue.typeenum;
 
 import model.Geometrie;
 import model.Level;
+import model.Tuile;
 import model.typeenum.TuileComposant;
 import vue.GameJPanel;
 import vue.utils.ImageEnum;
@@ -55,8 +56,13 @@ public class DirHexaGraphic implements DirectionInterfaceGraphic {
         return hexagon;
     }
 
-    public static void tuileImage(TuileComposant composant, boolean[] edge, boolean isconnected, Graphics2D g) {
+    public static void tuileImage(Tuile t, Graphics2D g) {
+        final TuileComposant composant = t.getComposant();
+        boolean[] edge = t.getEdge();
+        boolean isconnected = t.getPower();
+
         if (composant == TuileComposant.EMPTY) {
+
             if(isconnected){
                 for (int i = 0; i < edge.length; i++) {
                     if (edge[i]) {

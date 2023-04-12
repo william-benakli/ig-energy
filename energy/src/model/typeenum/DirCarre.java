@@ -1,5 +1,7 @@
 package model.typeenum;
 
+import model.Position;
+
 public enum DirCarre implements DirectionInterface {
 
     NORD(0),
@@ -32,24 +34,15 @@ public enum DirCarre implements DirectionInterface {
         return values();
     }
 
-
     @Override
-    public int getJ(int i, int j){
+    public Position getPositionIJ(int i, int j){
+        int p_i = 0, p_j = 0;
         switch (this){
-            case NORD, SUD -> {return j;}
-            case EST -> {return j+1;}
-            case OUEST-> { return j-1;}
-            default -> {return 0;}
+            case EST -> { p_i = i; p_j = j+1;}
+            case OUEST -> { p_i = i; p_j = j-1;}
+            case SUD -> { p_i = i + 1;  p_j = j;}
+            case NORD -> {p_i = i-1; p_j = j;}
         }
-    }
-
-    @Override
-    public int getI(int i, int j){
-        switch (this){
-            case EST, OUEST -> {return i;}
-            case NORD -> {return i-1;}
-            case SUD-> { return i+1;}
-            default -> {return 0;}
-        }
+        return new Position(p_i, p_j);
     }
 }

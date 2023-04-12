@@ -62,7 +62,7 @@ public class Tuile {
     //TODO changer la rotation avec decalage
     public void rotation() {
       //  System.out.println("rotation avant " + direction);
-        this.direction = direction.rotation();
+        //this.direction = direction.rotation();
         //System.out.println("rotation apres " + direction);
         //int decalage = (direction.getSize() - direction.getPosition() )% 6;
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
@@ -84,10 +84,10 @@ public class Tuile {
     public boolean isConnected(boolean[] edge, DirectionInterface dir) {
 //TODO: tous les voisins ?
             if(edgeBoolean[dir.getPosition()] && edge[dir.getOpositeDirection(dir.getPosition())]){
-                //System.out.println("Connection i " + dir.getPosition()  + " op " + dir + " opposite " + dir.getOpositeDirection(dir.getPosition()));
-                //System.out.println(Arrays.toString(edgeBoolean));
-                //System.out.println(Arrays.toString(edge));
-                //System.out.println("------------------");
+             //   System.out.println("Connection i " + dir.getPosition()  + " dir " + dir + " opposite " + dir.getOpositeDirection(dir.getPosition()));
+              //  System.out.println(Arrays.toString(edgeBoolean));
+               // System.out.println(Arrays.toString(edge));
+               // System.out.println("------------------");
                 return true;
             }
 
