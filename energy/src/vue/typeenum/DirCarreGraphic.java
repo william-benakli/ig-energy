@@ -47,34 +47,67 @@ public class DirCarreGraphic implements DirectionInterfaceGraphic {
         return hexagon;
     }
 
-    public static void tuileImage(TuileComposant composant, boolean[] edge, Graphics2D g) {
+    public static void tuileImage(TuileComposant composant, boolean[] edge, boolean isConnected, Graphics2D g) {
         if (composant == TuileComposant.EMPTY) {
-            for (int i = 0; i < edge.length; i++) {
-                if (edge[i]) {
-                    Graphics2D graphics2d = (Graphics2D) g.create();
-                    graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
+            if(isConnected){
+                for (int i = 0; i < edge.length; i++) {
+                    if (edge[i]) {
+                        Graphics2D graphics2d = (Graphics2D) g.create();
+                        graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
 
-                    if (edge[(i + 1) % edge.length]) {
-                        graphics2d.drawImage(ImageEnum.SQUARE_OFF_ARC.getImage(), 0, 0, null);
-                    } else if (edge[(i + 2) % edge.length]) {
-                        graphics2d.drawImage(ImageEnum.SQUARE_OFF_LINE.getImage(), 0, 0, null);
+                        if (edge[(i + 1) % edge.length]) {
+                            graphics2d.drawImage(ImageEnum.SQUARE_ON_ARC.getImage(), 0, 0, null);
+                        } else if (edge[(i + 2) % edge.length]) {
+                            graphics2d.drawImage(ImageEnum.SQUARE_ON_LINE.getImage(), 0, 0, null);
+                        }
+                    }
+                }
+            }else{
+                for (int i = 0; i < edge.length; i++) {
+                    if (edge[i]) {
+                        Graphics2D graphics2d = (Graphics2D) g.create();
+                        graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
+
+                        if (edge[(i + 1) % edge.length]) {
+                            graphics2d.drawImage(ImageEnum.SQUARE_OFF_ARC.getImage(), 0, 0, null);
+                        } else if (edge[(i + 2) % edge.length]) {
+                            graphics2d.drawImage(ImageEnum.SQUARE_OFF_LINE.getImage(), 0, 0, null);
+                        }
                     }
                 }
             }
-        } else {
-            BufferedImage bf;
-            if (composant == TuileComposant.WIFI) bf = ImageEnum.SQUARE_ON_COMPOSANT_WIFI.getImage();
-            else if (composant == TuileComposant.ENERGY) bf = ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage();
-            else bf = ImageEnum.SQUARE_OFF_COMPOSANT_LAMP.getImage();
-            g.drawImage(bf, 0, 0, null);
 
-            for (int i = 0; i < edge.length; i++) {
-                if (edge[i]) {
-                    Graphics2D graphics2d = (Graphics2D) g.create();
-                    graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
-                    graphics2d.drawImage((composant != TuileComposant.ENERGY) ? ImageEnum.SQUARE_OFF_Line_COMPOSANT.getImage() : ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
+        } else {
+            if(isConnected){
+                BufferedImage bf;
+                if (composant == TuileComposant.WIFI) bf = ImageEnum.SQUARE_ON_COMPOSANT_WIFI.getImage();
+                else if (composant == TuileComposant.ENERGY) bf = ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage();
+                else bf = ImageEnum.SQUARE_ON_COMPOSANT_LAMP.getImage();
+                g.drawImage(bf, 0, 0, null);
+
+                for (int i = 0; i < edge.length; i++) {
+                    if (edge[i]) {
+                        Graphics2D graphics2d = (Graphics2D) g.create();
+                        graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
+                        graphics2d.drawImage(ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
+                    }
+                }
+            }else{
+                BufferedImage bf;
+                if (composant == TuileComposant.WIFI) bf = ImageEnum.SQUARE_ON_COMPOSANT_WIFI.getImage();
+                else if (composant == TuileComposant.ENERGY) bf = ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage();
+                else bf = ImageEnum.SQUARE_OFF_COMPOSANT_LAMP.getImage();
+                g.drawImage(bf, 0, 0, null);
+
+                for (int i = 0; i < edge.length; i++) {
+                    if (edge[i]) {
+                        Graphics2D graphics2d = (Graphics2D) g.create();
+                        graphics2d.rotate(Math.toRadians(i * 90), 60, 60);
+                        graphics2d.drawImage((composant != TuileComposant.ENERGY) ? ImageEnum.SQUARE_OFF_Line_COMPOSANT.getImage() : ImageEnum.SQUARE_ON_Line_COMPOSANT.getImage(), 0, 0, null);
+                    }
                 }
             }
+
         }
     }
 

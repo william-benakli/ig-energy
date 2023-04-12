@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BoardViewGame extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -57,8 +58,13 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
     public void mouseClicked(MouseEvent e) {
         for (Geometrie geo : list) {
             if (geo.getPolygon().contains(e.getPoint())) {
+               // System.out.println(Arrays.toString(level.getPlateau()[geo.getDeducY()][geo.getDeducX()].getEdge()) + " fz");
+                System.out.println(level.getPlateau()[geo.getDeducY()][geo.getDeducX()].getPower() + " composat "+ level.getPlateau()[geo.getDeducY()][geo.getDeducX()].getComposant());
                 level.getPlateau()[geo.getDeducY()][geo.getDeducX()].rotation();
                 level.propagation();
+
+                level.updateAll();
+
                 if(level.endGame()){
                     System.out.println("fin de partie");
                 }
@@ -80,7 +86,7 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mousePressed(MouseEvent e) {
-        for (Geometrie geo : list) {
+       /* for (Geometrie geo : list) {
             if (geo.getPolygon().contains(e.getPoint())){
                 tuileCourante = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
             }
@@ -90,12 +96,12 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
         Graphics2D graphics2D = (Graphics2D) getGraphics();
         graphics2D.setColor(Color.white);
         graphics2D.setStroke(new BasicStroke(15));
-        graphics2D.drawLine(posX, posY, posX, posY);
+        graphics2D.drawLine(posX, posY, posX, posY);*/
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        for (Geometrie geo : list) {
+     /*   for (Geometrie geo : list) {
             if (geo.getPolygon().contains(e.getPoint()))
                 if(tuileCourante != level.getPlateau()[geo.getDeducY()][geo.getDeducX()]){
 
@@ -123,7 +129,7 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
             this.posX = e.getX();
             this.posY = e.getY();
         }
-
+        */
     }
 
     @Override

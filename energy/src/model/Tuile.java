@@ -4,6 +4,8 @@ import model.typeenum.*;
 import vue.utils.ConstructorBufferedTuile;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Tuile {
     /**
@@ -38,7 +40,7 @@ public class Tuile {
     }
 
     public void update() {
-        this.finalImage = new ConstructorBufferedTuile(shape, composant, edgeBoolean);
+        this.finalImage = new ConstructorBufferedTuile(shape, composant, this, edgeBoolean);
     }
 
     public BufferedImage getImage() {
@@ -59,9 +61,9 @@ public class Tuile {
 
     //TODO changer la rotation avec decalage
     public void rotation() {
-        System.out.println("rotation avant " + direction);
+      //  System.out.println("rotation avant " + direction);
         this.direction = direction.rotation();
-        System.out.println("rotation apres " + direction);
+        //System.out.println("rotation apres " + direction);
         //int decalage = (direction.getSize() - direction.getPosition() )% 6;
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
         for (int i = edgeBoolean.length - 1; i > 0; i--)
@@ -79,9 +81,21 @@ public class Tuile {
         return !power;
     }
 
-    public boolean isConnected(boolean[] edge) {
+    public boolean isConnected(boolean[] edge, DirectionInterface dir) {
+//TODO: tous les voisins ?
+            if(edgeBoolean[dir.getPosition()] && edge[dir.getOpositeDirection(dir.getPosition())]){
+                //System.out.println("Connection i " + dir.getPosition()  + " op " + dir + " opposite " + dir.getOpositeDirection(dir.getPosition()));
+                //System.out.println(Arrays.toString(edgeBoolean));
+                //System.out.println(Arrays.toString(edge));
+                //System.out.println("------------------");
+                return true;
+            }
 
         return false;
+    }
+
+    public boolean getPower() {
+        return power;
     }
 
     public static class Builder {

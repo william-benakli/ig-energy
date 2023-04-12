@@ -63,9 +63,11 @@ public final class Level implements Serializable {
                 int r = new Random().nextInt(5);
                 for (int k = 0; k <  r; k++) {
                     plateau[i][j].rotation();
+                    plateau[i][j].update();
                 }
             }
         }
+
     }
 
     /**
@@ -99,12 +101,14 @@ public final class Level implements Serializable {
             for(DirectionInterface dir :  t.getDirection().getValues()){
                 int ni = dir.getI(i, j);
                 int nj = dir.getJ(i, j);
-                if((ni >= 0 && ni < height) && (nj >= 0 && nj < height)){
+                if((ni >= 0 && ni < height) && (nj >= 0 && nj < width)){
                     Tuile neighbor = plateau[ni][nj];
-                    if(t.isConnected(neighbor.getEdge()))
-                  //  if(t.getEdge() == neighbor.getDirection().getOpositeDirection()){
-                        if(neighbor.isPowerOff())turnTuileOn(neighbor, ni, nj);
-                   // }
+                    if(t.isConnected(neighbor.getEdge(), dir)){
+                        if(neighbor.isPowerOff()){
+                            System.out.println("On a au moins un voisin connecté " + neighbor.getComposant());
+                            turnTuileOn(neighbor, ni, nj);
+                        }
+                    }
                 }
             }
             t.update();
@@ -151,6 +155,17 @@ public final class Level implements Serializable {
         return true;
     }
 
+    /**
+     * Cette fonction met à jour graphiquement toutes les tuiles
+     */
+    public void updateAll() {
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
+                plateau[i][k].update();
+            }
+        }
+    }
+
     /** Setteur & G etteur **/
 
     public void setTuileAt(int i, int j, Tuile tuile){
@@ -166,4 +181,6 @@ public final class Level implements Serializable {
         return this.plateau;
     }
     public TuileShape getTypeTuilePlateau() {return typeTuilePlateau;}
+
+
 }
