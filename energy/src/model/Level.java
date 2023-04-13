@@ -52,6 +52,8 @@ public final class Level implements Serializable {
             for (int j = 0; j < width; j++) {
                 Tuile t =  new Tuile.Builder().shapeTuile(typeTuilePlateau).composantTuile(TuileComposant.EMPTY).build();
                 plateau[i][j] = t;
+                t.i = i;
+                t.j = j;
             }
         }
     }

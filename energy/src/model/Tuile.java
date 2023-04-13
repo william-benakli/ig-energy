@@ -12,12 +12,15 @@ public class Tuile {
      * Class Tuile:
      */
 
-    private final TuileComposant composant;
+    private TuileComposant composant;
     private final TuileShape shape;
     private DirectionInterface direction;
     private ConstructorBufferedTuile finalImage;
     private final boolean[] edgeBoolean;
     private boolean power;
+
+    public boolean test = false;
+    public int i, j;
 
     private Tuile(Builder builder) {
         this.shape = builder.shape;
@@ -96,6 +99,10 @@ public class Tuile {
 
     public boolean getPower() {
         return power;
+    }
+
+    public void setComposant(TuileComposant composant) {
+        this.composant = composant;
     }
 
     public static class Builder {

@@ -10,6 +10,7 @@ import java.awt.*;
 
 public class EditorJPanel extends JPanel {
 
+    private EditorSelectionItemJPanel editorSelectionItemJPanel;
 
     public EditorJPanel(FenetreJFrame parent, Level level){
         this.setBackground(new Color(12, 12, 12));
@@ -27,11 +28,13 @@ public class EditorJPanel extends JPanel {
 
         this.add(panelEditeurEtButton);
         this.add(panelDivision);
-        panelDivision.add(new EditorSelectionItemJPanel());
-        panelDivision.add(new BoardViewGame(level, false));
+        editorSelectionItemJPanel = new EditorSelectionItemJPanel();
+        panelDivision.add(editorSelectionItemJPanel);
+        panelDivision.add(new BoardViewGame(level, editorSelectionItemJPanel, false));
     }
 
 
-
-
+    public EditorSelectionItemJPanel getEditorSelectionItemJPanel() {
+        return editorSelectionItemJPanel;
+    }
 }

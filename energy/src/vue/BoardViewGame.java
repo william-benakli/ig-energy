@@ -5,7 +5,9 @@ import model.Level;
 import model.Position;
 import model.Tuile;
 import model.typeenum.DirectionInterface;
+import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
+import vue.editor.EditorSelectionItemJPanel;
 import vue.typeenum.DirCarreGraphic;
 import vue.typeenum.DirHexaGraphic;
 import vue.utils.GraphiqueBuilder;
@@ -25,11 +27,13 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
     private boolean isGame;
     private int posX,posY;
     private Tuile tuileCourante;
-
+    private EditorSelectionItemJPanel editorSelectionItemJPanel;
 
     public BoardViewGame(Level level, boolean isGame) {
         this.isGame = isGame;
         this.level = level;
+        this.tuileCourante = level.getPlateau()[0][0];
+
         this.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 50));
         this.setBackground(GraphiqueBuilder.blackBackGround());
         addMouseListener(this);
@@ -37,14 +41,21 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
         setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
     }
 
+    public BoardViewGame(Level level, EditorSelectionItemJPanel editorSelectionItemJPanel, boolean isGame) {
+        this(level, isGame);
+        this.editorSelectionItemJPanel = editorSelectionItemJPanel;
+    }
+
+    public void setComposant(int ni, int nj , TuileComposant composant){
+        if (ni >= 0 && ni < level.getHeight() && nj >= 0 && nj < level.getWidth()) {
+            level.getPlateau()[ni][nj].setComposant(composant);
+        }
+        }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         list.clear();
-        if(tuileCourante != null){
-            System.out.println(tuileCourante.getComposant());
-        }
-
         int height = getSize().width / (level.getWidth());
         int width = getSize().height / (level.getHeight());
         int size = Math.min(width, height);
@@ -69,6 +80,16 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
                 repaint();
             }
         }
+        if(!isGame){
+            for (Geometrie geo : list) {
+                if(editorSelectionItemJPanel.getItemSelected() == 4){
+                    if (geo.getPolygon().contains(e.getPoint())) {
+                        level.getPlateau()[geo.getDeducY()][geo.getDeducX()].setComposant(TuileComposant.WIFI);
+                        level.updateAll();
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -88,6 +109,7 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
             for (Geometrie geo : list) {
                 if (geo.getPolygon().contains(e.getPoint())){
                     tuileCourante = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
+                  //  System.out.println(tuileCourante.i + " " + tuileCourante.j);
                 }
             }
             this.posX = e.getX();
@@ -101,37 +123,47 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
 
     @Override
     public void mouseDragged(MouseEvent e) {
+       // System.out.println(tuileCourante.i + " " + tuileCourante.j);
+
         if(!isGame) {
             for (Geometrie geo : list) {
-                if (geo.getPolygon().contains(e.getPoint()))
-                    if (tuileCourante != level.getPlateau()[geo.getDeducY()][geo.getDeducX()]) {
+                if (geo.getPolygon().contains(e.getPoint())){
+                    Tuile mousePosition = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
+                   // System.out.println(mousePosition.i + " " + mousePosition.j +" mousePosition");
+                    if (tuileCourante != mousePosition) {
 
                         for (DirectionInterface dir : tuileCourante.getDirection().getValues()) {
-                            Position position = dir.getPositionIJ(geo.getDeducY(), geo.getDeducX());
+                            Position position = dir.getPositionIJ(tuileCourante.i, tuileCourante.j);
                             int ni = position.i();
                             int nj = position.j();
                             if (ni >= 0 && ni < level.getHeight() && nj >= 0 && nj < level.getWidth()) {
                                 Tuile neighbor = level.getPlateau()[ni][nj];
-                                System.out.println("ni" + ni + " y " + geo.getDeducY() + " " + nj+ " "+ geo.getDeducX() );
-                                if (ni == geo.getDeducY() && nj == geo.getDeducX()){// == level.getPlateau()[geo.getDeducY()][geo.getDeducX()]) {
-                                    System.out.println("je suis dans mon voisin");
+                                neighbor.test = true;
+                               // System.out.println(neighbor.i + " " + neighbor.j +" neighbor");
+//                                System.out.println(level.getPlateau()[geo.getDeducY()][geo.getDeducX()].i + " " + level.getPlateau()[geo.getDeducY()][geo.getDeducX()].j +" ###########");
+//                                System.out.println(neighbor.i + " " +  neighbor.j + " ****");
+                                if (neighbor == mousePosition){
+                                   // System.out.println("je suis dans mon voisin");
                                     tuileCourante.setEdgeBoolean(dir.getPosition(), true);
                                     neighbor.setEdgeBoolean(dir.getOpositeDirection(dir.getPosition()), true);
-                                    System.out.println(Arrays.toString(tuileCourante.getEdge()));
-                                    System.out.println(Arrays.toString(neighbor.getEdge()));
-                                    level.updateAll();
-                                    repaint();
+                                  //  System.out.println(Arrays.toString(tuileCourante.getEdge()));
+                                   // System.out.println(Arrays.toString(neighbor.getEdge()));
+
+                                    tuileCourante = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
                                 }
                             }
                         }
-                        tuileCourante = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
                     }
+
+                }
                 Graphics2D graphics2D = (Graphics2D) getGraphics();
                 graphics2D.setColor(Color.white);
                 graphics2D.setStroke(new BasicStroke(15));
                 graphics2D.drawLine(posX, posY, e.getX(), e.getY());
                 this.posX = e.getX();
                 this.posY = e.getY();
+                level.updateAll();
+                repaint();
             }
         }
     }

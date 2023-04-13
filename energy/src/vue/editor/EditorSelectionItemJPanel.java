@@ -72,7 +72,7 @@ public class EditorSelectionItemJPanel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             selected = id;
-            System.out.println("clicked");
+           // System.out.println("clicked " + id);
         }
 
         @Override

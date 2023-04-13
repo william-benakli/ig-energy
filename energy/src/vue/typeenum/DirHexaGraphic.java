@@ -128,6 +128,11 @@ public class DirHexaGraphic implements DirectionInterfaceGraphic {
                 }
             }
         }
+
+      //  g.setColor(Color.WHITE);
+       // g.drawString(String.valueOf( "i " + t.i) + " j " + t.j, 50, 50);
+
+
     }
 
 }
