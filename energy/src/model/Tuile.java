@@ -4,60 +4,43 @@ import model.typeenum.*;
 import vue.utils.ConstructorBufferedTuile;
 
 import java.awt.image.BufferedImage;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Tuile {
     /**
      * Class Tuile:
      */
 
-    private final TuileComposant composant;
+    private TuileComposant composant;
     private final TuileShape shape;
     private DirectionInterface direction;
     private ConstructorBufferedTuile finalImage;
-    private final boolean[] edgeBoolean;
+    private boolean[] edgeBoolean;
     private boolean power;
+    private Position position;
 
-    private Tuile(Builder builder) {
-        this.shape = builder.shape;
-        this.composant = builder.composant;
+    public Tuile(TuileShape shapeTuile, TuileComposant composant, DirectionInterface direction, Position position) {
+        this.shape = shapeTuile;
+        this.composant = composant;
         this.power = (composant == TuileComposant.ENERGY);
-        if (shape == TuileShape.HEXA) direction = DirHexa.NORD;
-        else direction = DirCarre.NORD;
+        this.direction = direction;
+        this.position = position;
         edgeBoolean = new boolean[direction.getSize()];
     }
 
-    public boolean[] getEdge() {
-        return edgeBoolean;
-    }
-
-    public void setEdgeBoolean(int pos, boolean value) {
-        edgeBoolean[pos] = value;
-    }
-
     public void update() {
-        this.finalImage = new ConstructorBufferedTuile(shape, composant, edgeBoolean);
-    }
-
-    public BufferedImage getImage() {
-        return finalImage;
+        this.finalImage = new ConstructorBufferedTuile(shape, composant, this, edgeBoolean);
     }
 
     public void powerOff(){
         if(this.composant != TuileComposant.ENERGY) this.power = false;
     }
     public void powerOn(){
-        this.power = false;
+        this.power = true;
     }
 
-
-    public TuileComposant getComposant() {
-        return composant;
-    }
-
-    //TODO changer la rotation avec decalage
     public void rotation() {
-        this.direction = direction.rotation();
-        //int decalage = (direction.getSize() - direction.getPosition() )% 6;
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
         for (int i = edgeBoolean.length - 1; i > 0; i--)
             edgeBoolean[i] = edgeBoolean[i - 1];
@@ -65,32 +48,56 @@ public class Tuile {
         update();
     }
 
+    public boolean isConnected(boolean[] edge, DirectionInterface dir) {
+        return edgeBoolean[dir.getPosition()] && edge[dir.getOpositeDirection(dir.getPosition())];
+    }
+
+    /*Getteur and setteur*/
+
+    public BufferedImage getImage() {
+        return finalImage;
+    }
+
+    public TuileComposant getComposant() {
+        return composant;
+    }
+
+    public int getJ(){
+        return position.j();
+    }
+    public int getI(){
+        return position.i();
+    }
+    public DirectionInterface getDirection(){
+        return direction;
+    }
+    public boolean[] getEdge() {
+        return edgeBoolean;
+    }
+
+    public void setEdgeBoolean(int pos, boolean value) {
+        edgeBoolean[pos] = value;
+    }
     @Override
     public String toString() {
         return "Tuile{" + "typeTuile=" + composant + ", finalImage=" + finalImage + "direction=" + direction + '}';
     }
 
     public boolean isPowerOff() {
-        return (!power);
+        return !power;
     }
 
-    public static class Builder {
-        private TuileComposant composant;
-        private TuileShape shape;
-
-        public Builder composantTuile(TuileComposant composant) {
-            this.composant = composant;
-            return this;
-        }
-
-        public Builder shapeTuile(TuileShape shape) {
-            this.shape = shape;
-            return this;
-        }
-
-        public Tuile build() {
-            return new Tuile(this);
-        }
+    public boolean getPower() {
+        return power;
     }
 
+    public void setComposant(TuileComposant composant) {
+        this.composant = composant;
+    }
+
+    public void restore() {
+        composant = TuileComposant.EMPTY;
+        edgeBoolean = new boolean[direction.getSize()];
+        powerOff();
+    }
 }

@@ -1,8 +1,8 @@
 package utils;
 
-import java.awt.Image;
+import model.BufferedModel;
 
 public interface Observer {
 
-	void update(/*Model à mettre à jour */);
+	void update(BufferedModel model);
 }

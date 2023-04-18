@@ -1,9 +1,10 @@
 package vue.utils;
 
-import model.typeenum.DirCarre;
-import model.typeenum.DirHexa;
+import model.Tuile;
 import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
+import vue.typeenum.DirCarreGraphic;
+import vue.typeenum.DirHexaGraphic;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +12,7 @@ import java.awt.image.BufferedImage;
 public class ConstructorBufferedTuile extends BufferedImage {
 
 
-    public ConstructorBufferedTuile(TuileShape type, TuileComposant composant, boolean[] edge) {
+    public ConstructorBufferedTuile(TuileShape type, TuileComposant composant, Tuile tuile, boolean[] edge) {
         super(120, 120, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = (Graphics2D) super.getGraphics();
         g.setColor(new Color(0, 0, 0, 0));
@@ -20,9 +21,9 @@ public class ConstructorBufferedTuile extends BufferedImage {
 
 
         if (type == TuileShape.CARRE)
-            DirCarre.tuileImage(composant, edge, g);
+            DirCarreGraphic.tuileImage(composant, edge,  tuile.getPower(), g);
         else if (type == TuileShape.HEXA)
-            DirHexa.tuileImage(composant, edge, g);
+            DirHexaGraphic.tuileImage(tuile,  g);
 
         g.dispose();
 

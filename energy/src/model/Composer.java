@@ -11,18 +11,19 @@ import java.text.ParseException;
 
 public class Composer {
 
-    public Composer(Level level) {
+    public Composer(String name, Level level) {
 
         try {
-            saveInFile("save8", composeLine(level));
+            saveInFile(name, composeLine(level));
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            System.out.println("Echec de la sauvegarde");
         }
 
     }
 
     public static void saveInFile(String filename, String[] arr) throws IOException {
-        BufferedWriter ow = new BufferedWriter(new FileWriter(filename));
+        FileWriter file = new FileWriter("ressource/level/" +filename+".nrg");
+        BufferedWriter ow = new BufferedWriter(file);
         for (String s : arr) {
             ow.write(s);
             ow.newLine();

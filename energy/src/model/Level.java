@@ -1,11 +1,11 @@
 package model;
 
 
-import model.typeenum.TuileComposant;
-import model.typeenum.TuileShape;
+import model.typeenum.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public final class Level implements Serializable {
@@ -22,15 +22,7 @@ public final class Level implements Serializable {
     private int idLevel;
     private int width, height;
     private TuileShape typeTuilePlateau;
-
-    public Level(int idLevel, int height, int width, TuileShape typeTuilePlateau){
-        this.plateau = new Tuile[height][width];
-        this.idLevel = idLevel;
-        this.width = width;
-        this.height = height;
-        this.typeTuilePlateau = typeTuilePlateau;
-        idLevelStatic++;
-    }
+    private String nameLevel;
 
     public Level(int height, int width, TuileShape typeTuilePlateau){
         this.plateau = new Tuile[height][width];
@@ -38,16 +30,29 @@ public final class Level implements Serializable {
         this.width = width;
         this.height = height;
         this.typeTuilePlateau = typeTuilePlateau;
+        this.nameLevel = "level"+idLevel;
         initEmpty();
     }
 
-    /**
-     * Cette fonction inialise la plateau avec des tuiles vides
-     */
+    public Level(int idLevel, int height, int width, TuileShape typeTuilePlateau){
+        this(height, width, typeTuilePlateau);
+        this.idLevel = idLevel;
+        this.nameLevel = "level"+idLevel;
+    }
+
+    public Level(String name_level, int height, int width, TuileShape typeTuilePlateau){
+        this(height, width, typeTuilePlateau);
+        this.nameLevel = name_level;
+    }
+
+        /**
+         * Cette fonction inialise la plateau avec des tuiles vides
+         */
     public void initEmpty(){
         for (int i = 0; i < height ; i++) {
             for (int j = 0; j < width; j++) {
-                plateau[i][j] = new Tuile.Builder().shapeTuile(typeTuilePlateau).composantTuile(TuileComposant.EMPTY).build();
+                Tuile t =  new Tuile(typeTuilePlateau, TuileComposant.EMPTY, (typeTuilePlateau == TuileShape.CARRE? DirCarre.NORD : DirHexa.NORD), new Position(i, j));
+                plateau[i][j] = t;
             }
         }
     }
@@ -62,9 +67,11 @@ public final class Level implements Serializable {
                 int r = new Random().nextInt(5);
                 for (int k = 0; k <  r; k++) {
                     plateau[i][j].rotation();
+                    plateau[i][j].update();
                 }
             }
         }
+
     }
 
     /**
@@ -73,8 +80,8 @@ public final class Level implements Serializable {
      */
     public void propagation(){
        turnOffBoard();
-        for (int i = 0; i < plateau.length; i++) {
-            for (int j = 0; j < plateau[i].length; j++) {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 if (plateau[i][j].getComposant() == TuileComposant.ENERGY) {
                     turnTuileOn(plateau[i][j], i, j);
                 }
@@ -92,21 +99,20 @@ public final class Level implements Serializable {
      * @param j position j dans le plateau
      */
     public void turnTuileOn(Tuile t, int i, int j){
-        if((i < 0 || i >= plateau.length) || (j < 0 || j >= plateau[i].length)) return;
-
         t.powerOn();
-        if(t.getComposant() == TuileComposant.WIFI){
-            wifiPropagation();
-
+        if(t.getComposant() == TuileComposant.WIFI) wifiPropagation();
+        for(DirectionInterface dir :  t.getDirection().getValues()){
+            Position position = dir.getPositionIJ(i, j);
+            int ni = position.i();
+            int nj = position.j();
+            if((ni >= 0 && ni < height) && (nj >= 0 && nj < width)){
+                Tuile neighbor = plateau[ni][nj];
+                if(t.isConnected(neighbor.getEdge(), dir)){
+                    if(neighbor.isPowerOff())turnTuileOn(neighbor, ni, nj);
+                }
+            }
         }
-
-/*        for()
-        //s'ils sont déjà allumé ne pas entrée dedans
-        Tuile neighbor = null;
-        if(neighbor.isPowerOff()){
-           // turnTuileOn(neighbor);
-        }
-*/
+        t.update();
     }
 
     /**
@@ -114,10 +120,12 @@ public final class Level implements Serializable {
      * alors toutes les cases WIFI auront le comportement d'un composant ENERGY
      */
     private void wifiPropagation(){
-        for (int i = 0; i < plateau.length; i++) {
-            for (int k = 0; k < plateau[i].length; k++) {
+        for (int i = 0; i <height; i++) {
+            for (int k = 0; k < width; k++) {
                 if(plateau[i][k].getComposant() == TuileComposant.WIFI){
-                    turnTuileOn(plateau[i][k], i, k);
+                    if(plateau[i][k].isPowerOff()){
+                        turnTuileOn(plateau[i][k], i, k);
+                    }
                 }
             }
         }
@@ -127,9 +135,36 @@ public final class Level implements Serializable {
      * Cette fonction met toutes les tuiles en off sauf les tuiles energy
      */
     private void turnOffBoard(){
-        for (int i = 0; i < plateau.length; i++) {
-            for (int k = 0; k < plateau[i].length; k++) {
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
                 plateau[i][k].powerOff();
+            }
+        }
+    }
+
+    /**
+     * Cette fonction verifie que toutes les tuiles sont allumés donc une fin de parti
+     */
+    public boolean endGame(){
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
+                if(plateau[i][k].isPowerOff()){
+                    for(boolean b: plateau[i][k].getEdge()){
+                        if(b)return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Cette fonction met à jour graphiquement toutes les tuiles
+     */
+    public void updateAll() {
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
+                plateau[i][k].update();
             }
         }
     }
@@ -149,4 +184,8 @@ public final class Level implements Serializable {
         return this.plateau;
     }
     public TuileShape getTypeTuilePlateau() {return typeTuilePlateau;}
+
+    public String getNameLevel() {
+        return nameLevel;
+    }
 }

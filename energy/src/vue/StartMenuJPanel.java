@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 
 public class StartMenuJPanel extends JPanel {
 
-    private JTextField userNameField;
     private JPanel buttonJpanel;
     private FancyJButton playButton, editorButton, settingsButton;
     private  Image image;
@@ -31,11 +30,11 @@ public class StartMenuJPanel extends JPanel {
 
         this.setPreferredSize(new Dimension(1280, 720));
         this.setBackground(new Color(12, 12, 12));
-        this.userNameField = GraphiqueBuilder.createFancyJTextField("Username");
+        JTextField userNameField = GraphiqueBuilder.createFancyJTextField("Username");
         buttonJpanel.add(userNameField);
         this.playButton = GraphiqueBuilder.createFancyJbutton("Jouer", "ressource/icon/play_game.png", e -> {
             //chargé le joueur ou le créer
-            parent.addStackPanel(new LevelSelectedJPanel(parent, "test"));
+            parent.addStackPanel(new LevelSelectedJPanel(parent));
             parent.update();
         });
         this.settingsButton = GraphiqueBuilder.createFancyJbutton("Paramètres", "ressource/icon/settings_icon.png", e -> {
