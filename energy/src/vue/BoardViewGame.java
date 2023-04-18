@@ -19,7 +19,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class BoardViewGame extends JPanel implements MouseListener, MouseMotionListener {
 
@@ -57,7 +56,12 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        list.clear();
+       list.clear();
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
         int height = getSize().width / (level.getWidth());
         int width = getSize().height / (level.getHeight());
         int size = Math.min(width, height);
@@ -66,6 +70,7 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
             DirCarreGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
         else
             DirHexaGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
+
     }
 
     @Override
