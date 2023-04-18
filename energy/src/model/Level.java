@@ -1,9 +1,7 @@
 package model;
 
 
-import model.typeenum.DirectionInterface;
-import model.typeenum.TuileComposant;
-import model.typeenum.TuileShape;
+import model.typeenum.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,16 +22,7 @@ public final class Level implements Serializable {
     private int idLevel;
     private int width, height;
     private TuileShape typeTuilePlateau;
-
-    public Level(int idLevel, int height, int width, TuileShape typeTuilePlateau){
-        this.plateau = new Tuile[height][width];
-        this.idLevel = idLevel;
-        this.width = width;
-        this.height = height;
-        this.typeTuilePlateau = typeTuilePlateau;
-        idLevelStatic++;
-        initEmpty();
-    }
+    private String nameLevel;
 
     public Level(int height, int width, TuileShape typeTuilePlateau){
         this.plateau = new Tuile[height][width];
@@ -41,19 +30,29 @@ public final class Level implements Serializable {
         this.width = width;
         this.height = height;
         this.typeTuilePlateau = typeTuilePlateau;
+        this.nameLevel = "level"+idLevel;
         initEmpty();
     }
 
-    /**
-     * Cette fonction inialise la plateau avec des tuiles vides
-     */
+    public Level(int idLevel, int height, int width, TuileShape typeTuilePlateau){
+        this(height, width, typeTuilePlateau);
+        this.idLevel = idLevel;
+        this.nameLevel = "level"+idLevel;
+    }
+
+    public Level(String name_level, int height, int width, TuileShape typeTuilePlateau){
+        this(height, width, typeTuilePlateau);
+        this.nameLevel = name_level;
+    }
+
+        /**
+         * Cette fonction inialise la plateau avec des tuiles vides
+         */
     public void initEmpty(){
         for (int i = 0; i < height ; i++) {
             for (int j = 0; j < width; j++) {
-                Tuile t =  new Tuile.Builder().shapeTuile(typeTuilePlateau).composantTuile(TuileComposant.EMPTY).build();
+                Tuile t =  new Tuile(typeTuilePlateau, TuileComposant.EMPTY, (typeTuilePlateau == TuileShape.CARRE? DirCarre.NORD : DirHexa.NORD), new Position(i, j));
                 plateau[i][j] = t;
-                t.i = i;
-                t.j = j;
             }
         }
     }
@@ -149,8 +148,10 @@ public final class Level implements Serializable {
     public boolean endGame(){
         for (int i = 0; i < height; i++) {
             for (int k = 0; k < width; k++) {
-                if(plateau[i][k].getComposant() != TuileComposant.EMPTY){
-                    if(plateau[i][k].isPowerOff())return false;
+                if(plateau[i][k].isPowerOff()){
+                    for(boolean b: plateau[i][k].getEdge()){
+                        if(b)return false;
+                    }
                 }
             }
         }
@@ -184,5 +185,7 @@ public final class Level implements Serializable {
     }
     public TuileShape getTypeTuilePlateau() {return typeTuilePlateau;}
 
-
+    public String getNameLevel() {
+        return nameLevel;
+    }
 }

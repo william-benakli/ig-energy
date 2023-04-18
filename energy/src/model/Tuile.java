@@ -16,21 +16,58 @@ public class Tuile {
     private final TuileShape shape;
     private DirectionInterface direction;
     private ConstructorBufferedTuile finalImage;
-    private final boolean[] edgeBoolean;
+    private boolean[] edgeBoolean;
     private boolean power;
+    private Position position;
 
-    public boolean test = false;
-    public int i, j;
-
-    private Tuile(Builder builder) {
-        this.shape = builder.shape;
-        this.composant = builder.composant;
+    public Tuile(TuileShape shapeTuile, TuileComposant composant, DirectionInterface direction, Position position) {
+        this.shape = shapeTuile;
+        this.composant = composant;
         this.power = (composant == TuileComposant.ENERGY);
-        if (shape == TuileShape.HEXA) direction = DirHexa.NORD;
-        else direction = DirCarre.NORD;
+        this.direction = direction;
+        this.position = position;
         edgeBoolean = new boolean[direction.getSize()];
     }
 
+    public void update() {
+        this.finalImage = new ConstructorBufferedTuile(shape, composant, this, edgeBoolean);
+    }
+
+    public void powerOff(){
+        if(this.composant != TuileComposant.ENERGY) this.power = false;
+    }
+    public void powerOn(){
+        this.power = true;
+    }
+
+    public void rotation() {
+        boolean tmp = edgeBoolean[edgeBoolean.length - 1];
+        for (int i = edgeBoolean.length - 1; i > 0; i--)
+            edgeBoolean[i] = edgeBoolean[i - 1];
+        edgeBoolean[0] = tmp;
+        update();
+    }
+
+    public boolean isConnected(boolean[] edge, DirectionInterface dir) {
+        return edgeBoolean[dir.getPosition()] && edge[dir.getOpositeDirection(dir.getPosition())];
+    }
+
+    /*Getteur and setteur*/
+
+    public BufferedImage getImage() {
+        return finalImage;
+    }
+
+    public TuileComposant getComposant() {
+        return composant;
+    }
+
+    public int getJ(){
+        return position.j();
+    }
+    public int getI(){
+        return position.i();
+    }
     public DirectionInterface getDirection(){
         return direction;
     }
@@ -41,40 +78,6 @@ public class Tuile {
     public void setEdgeBoolean(int pos, boolean value) {
         edgeBoolean[pos] = value;
     }
-
-    public void update() {
-        this.finalImage = new ConstructorBufferedTuile(shape, composant, this, edgeBoolean);
-    }
-
-    public BufferedImage getImage() {
-        return finalImage;
-    }
-
-    public void powerOff(){
-        if(this.composant != TuileComposant.ENERGY) this.power = false;
-    }
-    public void powerOn(){
-        this.power = true;
-    }
-
-
-    public TuileComposant getComposant() {
-        return composant;
-    }
-
-    //TODO changer la rotation avec decalage
-    public void rotation() {
-      //  System.out.println("rotation avant " + direction);
-        //this.direction = direction.rotation();
-        //System.out.println("rotation apres " + direction);
-        //int decalage = (direction.getSize() - direction.getPosition() )% 6;
-        boolean tmp = edgeBoolean[edgeBoolean.length - 1];
-        for (int i = edgeBoolean.length - 1; i > 0; i--)
-            edgeBoolean[i] = edgeBoolean[i - 1];
-        edgeBoolean[0] = tmp;
-        update();
-    }
-
     @Override
     public String toString() {
         return "Tuile{" + "typeTuile=" + composant + ", finalImage=" + finalImage + "direction=" + direction + '}';
@@ -82,19 +85,6 @@ public class Tuile {
 
     public boolean isPowerOff() {
         return !power;
-    }
-
-    public boolean isConnected(boolean[] edge, DirectionInterface dir) {
-//TODO: tous les voisins ?
-            if(edgeBoolean[dir.getPosition()] && edge[dir.getOpositeDirection(dir.getPosition())]){
-             //   System.out.println("Connection i " + dir.getPosition()  + " dir " + dir + " opposite " + dir.getOpositeDirection(dir.getPosition()));
-              //  System.out.println(Arrays.toString(edgeBoolean));
-               // System.out.println(Arrays.toString(edge));
-               // System.out.println("------------------");
-                return true;
-            }
-
-        return false;
     }
 
     public boolean getPower() {
@@ -105,23 +95,9 @@ public class Tuile {
         this.composant = composant;
     }
 
-    public static class Builder {
-        private TuileComposant composant;
-        private TuileShape shape;
-
-        public Builder composantTuile(TuileComposant composant) {
-            this.composant = composant;
-            return this;
-        }
-
-        public Builder shapeTuile(TuileShape shape) {
-            this.shape = shape;
-            return this;
-        }
-
-        public Tuile build() {
-            return new Tuile(this);
-        }
+    public void restore() {
+        composant = TuileComposant.EMPTY;
+        edgeBoolean = new boolean[direction.getSize()];
+        powerOff();
     }
-
 }

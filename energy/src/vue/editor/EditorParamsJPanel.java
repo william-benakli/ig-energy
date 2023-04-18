@@ -6,6 +6,7 @@ import vue.FenetreJFrame;
 import vue.fancycomposant.FancyJButton;
 import vue.fancycomposant.FancyJRadioButton;
 import vue.fancycomposant.FancyJSlider;
+import vue.fancycomposant.FancyJTextField;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
@@ -20,17 +21,19 @@ public class EditorParamsJPanel extends JPanel {
     private final FancyJSlider colonnesJslider,lignesJslider;
     private final JLabel tileParam, typeTuile, lenghtLignes, lenghtColonnes, colonnes, lignes;
     private final JPanel mainJpanel, panelTypeTuile, panelLongueur, panelLargeur;
+    private final FancyJTextField nom_level;
 
 
     public EditorParamsJPanel(FenetreJFrame parent){
         this.setLayout(new GridBagLayout());
         this.colonnesJslider = new FancyJSlider(4, 1, 10);
         this.lignesJslider = new FancyJSlider(3, 1, 10);
-        this.mainJpanel = GraphiqueBuilder.createPanelGrid(5, 1, false);
+        this.mainJpanel = GraphiqueBuilder.createPanelGrid(6, 1, false);
         this.panelLongueur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelLargeur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelTypeTuile = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.tileParam = GraphiqueBuilder.createFancyJLabel("Paramètres du plateau", Color.white, 50);
+        this.nom_level = GraphiqueBuilder.createFancyJTextField("Nom du niveau");
         this.colonnes = GraphiqueBuilder.createFancyJLabel(String.valueOf(lignesJslider.getValue()), Color.white,  GraphiqueBuilder.getFontRoboto(50f));
         this.lignes = GraphiqueBuilder.createFancyJLabel(String.valueOf(colonnesJslider.getValue()), Color.white, GraphiqueBuilder.getFontRoboto(50f));
         this.typeTuile = GraphiqueBuilder.createFancyJLabel("Type tuile :", Color.white, 50);
@@ -50,7 +53,7 @@ public class EditorParamsJPanel extends JPanel {
 
         gbc.weighty = 1;
         final FancyJButton valider = GraphiqueBuilder.createFancyJbutton("Valider", e -> {
-            parent.addStackPanel(new EditorJPanel(parent, new Level(lignesJslider.getValue(), colonnesJslider.getValue(), (hexajRadio.isSelected() ? TuileShape.HEXA : TuileShape.CARRE))));
+            parent.addStackPanel(new EditorJPanel(parent, new Level(nom_level.getText().trim(), lignesJslider.getValue(), colonnesJslider.getValue(), (hexajRadio.isSelected() ? TuileShape.HEXA : TuileShape.CARRE))));
             parent.update();
             repaint();
         });
@@ -90,6 +93,7 @@ public class EditorParamsJPanel extends JPanel {
         mainJpanel.add(panelTypeTuile);
         mainJpanel.add(panelLargeur);
         mainJpanel.add(panelLongueur);
+        mainJpanel.add(nom_level);
         mainJpanel.add(buttonJpanel);
 
         this.setPreferredSize(new Dimension(1280, 720));

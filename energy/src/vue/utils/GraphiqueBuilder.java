@@ -4,13 +4,13 @@ import vue.fancycomposant.FancyJButton;
 import vue.fancycomposant.FancyJTextField;
 
 import javax.swing.*;
-import javax.swing.plaf.ButtonUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public final class GraphiqueBuilder {
 
@@ -107,5 +107,32 @@ public final class GraphiqueBuilder {
         panel.setOpaque(opaque);
         panel.setLayout(new BoxLayout(panel, TYPE_LAYOUT));
         return panel;
+    }
+
+    public static void createMessageTop(String msg, JPanel panel) {
+        panel.getGraphics().setFont(GraphiqueBuilder.getFontCocoGose(25));
+        panel.getGraphics().setColor(new Color(254, 254, 254));
+        panel.getGraphics().drawString(msg, 0, 0);//panel.getWidth()/2, panel.getHeight()/2);
+        panel.repaint();
+        panel.revalidate();
+        /*
+        java.util.Timer timer = new Timer();
+        timer.cancel();
+        timer.schedule(new TimerTask() {
+            int transparence = 100;
+            @Override
+            public void run() {
+                System.out.println("????");
+                panel.getGraphics().setFont(GraphiqueBuilder.getFontCocoGose(25));
+                panel.getGraphics().setColor(new Color(254, 254, 254, transparence));
+                panel.getGraphics().drawString(msg, 0, 0);//panel.getWidth()/2, panel.getHeight()/2);
+                panel.repaint();
+                if(transparence <= 0){
+                    System.out.println("fin");
+                    timer.cancel();
+                }
+                transparence-=20;
+            }
+        }, 0, 1000);*/
     }
 }

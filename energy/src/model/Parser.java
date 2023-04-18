@@ -2,6 +2,8 @@ package model;
 
 import model.Level;
 import model.Tuile;
+import model.typeenum.DirCarre;
+import model.typeenum.DirHexa;
 import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
 
@@ -65,10 +67,7 @@ public class Parser {
     }
 
     private void addTuile(int positionLine, Level level, int compteurColonne, TuileComposant currComposant, ArrayList<Integer> listEdge) {
-        Tuile tuile = new Tuile.Builder()
-                .composantTuile(currComposant)
-                .shapeTuile(level.getTypeTuilePlateau())
-                .build();
+        Tuile tuile =  new Tuile(level.getTypeTuilePlateau(), currComposant, (level.getTypeTuilePlateau() == TuileShape.CARRE? DirCarre.NORD : DirHexa.NORD), new Position((positionLine - 1), compteurColonne));
         level.setTuileAt((positionLine - 1), compteurColonne, tuile);
         for (Integer i : listEdge) tuile.setEdgeBoolean(i, true);
         tuile.update();
