@@ -28,7 +28,9 @@ public class EditorJPanel extends JPanel {
         final JButton save = GraphiqueBuilder.createFancyJbutton("Sauvegarder", e -> {
             if(level.endGame()){
                 new Composer(level.getNameLevel().trim(), level);
-                parent.addStackPanel(new LevelSelectedJPanel(parent));
+                parent.goBackPanel();
+                parent.goBackPanel();
+                parent.goBackPanel();
                 parent.update();
             }else{
                 GraphiqueBuilder.createMessageTop("Sauvegarde impossible map non terminé", this);

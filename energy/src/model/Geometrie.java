@@ -3,6 +3,7 @@ package model;
 import java.awt.*;
 
 public class Geometrie {
+
     private final Polygon polygon;
     private final int i, j;
 

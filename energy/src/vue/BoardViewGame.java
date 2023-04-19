@@ -15,31 +15,61 @@ import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class BoardViewGame extends JPanel implements MouseListener, MouseMotionListener {
+public class BoardViewGame extends JPanel implements MouseListener, MouseMotionListener, ComponentListener {
 
-    private final ArrayList<Geometrie> list = new ArrayList<>();
+    private final ArrayList<Geometrie> list;
     private Level level;
     private boolean isGame;
     private int posX,posY;
     private Tuile tuileCourante;
     private EditorSelectionItemJPanel editorSelectionItemJPanel;
 
-
     public BoardViewGame(Level level, boolean isGame) {
         this.isGame = isGame;
         this.level = level;
         this.tuileCourante = level.getPlateau()[0][0];
+        this.list = new ArrayList<>();
 
         this.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 50));
         this.setBackground(GraphiqueBuilder.blackBackGround());
         addMouseListener(this);
         addMouseMotionListener(this);
+        addComponentListener(this);
         setPreferredSize(new Dimension(level.getWidth() * 120, level.getHeight() * 120));
+
+    }
+
+    private void initGeometrieList() {
+        if(list.size() > 0)return;
+        int width = getSize().width;
+        int height = getSize().height;
+
+        int height_ = getSize().width / (level.getWidth());
+        int width_ = getSize().height / (level.getHeight());
+        int size = Math.min(width_, height_);
+
+        for (int row = 0; row < level.getWidth(); row++) {
+            for (int col = 0; col < level.getHeight(); col++) {
+
+                if(level.getTypeTuilePlateau() == TuileShape.CARRE) {
+                    int x = row * size + (width - ((level.getWidth()) * size)) / 2;
+                    int y = col * size + (height - ((level.getHeight()) * size)) / 2;
+                    list.add(new Geometrie(DirCarreGraphic.createPolygon(x, y, size), row, col));
+                }else {
+                    int x = row * size + (width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2 - (size / 4) * row;
+                    int y = col * size + (height - ((level.getHeight()) * size)) / 2 + size / 3 - (size / 7) * col;
+                    if (row % 2 == 0 || col < level.getHeight() - 1) {
+                        if (row % 2 == 1) y += (size / 2 - size / 12);
+                        list.add(new Geometrie(DirHexaGraphic.createPolygon(x, y - size / 12, size), row, col));
+                    }
+                }
+            }
+        }
+
+
     }
 
     public BoardViewGame(Level level, EditorSelectionItemJPanel editorSelectionItemJPanel, boolean isGame) {
@@ -47,16 +77,9 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
         this.editorSelectionItemJPanel = editorSelectionItemJPanel;
     }
 
-    public void setComposant(int ni, int nj , TuileComposant composant){
-        if (ni >= 0 && ni < level.getHeight() && nj >= 0 && nj < level.getWidth()) {
-            level.getPlateau()[ni][nj].setComposant(composant);
-        }
-        }
-
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-       list.clear();
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -66,12 +89,26 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
         int width = getSize().height / (level.getHeight());
         int size = Math.min(width, height);
 
-        if (level.getTypeTuilePlateau() == TuileShape.CARRE)
-            DirCarreGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
-        else
-            DirHexaGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
+        if (level.getTypeTuilePlateau() == TuileShape.CARRE) DirCarreGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
+        else DirHexaGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
 
     }
+
+    @Override
+    public void componentResized(ComponentEvent e) {
+        list.clear();
+        initGeometrieList();
+        repaint();
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent componentEvent) {}
+
+    @Override
+    public void componentShown(ComponentEvent componentEvent) {}
+
+    @Override
+    public void componentHidden(ComponentEvent componentEvent) {}
 
     @Override
     public void mouseClicked(MouseEvent e) {
