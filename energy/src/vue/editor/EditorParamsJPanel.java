@@ -26,8 +26,8 @@ public class EditorParamsJPanel extends JPanel {
 
     public EditorParamsJPanel(FenetreJFrame parent){
         this.setLayout(new GridBagLayout());
-        this.colonnesJslider = new FancyJSlider(4, 1, 10);
-        this.lignesJslider = new FancyJSlider(3, 1, 10);
+        this.colonnesJslider = new FancyJSlider(4, 2, 6);
+        this.lignesJslider = new FancyJSlider(3, 2, 6);
         this.mainJpanel = GraphiqueBuilder.createPanelGrid(6, 1, false);
         this.panelLongueur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelLargeur = GraphiqueBuilder.createPanelGrid(1, 3, false);
