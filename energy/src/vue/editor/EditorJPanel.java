@@ -1,5 +1,8 @@
 package vue.editor;
 
+import controler.Controller;
+import controler.ControllerEditBoard;
+import model.BufferedModel;
 import model.Composer;
 import model.Level;
 import vue.BoardViewGame;
@@ -9,6 +12,7 @@ import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class EditorJPanel extends JPanel {
 
@@ -44,9 +48,15 @@ public class EditorJPanel extends JPanel {
         this.add(panelEditeurEtButton);
         this.add(GraphiqueBuilder.createFancyJLabel("Editeur de niveau", Color.white, 50));
         this.add(panelDivision);
-        editorSelectionItemJPanel = new EditorSelectionItemJPanel();
+        BufferedModel model = new BufferedModel(1200, 1200, BufferedImage.TYPE_INT_RGB);
+        BoardViewGame boardViewGame = new BoardViewGame(level);
+        model.subscribe(boardViewGame);
+        model.notifyObserver();
+
+        ControllerEditBoard controllerEditBoard = new ControllerEditBoard(level, model, boardViewGame);
+        editorSelectionItemJPanel = new EditorSelectionItemJPanel(controllerEditBoard);
         panelDivision.add(editorSelectionItemJPanel);
-        panelDivision.add(new BoardViewGame(level, editorSelectionItemJPanel, false));
+        panelDivision.add(boardViewGame);
     }
 
 

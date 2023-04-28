@@ -33,6 +33,17 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
         this.level = level;
         this.gameView = gameView;
         this.list = new ArrayList<>();
+        gameView.addComponentListener(this);
+
+        /*
+               int height = getSize().width / (level.getWidth());
+        int width = getSize().height / (level.getHeight());
+        int size = Math.min(width, height);
+
+        if (level.getTypeTuilePlateau() == TuileShape.CARRE) DirCarreGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
+        else DirHexaGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
+
+         */
     }
 
     final public void activer() {
@@ -52,6 +63,9 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
         return gameView;
     }
 
+    public Level getLevel(){
+        return level;
+    }
 
     public void initGeometrieList(){
         if(list.size() > 0)return;

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class BufferedModel  extends BufferedImage implements Observable {
+public class BufferedModel extends BufferedImage implements Observable {
 
     private Graphics g;
     private ArrayList<Observer> listObserver;
@@ -15,7 +15,7 @@ public class BufferedModel  extends BufferedImage implements Observable {
     public BufferedModel(int width, int height, int imageType) {
         super(width, height, imageType);
         this.g = super.getGraphics();
-        this.listObserver = new ArrayList<Observer>();
+        this.listObserver = new ArrayList<>();
     }
 
 
