@@ -2,7 +2,10 @@ package vue;
 
 import model.*;
 
+import model.typeenum.TuileShape;
 import utils.Observer;
+import vue.typeenum.DirCarreGraphic;
+import vue.typeenum.DirHexaGraphic;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
@@ -20,6 +23,7 @@ public class BoardViewGame extends JPanel implements Observer {
         this.level = level;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;

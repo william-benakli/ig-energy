@@ -18,7 +18,6 @@ public class BufferedModel extends BufferedImage implements Observable {
         this.listObserver = new ArrayList<>();
     }
 
-
     @Override
     public void subscribe(Observer observer) {
         listObserver.add(observer);
