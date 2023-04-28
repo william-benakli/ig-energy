@@ -68,8 +68,6 @@ public class BoardViewGame extends JPanel implements MouseListener, MouseMotionL
                 }
             }
         }
-
-
     }
 
     public BoardViewGame(Level level, EditorSelectionItemJPanel editorSelectionItemJPanel, boolean isGame) {

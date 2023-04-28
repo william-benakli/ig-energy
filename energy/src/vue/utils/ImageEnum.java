@@ -50,7 +50,7 @@ public enum ImageEnum {
         }
     }
 
-    public BufferedImage    getImage() {
+    public BufferedImage getImage() {
         return image;
     }
 
