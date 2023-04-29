@@ -5,6 +5,7 @@ import model.Geometrie;
 import model.Level;
 import vue.BoardViewGame;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class ControllerInGame extends Controller{
@@ -24,5 +25,7 @@ public class ControllerInGame extends Controller{
                 gameView.repaint();
             }
         }
+        super.mouseClicked(e);
+        model.notifyObserver();
     }
 }

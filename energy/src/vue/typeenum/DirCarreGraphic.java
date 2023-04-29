@@ -1,5 +1,6 @@
 package vue.typeenum;
 
+import controler.Controller;
 import model.Geometrie;
 import model.Level;
 import model.typeenum.TuileComposant;
@@ -13,9 +14,8 @@ import java.util.ArrayList;
 
 public class DirCarreGraphic implements DirectionInterfaceGraphic {
 
-    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, JPanel menuJPanel){
-
-        for (Geometrie geo : list) {
+    public static void paintComponent(Level level, int width, int height, int size, Graphics g, Controller controller, JPanel menuJPanel){
+        for (Geometrie geo : controller.getList()) {
             int col = geo.getDeducY();
             int row = geo.getDeducX();
             int x = row * size + (width - ((level.getWidth()) * size)) / 2;

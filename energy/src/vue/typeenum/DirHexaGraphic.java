@@ -1,5 +1,6 @@
 package vue.typeenum;
 
+import controler.Controller;
 import model.Geometrie;
 import model.Level;
 import model.Tuile;
@@ -9,12 +10,11 @@ import vue.utils.ImageEnum;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class DirHexaGraphic implements DirectionInterfaceGraphic {
 
-    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, JPanel menuJPanel) {
-        for (Geometrie geo : list) {
+    public static void paintComponent(Level level, int width, int height, int size, Graphics2D g, Controller controller, JPanel menuJPanel) {
+        for (Geometrie geo : controller.getList()) {
             int col = geo.getDeducY();
             int row = geo.getDeducX();
             int x = row * size + (width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2 - (size / 4) * row;

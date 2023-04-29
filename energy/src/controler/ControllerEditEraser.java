@@ -22,6 +22,7 @@ public class ControllerEditEraser extends Controller{
         }
         level.propagation();
         level.updateAll();
-        gameView.repaint();
+        super.mouseClicked(e);
+        model.notifyObserver();
     }
 }

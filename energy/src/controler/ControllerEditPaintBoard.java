@@ -7,11 +7,11 @@ import vue.BoardViewGame;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class ControllerEditBoard extends Controller{
+public class ControllerEditPaintBoard extends Controller{
 
     private int posX,posY;
 
-    public ControllerEditBoard(Level level, BufferedModel model, BoardViewGame gameView) {
+    public ControllerEditPaintBoard(Level level, BufferedModel model, BoardViewGame gameView) {
         super(level, model, gameView);
     }
 
@@ -27,12 +27,14 @@ public class ControllerEditBoard extends Controller{
             graphics2D.setColor(Color.white);
             graphics2D.setStroke(new BasicStroke(15));
             graphics2D.drawLine(posX, posY, posX, posY);
+        super.mousePressed(e);
+        model.notifyObserver();
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
             for (Geometrie geo : list) {
-                if (geo.getPolygon().contains(e.getPoint())) {
+                if (geo.getPolygon().contains(e.getPoint()) && tuileCourante != null) {
                     Tuile mousePosition = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
                     if (tuileCourante != mousePosition) {
                         for (DirectionInterface dir : tuileCourante.getDirection().getValues()) {
@@ -45,20 +47,22 @@ public class ControllerEditBoard extends Controller{
                                     tuileCourante.setEdgeBoolean(dir.getPosition(), true);
                                     neighbor.setEdgeBoolean(dir.getOpositeDirection(dir.getPosition()), true);
                                     tuileCourante = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
+                                    level.updateAll();
+                                    model.notifyObserver();
+                                    super.mouseDragged(e);
                                 }
                             }
                         }
                     }
+                    Graphics2D graphics2D = model.getGraphics();
+                    graphics2D.setColor(Color.white);
+                    graphics2D.setStroke(new BasicStroke(8));
+                    graphics2D.drawLine(posX, posY, e.getX(), e.getY());
+                    this.posX = e.getX();
+                    this.posY = e.getY();
+                    level.updateAll();
+                    model.notifyObserver();
                 }
-                Graphics2D graphics2D = (Graphics2D) model.getGraphics();
-                graphics2D.setColor(Color.white);
-                graphics2D.setStroke(new BasicStroke(15));
-                graphics2D.drawLine(posX, posY, e.getX(), e.getY());
-                this.posX = e.getX();
-                this.posY = e.getY();
-                level.updateAll();
-                gameView.repaint();
             }
-        }
-
+    }
 }

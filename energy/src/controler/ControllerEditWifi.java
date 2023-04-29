@@ -22,6 +22,7 @@ public class ControllerEditWifi extends Controller{
         }
         level.propagation();
         level.updateAll();
-        gameView.repaint();
+        super.mouseClicked(e);
+        model.notifyObserver();
     }
 }

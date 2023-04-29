@@ -1,13 +1,11 @@
 package vue.editor;
 
-import controler.Controller;
-import controler.ControllerEditBoard;
+import controler.ControllerEditPaintBoard;
 import model.BufferedModel;
 import model.Composer;
 import model.Level;
 import vue.BoardViewGame;
 import vue.FenetreJFrame;
-import vue.LevelSelectedJPanel;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
@@ -48,19 +46,18 @@ public class EditorJPanel extends JPanel {
         this.add(panelEditeurEtButton);
         this.add(GraphiqueBuilder.createFancyJLabel("Editeur de niveau", Color.white, 50));
         this.add(panelDivision);
-        BufferedModel model = new BufferedModel(1200, 1200, BufferedImage.TYPE_INT_RGB);
-        BoardViewGame boardViewGame = new BoardViewGame(level);
+        BoardViewGame boardViewGame = new BoardViewGame(level.getWidth() * 120, level.getHeight() * 120);
+        System.out.println(boardViewGame.getSize().width);
+        System.out.println(boardViewGame.getSize().height);
+        BufferedModel model = new BufferedModel(2500, 500, BufferedImage.TYPE_INT_RGB);
         model.subscribe(boardViewGame);
         model.notifyObserver();
-
-        ControllerEditBoard controllerEditBoard = new ControllerEditBoard(level, model, boardViewGame);
+        ControllerEditPaintBoard controllerEditBoard = new ControllerEditPaintBoard(level, model, boardViewGame);
         editorSelectionItemJPanel = new EditorSelectionItemJPanel(controllerEditBoard);
+        controllerEditBoard.activer();
         panelDivision.add(editorSelectionItemJPanel);
         panelDivision.add(boardViewGame);
     }
 
 
-    public EditorSelectionItemJPanel getEditorSelectionItemJPanel() {
-        return editorSelectionItemJPanel;
-    }
 }

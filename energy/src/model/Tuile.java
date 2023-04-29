@@ -41,6 +41,7 @@ public class Tuile {
     }
 
     public void rotation() {
+        if(composant == TuileComposant.ENERGY)return;
         boolean tmp = edgeBoolean[edgeBoolean.length - 1];
         for (int i = edgeBoolean.length - 1; i > 0; i--)
             edgeBoolean[i] = edgeBoolean[i - 1];

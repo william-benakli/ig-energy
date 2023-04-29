@@ -2,11 +2,9 @@ package vue.editor;
 
 import controler.*;
 import model.typeenum.EditeurSelector;
-import model.typeenum.TuileComposant;
 import vue.utils.GraphiqueBuilder;
 import vue.utils.ImageEnum;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,7 +20,7 @@ public class EditorSelectionItemJPanel extends JPanel {
         this.courantController = controller;
         this.setLayout(new GridLayout(5,2));
         this.selected = EditeurSelector.DRAW;
-        add(new ButtonEditorImage("ressource/icon/stylo_icon.png", EditeurSelector.DRAW, new ControllerEditBoard(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
+        add(new ButtonEditorImage("ressource/icon/stylo_icon.png", EditeurSelector.DRAW, new ControllerEditPaintBoard(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
         add(new ButtonEditorImage("ressource/icon/gomme_icon.png", EditeurSelector.ERASER, new ControllerEditEraser(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
         add(new ButtonEditorImage("ressource/icon/rotation_icon.png", EditeurSelector.ROTATION, new ControllerRotation(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
         add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage(), EditeurSelector.ENERGY, new ControllerEditEnergy(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));

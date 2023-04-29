@@ -9,13 +9,13 @@ import vue.BoardViewGame;
 import vue.typeenum.DirCarreGraphic;
 import vue.typeenum.DirHexaGraphic;
 
+import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public abstract class Controller extends MouseAdapter implements ComponentListener {
 
@@ -33,17 +33,16 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
         this.level = level;
         this.gameView = gameView;
         this.list = new ArrayList<>();
+
         gameView.addComponentListener(this);
+        initGeometrieList();
+        paintModel();
+        level.updateAll();
+        model.notifyObserver();
+    }
 
-        /*
-               int height = getSize().width / (level.getWidth());
-        int width = getSize().height / (level.getHeight());
-        int size = Math.min(width, height);
-
-        if (level.getTypeTuilePlateau() == TuileShape.CARRE) DirCarreGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
-        else DirHexaGraphic.paintComponent(level, getSize().width, getSize().height, size, g, list, this);
-
-         */
+    final public ArrayList<Geometrie> getList() {
+        return list;
     }
 
     final public void activer() {
@@ -99,7 +98,9 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
     public void componentResized(ComponentEvent e) {
         list.clear();
         initGeometrieList();
-        getBoardViewGame().repaint();
+        paintModel();
+        level.updateAll();
+        model.notifyObserver();
     }
 
     @Override
@@ -111,4 +112,34 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
     @Override
     public void componentHidden(ComponentEvent componentEvent) {}
 
+    private void paintModel(){
+        model.getGraphics().clearRect(0, 0, 5000, 5000);
+        model.getGraphics().setStroke(new BasicStroke(2));
+        int height = gameView.getSize().width / (level.getWidth());
+        int width = gameView.getSize().height / (level.getHeight());
+        int size = Math.min(width, height);
+        if (level.getTypeTuilePlateau() == TuileShape.CARRE) DirCarreGraphic.paintComponent(level, gameView.getSize().width, gameView.getSize().height, size, model.getGraphics(), this, gameView);
+        else DirHexaGraphic.paintComponent(level, gameView.getSize().width, gameView.getSize().height, size, model.getGraphics(), this, gameView);
+    }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        paintModel();
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        paintModel();
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        paintModel();
+        level.updateAll();
+        model.notifyObserver();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        paintModel();
+    }
 }

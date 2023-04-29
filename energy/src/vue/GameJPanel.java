@@ -1,10 +1,8 @@
 package vue;
 
-import controler.ControllerEditBoard;
 import controler.ControllerInGame;
 import model.BufferedModel;
 import model.Level;
-import vue.editor.EditorSelectionItemJPanel;
 import vue.fancycomposant.FancyJButton;
 import vue.utils.GraphiqueBuilder;
 
@@ -30,12 +28,14 @@ public final class GameJPanel extends JPanel {
             jFrame.update();
         });
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.boardViewGame = new BoardViewGame(level);
-        BufferedModel model = new BufferedModel(1200, 1200, BufferedImage.TYPE_INT_RGB);
+        this.boardViewGame = new BoardViewGame(level.getWidth() * 120, level.getHeight() * 120);
+        BufferedModel model = new BufferedModel(500, 500, BufferedImage.TYPE_INT_RGB);
         model.subscribe(boardViewGame);
         model.notifyObserver();
+
         ControllerInGame controllerEditBoard = new ControllerInGame(level, model, boardViewGame);
         controllerEditBoard.activer();
+
         this.setBackground(GraphiqueBuilder.blackBackGround());
         add(goback);
         add(boardViewGame);

@@ -22,6 +22,7 @@ public class ControllerEditEnergy extends Controller{
         }
         level.propagation();
         level.updateAll();
-        gameView.repaint();
+        super.mouseClicked(e);
+        model.notifyObserver();
     }
 }
