@@ -49,7 +49,7 @@ public class EditorJPanel extends JPanel {
         BoardViewGame boardViewGame = new BoardViewGame(level.getWidth() * 120, level.getHeight() * 120);
         System.out.println(boardViewGame.getSize().width);
         System.out.println(boardViewGame.getSize().height);
-        BufferedModel model = new BufferedModel(2500, 500, BufferedImage.TYPE_INT_RGB);
+        BufferedModel model = new BufferedModel(parent.getWidth(), parent.getWidth(), BufferedImage.TYPE_INT_RGB);
         model.subscribe(boardViewGame);
         model.notifyObserver();
         ControllerEditPaintBoard controllerEditBoard = new ControllerEditPaintBoard(level, model, boardViewGame);

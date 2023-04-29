@@ -29,7 +29,7 @@ public final class GameJPanel extends JPanel {
         });
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.boardViewGame = new BoardViewGame(level.getWidth() * 120, level.getHeight() * 120);
-        BufferedModel model = new BufferedModel(500, 500, BufferedImage.TYPE_INT_RGB);
+        BufferedModel model = new BufferedModel(jFrame.getWidth(), jFrame.getHeight(), BufferedImage.TYPE_INT_RGB);
         model.subscribe(boardViewGame);
         model.notifyObserver();
 
