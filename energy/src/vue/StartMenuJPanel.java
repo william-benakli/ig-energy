@@ -1,13 +1,13 @@
 package vue;
 
 import controler.Controller;
+import model.Joueur;
 import vue.fancycomposant.FancyJButton;
 import vue.utils.GraphiqueBuilder;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class StartMenuJPanel extends JPanel {
 
@@ -31,9 +31,16 @@ public class StartMenuJPanel extends JPanel {
         this.setPreferredSize(new Dimension(1280, 720));
         this.setBackground(new Color(12, 12, 12));
         JTextField userNameField = GraphiqueBuilder.createFancyJTextField("Username");
+        if(Controller.getPlayer()!=null)userNameField.setText(Controller.getPlayer().getName());
         buttonJpanel.add(userNameField);
         this.playButton = GraphiqueBuilder.createFancyJbutton("Jouer", "ressource/icon/play_game.png", e -> {
-            //chargé le joueur ou le créer
+            Joueur existingPlayer = Joueur.load(userNameField.getText());
+            if(existingPlayer == null) {
+                Joueur newPlayer = new Joueur(userNameField.getText());
+                newPlayer.save();
+                Controller.setPlayer(newPlayer);
+            } else Controller.setPlayer(existingPlayer);
+
             parent.addStackPanel(new LevelSelectedJPanel(parent));
             parent.update();
         });

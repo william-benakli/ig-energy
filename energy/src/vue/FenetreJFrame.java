@@ -1,7 +1,5 @@
 package vue;
 
-import model.Level;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Stack;
@@ -13,6 +11,9 @@ public final class FenetreJFrame extends JFrame {
      */
 
     private Stack<JPanel> panelView = new Stack<>();
+
+
+    //TODO: instance parametres
 
     public FenetreJFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

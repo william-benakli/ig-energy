@@ -1,7 +1,5 @@
 package model;
 
-import model.Level;
-import model.Tuile;
 import model.typeenum.DirCarre;
 import model.typeenum.DirHexa;
 import model.typeenum.TuileComposant;
@@ -29,7 +27,7 @@ public class Parser {
             throw new ParseException("Erreur à la ligne", 0);
 
         TuileShape shape = arrayLine[2].equalsIgnoreCase("S") ? TuileShape.CARRE : TuileShape.HEXA;
-        this.level = new Level(0, Integer.parseInt(arrayLine[0]), Integer.parseInt(arrayLine[1]), shape);
+        this.level = new Level(Integer.parseInt(arrayLine[0]), Integer.parseInt(arrayLine[1]), shape, levelName.replace(".nrg", "").split("/")[2]);
 
         int positionLine = 0;
         while (scanner.hasNextLine()) {

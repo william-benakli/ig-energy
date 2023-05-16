@@ -1,9 +1,6 @@
 package controler;
 
-import model.BufferedModel;
-import model.Geometrie;
-import model.Level;
-import model.Tuile;
+import model.*;
 import model.typeenum.TuileShape;
 import vue.BoardViewGame;
 import vue.typeenum.DirCarreGraphic;
@@ -27,6 +24,16 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
     protected BufferedModel model;
     protected BoardViewGame gameView;
     protected Tuile tuileCourante;
+
+    private static Joueur playerControler;
+
+    public static void setPlayer(Joueur player) {
+        playerControler = player;
+    }
+
+    public static Joueur getPlayer() {
+        return playerControler;
+    }
 
     public Controller(Level level, BufferedModel model, BoardViewGame gameView){
         this.model = model;

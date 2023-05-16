@@ -21,6 +21,8 @@ public final class GameJPanel extends JPanel {
         this.level.randomised();
         this.goback = GraphiqueBuilder.createFancyJbutton("Retour", e -> {
             jFrame.goBackPanel();
+            jFrame.goBackPanel();
+            jFrame.addStackPanel(new LevelSelectedJPanel(jFrame));
             jFrame.update();
         });
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
