@@ -27,7 +27,6 @@ public final class Joueur implements Serializable {
         try (FileOutputStream fileOut = new FileOutputStream("ressource/user/"+name + ".ser");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(this);
-            System.out.println("Player saved successfully.");
         } catch (Exception e) {
             System.out.println("Impossible d'enregistrer le joueur");
         }
@@ -36,7 +35,6 @@ public final class Joueur implements Serializable {
     public static Joueur load(String name) {
         try ( FileInputStream fileIn = new FileInputStream("ressource/user/"+name + ".ser");
               ObjectInputStream objectIn = new ObjectInputStream(fileIn) ) {
-            System.out.println("Player loaded successfully.");
             return (Joueur) objectIn.readObject();
         } catch (Exception e) {
             return null;

@@ -1,5 +1,7 @@
 package vue;
 
+import model.ParametersGame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Stack;
@@ -14,6 +16,7 @@ public final class FenetreJFrame extends JFrame {
 
 
     //TODO: instance parametres
+    private static ParametersGame params;
 
     public FenetreJFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
