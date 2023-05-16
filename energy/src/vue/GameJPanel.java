@@ -12,10 +12,6 @@ import java.awt.image.BufferedImage;
 
 public final class GameJPanel extends JPanel {
 
-    /**
-     *
-     */
-
     private final Level level;
     private final FancyJButton goback;
     private final BoardViewGame boardViewGame;
