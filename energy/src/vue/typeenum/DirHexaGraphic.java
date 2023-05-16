@@ -1,58 +1,44 @@
 package vue.typeenum;
 
+import controler.Controller;
 import model.Geometrie;
 import model.Level;
 import model.Tuile;
 import model.typeenum.TuileComposant;
-import vue.GameJPanel;
 import vue.utils.ImageEnum;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class DirHexaGraphic implements DirectionInterfaceGraphic {
 
-    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, JPanel menuJPanel) {
-        for (int row = 0; row < level.getWidth(); row++) {
-            for (int col = 0; col < level.getHeight(); col++) {
-                int x = row * size + (width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2 - (size / 4) * row;
-                int y = col * size + (height - ((level.getHeight()) * size)) / 2 + size / 3 - (size / 7) * col;
-                    if (row % 2 == 0 || col < level.getHeight() - 1) {
-                    if (row % 2 == 1) y += (size / 2 - size / 12);
-
-                    Geometrie geometriePolygon = new Geometrie(drawPolygon(x, y - size / 12, size), row, col);
-                    list.add(geometriePolygon);
-                    g.setColor(Color.red);  
-                    g.drawPolygon(geometriePolygon.getPolygon());
-
-                    g.drawImage(
-                            level.getPlateau()[col][row].getImage(),
-                            x,
-                            y,
-                            size,
-                            size,
-                            menuJPanel
-                    );
-                }
+    public static void paintComponent(Level level, int width, int height, int size, Graphics2D g, Controller controller, JPanel menuJPanel) {
+        for (Geometrie geo : controller.getList()) {
+            int col = geo.getDeducY();
+            int row = geo.getDeducX();
+            int x = row * size + (width - ((level.getWidth()) * size)) / 2 + (size / 2 * ((int) level.getWidth() / 2)) / 2 - (size / 4) * row;
+            int y = col * size + (height - ((level.getHeight()) * size)) / 2 + size / 3 - (size / 7) * col;
+            if (row % 2 == 0 || col < level.getHeight() - 1) {
+                if (row % 2 == 1) y += (size / 2 - size / 12);
+                g.drawImage(level.getPlateau()[col][row].getImage(), x, y, size, size, menuJPanel);
+                g.setColor(Color.red);
+                g.drawPolygon(geo.getPolygon());
             }
         }
+
     }
 
-    private static Polygon drawPolygon(int x, int y, int size) {
+    public static Polygon createPolygon(int x, int y, int size) {
         Polygon hexagon = new Polygon();
-
         x += size / 2;
         y += size / 2;
-
         for (int i = 0; i < 6; i++) {
             hexagon.addPoint(
                     (int) (x + size / 2 * Math.cos(i * 2 * Math.PI / 6D)),
                     (int) (y + size / 2 * Math.sin(i * 2 * Math.PI / 6D))
             );
         }
-
         return hexagon;
     }
 
@@ -128,11 +114,5 @@ public class DirHexaGraphic implements DirectionInterfaceGraphic {
                 }
             }
         }
-
-      //  g.setColor(Color.WHITE);
-       // g.drawString(String.valueOf( "i " + t.i) + " j " + t.j, 50, 50);
-
-
     }
-
 }

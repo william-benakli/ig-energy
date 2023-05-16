@@ -1,7 +1,7 @@
 package vue.editor;
 
+import controler.*;
 import model.typeenum.EditeurSelector;
-import model.typeenum.TuileComposant;
 import vue.utils.GraphiqueBuilder;
 import vue.utils.ImageEnum;
 
@@ -14,16 +14,18 @@ public class EditorSelectionItemJPanel extends JPanel {
 
 
     private EditeurSelector selected;
+    private Controller courantController;
 
-    EditorSelectionItemJPanel(){
+    EditorSelectionItemJPanel(Controller controller){
+        this.courantController = controller;
         this.setLayout(new GridLayout(5,2));
         this.selected = EditeurSelector.DRAW;
-        add(new ButtonEditorImage("ressource/icon/stylo_icon.png", EditeurSelector.DRAW));
-        add(new ButtonEditorImage("ressource/icon/gomme_icon.png", EditeurSelector.ERASER));
-        add(new ButtonEditorImage("ressource/icon/rotation_icon.png", EditeurSelector.ROTATION));
-        add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage(), EditeurSelector.ENERGY));
-        add(new ButtonEditorImage(ImageEnum.SQUARE_OFF_COMPOSANT_WIFI.getImage(), EditeurSelector.WIFI));
-        add(new ButtonEditorImage(ImageEnum.SQUARE_OFF_COMPOSANT_LAMP.getImage(), EditeurSelector.LIGHT));
+        add(new ButtonEditorImage("ressource/icon/stylo_icon.png", EditeurSelector.DRAW, new ControllerEditPaintBoard(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
+        add(new ButtonEditorImage("ressource/icon/gomme_icon.png", EditeurSelector.ERASER, new ControllerEditEraser(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
+        add(new ButtonEditorImage("ressource/icon/rotation_icon.png", EditeurSelector.ROTATION, new ControllerRotation(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
+        add(new ButtonEditorImage(ImageEnum.SQUARE_ON_COMPOSANT_ENERGY.getImage(), EditeurSelector.ENERGY, new ControllerEditEnergy(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
+        add(new ButtonEditorImage(ImageEnum.SQUARE_OFF_COMPOSANT_WIFI.getImage(), EditeurSelector.WIFI, new ControllerEditWifi(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
+        add(new ButtonEditorImage(ImageEnum.SQUARE_OFF_COMPOSANT_LAMP.getImage(), EditeurSelector.LIGHT, new ControllerEditLight(courantController.getLevel(), courantController.getModel(), courantController.getBoardViewGame())));
         this.setOpaque(false);
         final Dimension dimension = new Dimension(100*3, 100*7);
         this.setPreferredSize(dimension);
@@ -42,8 +44,9 @@ public class EditorSelectionItemJPanel extends JPanel {
         private Image image;
         private EditeurSelector composant;
         private boolean isHover;
+        private Controller controllerOutils;
 
-        public ButtonEditorImage(Image image, EditeurSelector composant){
+        public ButtonEditorImage(Image image, EditeurSelector composant, Controller controllerOutils){
             this.composant = composant;
             this.isHover = false;
             this.image = image;
@@ -52,10 +55,11 @@ public class EditorSelectionItemJPanel extends JPanel {
             setContentAreaFilled(false);
             setFocusPainted(false);
             this.addMouseListener(this);
+            this.controllerOutils = controllerOutils;
         }
 
-        public ButtonEditorImage(String img, EditeurSelector composant){
-           this(new ImageIcon(img).getImage(), composant);
+        public ButtonEditorImage(String img, EditeurSelector composant, Controller controllerOutils){
+           this(new ImageIcon(img).getImage(), composant, controllerOutils);
         }
 
         @Override
@@ -69,6 +73,9 @@ public class EditorSelectionItemJPanel extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
+            courantController.desactiver();
+            controllerOutils.activer();
+            courantController = controllerOutils;
             selected = composant;
         }
 

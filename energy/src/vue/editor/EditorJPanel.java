@@ -1,14 +1,16 @@
 package vue.editor;
 
+import controler.ControllerEditPaintBoard;
+import model.BufferedModel;
 import model.Composer;
 import model.Level;
 import vue.BoardViewGame;
 import vue.FenetreJFrame;
-import vue.LevelSelectedJPanel;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class EditorJPanel extends JPanel {
 
@@ -28,7 +30,9 @@ public class EditorJPanel extends JPanel {
         final JButton save = GraphiqueBuilder.createFancyJbutton("Sauvegarder", e -> {
             if(level.endGame()){
                 new Composer(level.getNameLevel().trim(), level);
-                parent.addStackPanel(new LevelSelectedJPanel(parent));
+                parent.goBackPanel();
+                parent.goBackPanel();
+                parent.goBackPanel();
                 parent.update();
             }else{
                 GraphiqueBuilder.createMessageTop("Sauvegarde impossible map non terminé", this);
@@ -42,13 +46,18 @@ public class EditorJPanel extends JPanel {
         this.add(panelEditeurEtButton);
         this.add(GraphiqueBuilder.createFancyJLabel("Editeur de niveau", Color.white, 50));
         this.add(panelDivision);
-        editorSelectionItemJPanel = new EditorSelectionItemJPanel();
+        BoardViewGame boardViewGame = new BoardViewGame(level.getWidth() * 120, level.getHeight() * 120);
+        System.out.println(boardViewGame.getSize().width);
+        System.out.println(boardViewGame.getSize().height);
+        BufferedModel model = new BufferedModel(parent.getWidth(), parent.getWidth(), BufferedImage.TYPE_INT_RGB);
+        model.subscribe(boardViewGame);
+        model.notifyObserver();
+        ControllerEditPaintBoard controllerEditBoard = new ControllerEditPaintBoard(level, model, boardViewGame);
+        editorSelectionItemJPanel = new EditorSelectionItemJPanel(controllerEditBoard);
+        controllerEditBoard.activer();
         panelDivision.add(editorSelectionItemJPanel);
-        panelDivision.add(new BoardViewGame(level, editorSelectionItemJPanel, false));
+        panelDivision.add(boardViewGame);
     }
 
 
-    public EditorSelectionItemJPanel getEditorSelectionItemJPanel() {
-        return editorSelectionItemJPanel;
-    }
 }

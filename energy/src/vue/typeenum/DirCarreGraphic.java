@@ -1,9 +1,10 @@
 package vue.typeenum;
 
+import controler.Controller;
 import model.Geometrie;
 import model.Level;
 import model.typeenum.TuileComposant;
-import vue.GameJPanel;
+
 import vue.utils.ImageEnum;
 
 import javax.swing.*;
@@ -13,37 +14,24 @@ import java.util.ArrayList;
 
 public class DirCarreGraphic implements DirectionInterfaceGraphic {
 
-    public static void paintComponent(Level level, int width, int height, int size, Graphics g, ArrayList<Geometrie> list, JPanel menuJPanel) {
-        for (int row = 0; row < level.getWidth(); row++) {
-            for (int col = 0; col < level.getHeight(); col++) {
-                int x = row * size + (width - ((level.getWidth()) * size)) / 2;
-                int y = col * size + (height - ((level.getHeight()) * size)) / 2;
-
-                Geometrie geometriePolygon = new Geometrie(drawPolygon(x, y, size), row, col);
-                list.add(geometriePolygon);
-                g.setColor(Color.red);
-                g.drawPolygon(geometriePolygon.getPolygon());
-
-                g.drawImage(
-                        level.getPlateau()[col][row].getImage(),
-                        x,
-                        y,
-                        size,
-                        size,
-                        menuJPanel
-                );
-            }
+    public static void paintComponent(Level level, int width, int height, int size, Graphics g, Controller controller, JPanel menuJPanel){
+        for (Geometrie geo : controller.getList()) {
+            int col = geo.getDeducY();
+            int row = geo.getDeducX();
+            int x = row * size + (width - ((level.getWidth()) * size)) / 2;
+            int y = col * size + (height - ((level.getHeight()) * size)) / 2;
+            g.drawImage(level.getPlateau()[col][row].getImage(), x, y, size, size, menuJPanel);
+            g.setColor(Color.red);
+            g.drawPolygon(geo.getPolygon());
         }
     }
 
-    private static Polygon drawPolygon(int x, int y, int size) {
+    public static Polygon createPolygon(int x, int y, int size) {
         Polygon hexagon = new Polygon();
-
         hexagon.addPoint(x, y);
         hexagon.addPoint(x + size, y);
         hexagon.addPoint(x + size, y + size);
         hexagon.addPoint(x, y + size);
-
         return hexagon;
     }
 
