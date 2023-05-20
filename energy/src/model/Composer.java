@@ -1,10 +1,10 @@
 package model;
 
-import model.Level;
 import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
@@ -22,7 +22,9 @@ public class Composer {
     }
 
     public static void saveInFile(String filename, String[] arr) throws IOException {
-        FileWriter file = new FileWriter("ressource/level/" +filename+".nrg");
+
+        FileWriter file = new FileWriter("ressource/level/perso/" +filename+".nrg");
+
         BufferedWriter ow = new BufferedWriter(file);
         for (String s : arr) {
             ow.write(s);

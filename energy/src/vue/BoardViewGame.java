@@ -16,7 +16,13 @@ public class BoardViewGame extends JPanel implements Observer {
         this.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         this.setBackground(GraphiqueBuilder.blackBackGround());
         setPreferredSize(new Dimension(weight, height));
+        animation();
     }
+
+    private void animation() {
+        
+    }
+
 
     @Override
     public void paintComponent(Graphics g) {
