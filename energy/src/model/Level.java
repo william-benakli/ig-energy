@@ -4,8 +4,6 @@ package model;
 import model.typeenum.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public final class Level implements Serializable {
@@ -18,31 +16,21 @@ public final class Level implements Serializable {
     private static int idLevelStatic = 0;
     private Tuile[][] plateau;
     private Joueur j;
-
-    private int idLevel;
     private int width, height;
     private TuileShape typeTuilePlateau;
     private String nameLevel;
 
-    public Level(int height, int width, TuileShape typeTuilePlateau){
+    public Level(int height, int width, TuileShape typeTuilePlateau, String nameId){
         this.plateau = new Tuile[height][width];
-        this.idLevel = idLevelStatic++;
         this.width = width;
         this.height = height;
         this.typeTuilePlateau = typeTuilePlateau;
-        this.nameLevel = "level"+idLevel;
+        this.nameLevel = nameId;
         initEmpty();
     }
 
-    public Level(int idLevel, int height, int width, TuileShape typeTuilePlateau){
-        this(height, width, typeTuilePlateau);
-        this.idLevel = idLevel;
-        this.nameLevel = "level"+idLevel;
-    }
-
     public Level(String name_level, int height, int width, TuileShape typeTuilePlateau){
-        this(height, width, typeTuilePlateau);
-        this.nameLevel = name_level;
+        this(height, width, typeTuilePlateau, name_level);
     }
 
         /**
