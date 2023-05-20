@@ -1,6 +1,6 @@
 package vue;
 
-import model.Level;
+import model.ParametersGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +13,10 @@ public final class FenetreJFrame extends JFrame {
      */
 
     private Stack<JPanel> panelView = new Stack<>();
+
+
+    //TODO: instance parametres
+    private static ParametersGame params;
 
     public FenetreJFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

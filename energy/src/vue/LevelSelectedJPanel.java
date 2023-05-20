@@ -1,5 +1,6 @@
 package vue;
 
+import controler.Controller;
 import model.Level;
 import model.Parser;
 import vue.editor.EditorSelectJPanel;
@@ -119,6 +120,14 @@ public final class LevelSelectedJPanel extends JPanel {
             setFocusPainted(false);
             setFont(GraphiqueBuilder.getFontRoboto(30f));
             setText(name); //"<html> " + name + "<br> Temps:  </html>");
+
+
+            long tm = Controller.getPlayer().getLevelTime(name);
+            long second = (tm / 1000) % 60;
+            long minute = (tm / (1000 * 60)) % 60;
+            String time = String.format("%02d:%02d", minute, second);
+
+           // setText("<html> " + name + "<br> Temps:  "+ time +"</html>");
             setForeground(Color.white);
             setBackground(GraphiqueBuilder.blackBackGround());
             setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));

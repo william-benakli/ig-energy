@@ -12,6 +12,7 @@ public class ControllerInGame extends Controller{
 
     public ControllerInGame(Level level, BufferedModel model, BoardViewGame gameView) {
         super(level, model, gameView);
+        getPlayer().start();
     }
 
     @Override
@@ -21,7 +22,9 @@ public class ControllerInGame extends Controller{
                 level.getPlateau()[geo.getDeducY()][geo.getDeducX()].rotation();
                 level.propagation();
                 level.updateAll();
-                if(level.endGame())System.out.println("fin de partie");
+                if(level.endGame()){
+                    getPlayer().stop(level.getNameLevel());
+                }
                 gameView.repaint();
             }
         }
