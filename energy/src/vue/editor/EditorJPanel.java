@@ -52,6 +52,7 @@ public class EditorJPanel extends JPanel {
         BufferedModel model = new BufferedModel(parent.getWidth(), parent.getWidth(), BufferedImage.TYPE_INT_RGB);
         model.subscribe(boardViewGame);
         model.notifyObserver();
+
         ControllerEditPaintBoard controllerEditBoard = new ControllerEditPaintBoard(level, model, boardViewGame);
         editorSelectionItemJPanel = new EditorSelectionItemJPanel(controllerEditBoard);
         controllerEditBoard.activer();
