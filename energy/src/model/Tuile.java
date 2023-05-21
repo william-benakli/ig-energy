@@ -4,8 +4,6 @@ import model.typeenum.*;
 import vue.utils.ConstructorBufferedTuile;
 
 import java.awt.image.BufferedImage;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class Tuile {
     /**

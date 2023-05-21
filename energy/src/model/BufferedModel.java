@@ -2,6 +2,7 @@ package model;
 
 import utils.Observable;
 import utils.Observer;
+import vue.utils.GraphiqueBuilder;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,12 @@ public class BufferedModel extends BufferedImage implements Observable {
         super(width, height, imageType);
         this.g = super.getGraphics();
         this.listObserver = new ArrayList<>();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                setRGB(x, y, GraphiqueBuilder.blackBackGround().getRGB());
+            }
+        }
+        notifyObserver();
     }
 
     @Override

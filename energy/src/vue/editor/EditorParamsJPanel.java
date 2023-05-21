@@ -1,5 +1,6 @@
 package vue.editor;
 
+import controler.Controller;
 import model.Level;
 import model.typeenum.TuileShape;
 import vue.FenetreJFrame;
@@ -32,13 +33,13 @@ public class EditorParamsJPanel extends JPanel {
         this.panelLongueur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelLargeur = GraphiqueBuilder.createPanelGrid(1, 3, false);
         this.panelTypeTuile = GraphiqueBuilder.createPanelGrid(1, 3, false);
-        this.tileParam = GraphiqueBuilder.createFancyJLabel("Paramètres du plateau", Color.white, 50);
+        this.tileParam = GraphiqueBuilder.createFancyJLabel("Paramètres du plateau", GraphiqueBuilder.composantColor(), 50);
         this.nom_level = GraphiqueBuilder.createFancyJTextField("Nom du niveau");
-        this.colonnes = GraphiqueBuilder.createFancyJLabel(String.valueOf(lignesJslider.getValue()), Color.white,  GraphiqueBuilder.getFontRoboto(50f));
-        this.lignes = GraphiqueBuilder.createFancyJLabel(String.valueOf(colonnesJslider.getValue()), Color.white, GraphiqueBuilder.getFontRoboto(50f));
-        this.typeTuile = GraphiqueBuilder.createFancyJLabel("Type tuile :", Color.white, 50);
-        this.lenghtLignes = GraphiqueBuilder.createFancyJLabel("Lignes :", Color.white, 50);
-        this.lenghtColonnes = GraphiqueBuilder.createFancyJLabel("Colonnes :", Color.white, 50);
+        this.colonnes = GraphiqueBuilder.createFancyJLabel(String.valueOf(lignesJslider.getValue()), GraphiqueBuilder.composantColor(),  GraphiqueBuilder.getFontRoboto(50f));
+        this.lignes = GraphiqueBuilder.createFancyJLabel(String.valueOf(colonnesJslider.getValue()), GraphiqueBuilder.composantColor(), GraphiqueBuilder.getFontRoboto(50f));
+        this.typeTuile = GraphiqueBuilder.createFancyJLabel("Type tuile :", GraphiqueBuilder.composantColor(), 50);
+        this.lenghtLignes = GraphiqueBuilder.createFancyJLabel("Lignes :", GraphiqueBuilder.composantColor(), 50);
+        this.lenghtColonnes = GraphiqueBuilder.createFancyJLabel("Colonnes :", GraphiqueBuilder.composantColor(), 50);
 
         this.buttonJpanel = GraphiqueBuilder.createPanelGrid(1, 2, false);
         final ButtonGroup buttonGroup = new ButtonGroup();
@@ -97,7 +98,7 @@ public class EditorParamsJPanel extends JPanel {
         mainJpanel.add(buttonJpanel);
 
         this.setPreferredSize(new Dimension(1280, 720));
-        this.setBackground(new Color(12, 12, 12));
+        this.setBackground(GraphiqueBuilder.blackBackGround());
         this.add(mainJpanel, gbc);
     }
 }

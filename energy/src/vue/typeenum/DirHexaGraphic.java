@@ -5,13 +5,14 @@ import model.Geometrie;
 import model.Level;
 import model.Tuile;
 import model.typeenum.TuileComposant;
+import vue.utils.GraphiqueBuilder;
 import vue.utils.ImageEnum;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class DirHexaGraphic implements DirectionInterfaceGraphic {
+public class DirHexaGraphic {
 
     public static void paintComponent(Level level, int width, int height, int size, Graphics2D g, Controller controller, JPanel menuJPanel) {
         for (Geometrie geo : controller.getList()) {
@@ -22,7 +23,7 @@ public class DirHexaGraphic implements DirectionInterfaceGraphic {
             if (row % 2 == 0 || col < level.getHeight() - 1) {
                 if (row % 2 == 1) y += (size / 2 - size / 12);
                 g.drawImage(level.getPlateau()[col][row].getImage(), x, y, size, size, menuJPanel);
-                g.setColor(Color.red);
+                g.setColor(GraphiqueBuilder.composantColor());
                 g.drawPolygon(geo.getPolygon());
             }
         }

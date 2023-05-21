@@ -1,5 +1,6 @@
 package vue.editor;
 
+import controler.Controller;
 import model.Level;
 import model.Parser;
 import vue.FenetreJFrame;
@@ -53,7 +54,7 @@ public final class EditorSelectJPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
         this.setPreferredSize(new Dimension(1280, 720));
-        this.setBackground(new Color(12, 12, 12));
+        this.setBackground(GraphiqueBuilder.blackBackGround());
         gbc.weighty = 1;
         buttonJpanel.add(label);
         buttonJpanel.add(editorButton);

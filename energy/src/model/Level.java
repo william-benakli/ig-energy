@@ -1,6 +1,5 @@
 package model;
 
-
 import model.typeenum.*;
 
 import java.io.Serializable;
@@ -13,14 +12,12 @@ public final class Level implements Serializable {
      *
      */
 
-    private static int idLevelStatic = 0;
     private Tuile[][] plateau;
-    private Joueur j;
-    private int width, height;
-    private TuileShape typeTuilePlateau;
-    private String nameLevel;
+    private final int width, height;
+    private final TuileShape typeTuilePlateau;
+    private final String nameLevel;
 
-    public Level(int height, int width, TuileShape typeTuilePlateau, String nameId){
+    public  Level(int height, int width, TuileShape typeTuilePlateau, String nameId){
         this.plateau = new Tuile[height][width];
         this.width = width;
         this.height = height;
@@ -157,6 +154,20 @@ public final class Level implements Serializable {
         }
     }
 
+    /**
+     * Cette fonction verifie si la plateau est vide
+     */
+    public boolean isEmpty() {
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
+                if(plateau[i][k].getComposant() !=  TuileComposant.EMPTY){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /** Setteur & G etteur **/
 
     public void setTuileAt(int i, int j, Tuile tuile){
@@ -172,8 +183,8 @@ public final class Level implements Serializable {
         return this.plateau;
     }
     public TuileShape getTypeTuilePlateau() {return typeTuilePlateau;}
-
     public String getNameLevel() {
         return nameLevel;
     }
+
 }

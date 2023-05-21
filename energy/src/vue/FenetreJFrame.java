@@ -1,9 +1,17 @@
 package vue;
 
+import model.Level;
 import model.ParametersGame;
+import model.Parser;
+import vue.level.BoxLevelJPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Stack;
 
 public final class FenetreJFrame extends JFrame {
@@ -13,10 +21,6 @@ public final class FenetreJFrame extends JFrame {
      */
 
     private Stack<JPanel> panelView = new Stack<>();
-
-
-    //TODO: instance parametres
-    private static ParametersGame params;
 
     public FenetreJFrame(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,4 +50,5 @@ public final class FenetreJFrame extends JFrame {
         panelView.pop();
         return true;
     }
+
 }

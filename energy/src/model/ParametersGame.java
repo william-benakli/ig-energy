@@ -4,12 +4,26 @@ import java.awt.*;
 import java.io.*;
 
 public class ParametersGame implements Serializable {
-    private boolean animation;
-    private Color backgroundColor;
 
-    public ParametersGame(boolean animationOn, Color backgroundColor) {
+    private boolean animation;
+    private Color backgroundColor, composantColor;
+
+    private static ParametersGame parametersGame = loadParametersGame();
+
+    public static ParametersGame getInstance(){
+        if(parametersGame == null){
+            return  parametersGame =new ParametersGame(true, new Color(12, 12, 12), Color.white);
+        }
+        return parametersGame;
+    }
+
+
+
+    private ParametersGame(boolean animationOn, Color backgroundColor, Color composantColor) {
         this.animation = animationOn;
         this.backgroundColor = backgroundColor;
+        this.composantColor = composantColor;
+        saveParametersGame(this);
     }
 
     public static void saveParametersGame(ParametersGame parameters) {
@@ -47,6 +61,15 @@ public class ParametersGame implements Serializable {
 
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
+        saveParametersGame(this);
+    }
+
+    public Color getComposantColor() {
+        return composantColor;
+    }
+
+    public void setComposantColor(Color backgroundColor) {
+        this.composantColor = backgroundColor;
         saveParametersGame(this);
     }
 

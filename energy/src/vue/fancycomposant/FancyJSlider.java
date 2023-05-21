@@ -14,7 +14,7 @@ public class FancyJSlider extends JSlider {
         this.setMaximum(max);
         this.setMinimum(min);
         this.setValue(value);
-        this.setForeground(Color.white);
+        this.setForeground(GraphiqueBuilder.composantColor());
         this.setPaintLabels(true);
         this.setPaintTicks(true);
         this.setPaintTrack(true);
@@ -57,7 +57,7 @@ public class FancyJSlider extends JSlider {
         public void paintTrack(Graphics grphcs) {
             Graphics2D g2 = (Graphics2D) grphcs.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(Color.white);
+            g2.setColor(GraphiqueBuilder.composantColor());
             int size = 35;
             if (slider.getOrientation() == JSlider.HORIZONTAL) {
                 int x = 0;

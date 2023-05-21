@@ -1,6 +1,8 @@
 package model;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public final class Joueur implements Serializable {
@@ -8,7 +10,7 @@ public final class Joueur implements Serializable {
     private final String name;
     /** Cette Hasmap content l'id du level et le temps passé dessus **/
     private final HashMap<String, Long> progression;
-
+    private int leveMax;
     private long startTime;
 
     @Override
@@ -19,12 +21,13 @@ public final class Joueur implements Serializable {
     public Joueur(String name){
         this.name = name;
         this.progression = new HashMap<>();
+        this.leveMax = 1;
     }
 
     public void save() {
         File directory = new File("ressource/user/");
         if (!directory.exists()) directory.mkdirs();
-        try (FileOutputStream fileOut = new FileOutputStream("ressource/user/"+name + ".ser");
+        try (FileOutputStream fileOut = new FileOutputStream("ressource/user/"+name.toLowerCase() + ".ser");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(this);
         } catch (Exception e) {
@@ -62,5 +65,13 @@ public final class Joueur implements Serializable {
     public void stop(String levelId) {
         setLevelTime(levelId, System.currentTimeMillis() - startTime);
         save();
+    }
+
+    public int getLevelMax() {
+        return leveMax;
+    }
+
+    public void levelUp() {
+        leveMax++;
     }
 }

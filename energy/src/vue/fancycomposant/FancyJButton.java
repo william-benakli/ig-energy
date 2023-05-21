@@ -19,7 +19,7 @@ public class FancyJButton extends JButton implements MouseListener {
         setContentAreaFilled(false);
         setFont(GraphiqueBuilder.getFontCocoGose(50f));
         setFocusPainted(false);
-        setForeground(Color.white);
+        setForeground(GraphiqueBuilder.composantColor());
         addMouseListener(this);
     }
 
@@ -30,7 +30,7 @@ public class FancyJButton extends JButton implements MouseListener {
         setContentAreaFilled(false);
         setFont(font);
         setFocusPainted(false);
-        setForeground(Color.white);
+        setForeground(GraphiqueBuilder.composantColor());
         addMouseListener(this);
     }
 
@@ -42,7 +42,7 @@ public class FancyJButton extends JButton implements MouseListener {
         setContentAreaFilled(false);
         setFont(GraphiqueBuilder.getFontCocoGose(50f));
         setFocusPainted(false);
-        setForeground(Color.white);
+        setForeground(GraphiqueBuilder.composantColor());
         addMouseListener(this);
     }
 
@@ -57,7 +57,7 @@ public class FancyJButton extends JButton implements MouseListener {
         super.paintComponent(g);
         final Graphics2D graphics2d = (Graphics2D) g;
         graphics2d.setStroke(new BasicStroke(12));
-        graphics2d.setColor(Color.white);
+        graphics2d.setColor(GraphiqueBuilder.composantColor());
         if(isHover) graphics2d.drawLine(0,this.getHeight()/2+40, this.getWidth(), this.getHeight()/2+40);
     }
 
