@@ -51,7 +51,7 @@ public class EditorSelectionItemJPanel extends JPanel {
             this.isHover = false;
             this.image = image;
             this.setBackground(GraphiqueBuilder.blackBackGround());
-            this.setBorder(BorderFactory.createLineBorder(Color.white));
+            this.setBorder(BorderFactory.createLineBorder(GraphiqueBuilder.composantColor()));
             setContentAreaFilled(false);
             setFocusPainted(false);
             this.addMouseListener(this);
@@ -67,7 +67,7 @@ public class EditorSelectionItemJPanel extends JPanel {
             super.paintComponent(g);
             if(composant == selected) setBorder(BorderFactory.createLineBorder(Color.orange));
             else if(isHover) setBorder(BorderFactory.createLineBorder(Color.lightGray));
-            else setBorder(BorderFactory.createLineBorder(Color.white));
+            else setBorder(BorderFactory.createLineBorder(GraphiqueBuilder.composantColor()));
             g.drawImage(image, getWidth()/2-50, getHeight()/2-50, this);
         }
 

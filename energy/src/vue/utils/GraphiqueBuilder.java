@@ -1,5 +1,7 @@
 package vue.utils;
 
+import model.ParametersGame;
+import vue.FenetreJFrame;
 import vue.fancycomposant.FancyJButton;
 import vue.fancycomposant.FancyJTextField;
 
@@ -71,8 +73,9 @@ public final class GraphiqueBuilder {
     }
 
     public static Color blackBackGround() {
-        return new Color(12, 12, 12);
+        return ParametersGame.getInstance().getBackgroundColor();
     }
+    public static Color composantColor() {return ParametersGame.getInstance().getComposantColor();}
 
     public static JLabel createJLabelError(String s) {
         return createFancyJLabel(s, Color.RED, 50);
@@ -109,30 +112,4 @@ public final class GraphiqueBuilder {
         return panel;
     }
 
-    public static void createMessageTop(String msg, JPanel panel) {
-        panel.getGraphics().setFont(GraphiqueBuilder.getFontCocoGose(25));
-        panel.getGraphics().setColor(new Color(254, 254, 254));
-        panel.getGraphics().drawString(msg, 0, 0);//panel.getWidth()/2, panel.getHeight()/2);
-        panel.repaint();
-        panel.revalidate();
-        /*
-        java.util.Timer timer = new Timer();
-        timer.cancel();
-        timer.schedule(new TimerTask() {
-            int transparence = 100;
-            @Override
-            public void run() {
-                System.out.println("????");
-                panel.getGraphics().setFont(GraphiqueBuilder.getFontCocoGose(25));
-                panel.getGraphics().setColor(new Color(254, 254, 254, transparence));
-                panel.getGraphics().drawString(msg, 0, 0);//panel.getWidth()/2, panel.getHeight()/2);
-                panel.repaint();
-                if(transparence <= 0){
-                    System.out.println("fin");
-                    timer.cancel();
-                }
-                transparence-=20;
-            }
-        }, 0, 1000);*/
-    }
 }

@@ -1,7 +1,8 @@
 package vue.level;
 
+import controler.Controller;
+import controler.ControllerMenu;
 import model.Level;
-import model.Parser;
 import vue.FenetreJFrame;
 import vue.editor.EditorSelectJPanel;
 import vue.fancycomposant.FancyJButton;
@@ -9,11 +10,7 @@ import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 
 public final class LevelSelectedJPanel extends JPanel {
@@ -23,10 +20,12 @@ public final class LevelSelectedJPanel extends JPanel {
     private JPanel panelLevelSelector;
     private FancyJButton createLevel, niveauPerso;
     private JScrollPane paneScroll;
-
+    private ControllerMenu menu;
 
     public LevelSelectedJPanel(FenetreJFrame parent) {
         this.setPreferredSize(new Dimension(1280, 720));
+        this.menu = new ControllerMenu();
+        this.parent = parent;
         this.setBackground(GraphiqueBuilder.blackBackGround());
         this.createLevel = GraphiqueBuilder.createFancyJbutton("Creer un niveau", e -> {
             parent.addStackPanel(new EditorSelectJPanel(parent));
@@ -43,23 +42,17 @@ public final class LevelSelectedJPanel extends JPanel {
         paneScroll.setViewportBorder(BorderFactory.createEmptyBorder());
 
         this.levelButton = new ArrayList<>();
+        loadLevel(levelButton);
 
         this.parent = parent;
-        try {
-            chargeLevel("ressource/level",levelButton);
-            levelButton.sort(Comparator.comparingInt(chiffre -> Integer.parseInt(chiffre.getText().replace("level", ""))));
-        } catch (FileNotFoundException e) {
-            System.out.println("Fichier introuvable");
-        }
 
-
-        this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size() / 2, 3, new Color(12, 12, 12));
+        this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size() / 2, 3, GraphiqueBuilder.blackBackGround());
         for (JPanel buttons : levelButton) panelLevelSelector.add(buttons);
-        panelLevelSelector.setBorder(BorderFactory.createLineBorder(Color.white));
+        panelLevelSelector.setBorder(BorderFactory.createLineBorder(GraphiqueBuilder.composantColor()));
 
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        JPanel p = GraphiqueBuilder.createPanelGrid(1, 3, new Color(12, 12, 12));
+        JPanel p = GraphiqueBuilder.createPanelGrid(1, 3, GraphiqueBuilder.blackBackGround());
         p.setMaximumSize(new Dimension(
                 Integer.MAX_VALUE,
                 120
@@ -72,29 +65,21 @@ public final class LevelSelectedJPanel extends JPanel {
         p.add(niveauPerso);
         p.add(createLevel);
 
+
         this.add(p);
         this.add(panelLevelSelector);
-
     }
 
-    public void chargeLevel(String cheminLevel, ArrayList<BoxLevelJPanel> listLevel) throws FileNotFoundException {
-        File dir = new File(cheminLevel);
-        if (!dir.exists()) throw new FileNotFoundException();
-        File[] liste = dir.listFiles();
-        for (File item : liste) {
-            if (item.isFile()) {
-                Level level = null;
-                try {
-                    level = new Parser().parseLineToLevel(cheminLevel + "/" + item.getName());
 
-                    BoxLevelJPanel button = new BoxLevelJPanel(parent, item.getName().replace(".nrg", ""), level);
-                    listLevel.add(button);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
+    public void loadLevel(ArrayList<BoxLevelJPanel> listLevel) {
+        for (int i = 0; i < menu.listLvl.size(); i++) {
+            Level level = menu.listLvl.get(i);
+            BoxLevelJPanel button;
+            if (Controller.getPlayer().getLevelMax() > i){
+                button = new BoxLevelJPanel(parent, menu, level.getNameLevel(), level, true);
+            } else button = new BoxLevelJPanel(parent, menu, level.getNameLevel(), level, false);
+            listLevel.add(button);
         }
+
     }
-
-
 }

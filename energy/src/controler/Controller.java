@@ -3,6 +3,7 @@ package controler;
 import model.*;
 import model.typeenum.TuileShape;
 import vue.BoardViewGame;
+import vue.level.BoxLevelJPanel;
 import vue.typeenum.DirCarreGraphic;
 import vue.typeenum.DirHexaGraphic;
 
@@ -12,7 +13,10 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public abstract class Controller extends MouseAdapter implements ComponentListener {
 
@@ -20,6 +24,7 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
     public static File file_start_menu = new File("ressource/img/start_menu_bg.png");
 
     protected final ArrayList<Geometrie> list;
+
     protected Level level;
     protected BufferedModel model;
     protected BoardViewGame gameView;
@@ -40,13 +45,14 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
         this.level = level;
         this.gameView = gameView;
         this.list = new ArrayList<>();
-
         gameView.addComponentListener(this);
         initGeometrieList();
         paintModel();
         level.updateAll();
         model.notifyObserver();
     }
+
+
 
     final public ArrayList<Geometrie> getList() {
         return list;
@@ -149,4 +155,6 @@ public abstract class Controller extends MouseAdapter implements ComponentListen
     public void mousePressed(MouseEvent e) {
         paintModel();
     }
+
+
 }

@@ -5,6 +5,7 @@ import model.Geometrie;
 import model.Level;
 import model.typeenum.TuileComposant;
 
+import vue.utils.GraphiqueBuilder;
 import vue.utils.ImageEnum;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class DirCarreGraphic implements DirectionInterfaceGraphic {
+public class DirCarreGraphic {
 
     public static void paintComponent(Level level, int width, int height, int size, Graphics g, Controller controller, JPanel menuJPanel){
         for (Geometrie geo : controller.getList()) {
@@ -21,7 +22,7 @@ public class DirCarreGraphic implements DirectionInterfaceGraphic {
             int x = row * size + (width - ((level.getWidth()) * size)) / 2;
             int y = col * size + (height - ((level.getHeight()) * size)) / 2;
             g.drawImage(level.getPlateau()[col][row].getImage(), x, y, size, size, menuJPanel);
-            g.setColor(Color.red);
+            g.setColor(GraphiqueBuilder.composantColor());
             g.drawPolygon(geo.getPolygon());
         }
     }

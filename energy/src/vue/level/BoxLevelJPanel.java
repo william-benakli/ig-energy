@@ -1,6 +1,7 @@
 package vue.level;
 
 import controler.Controller;
+import controler.ControllerMenu;
 import model.Level;
 import model.Parser;
 import vue.FenetreJFrame;
@@ -19,55 +20,50 @@ public class BoxLevelJPanel extends JPanel implements MouseListener {
     private Level level;
     private JLabel timeInfoLabel;
     private String name;
+    private ControllerMenu menu;
 
-    BoxLevelJPanel(FenetreJFrame parent, String name, Level level, boolean isAcces) {
+    public BoxLevelJPanel(FenetreJFrame parent, ControllerMenu menu, String name, Level level, boolean isAcces) {
         this.isAcces = isAcces;
         this.level = level;
         this.parent = parent;
         this.isHover = false;
         this.name = name;
+        this.menu = menu;
         long tm = Controller.getPlayer().getLevelTime(name);
         long second = (tm / 1000) % 60;
         long minute = (tm / (1000 * 60)) % 60;
         String time = String.format("%02d:%02d", minute, second);
-        this.timeInfoLabel = GraphiqueBuilder.createFancyJLabel("<html> " + name +" </br>" + time + " </html>", Color.white, GraphiqueBuilder.getFontRoboto(35f));
-        setForeground(Color.white);
+        this.timeInfoLabel = GraphiqueBuilder.createFancyJLabel("<html> " + name +" <br>"  + (isAcces ? "Meilleur temps :" + time: "Niveau non debloqué") + " </html>", GraphiqueBuilder.composantColor(), GraphiqueBuilder.getFontRoboto(35f));
+        setForeground(GraphiqueBuilder.composantColor());
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
         setBackground(GraphiqueBuilder.blackBackGround());
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         addMouseListener(this);
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        add(timeInfoLabel);
+        add(timeInfoLabel, BorderLayout.CENTER);
     }
 
-    BoxLevelJPanel(FenetreJFrame parent, String name, Level level){
-        this(parent, name, level, true);
-    }
-
-    public String getText() {
-        return name;
+    public BoxLevelJPanel(FenetreJFrame parent, ControllerMenu menu, String name, Level level){
+        this(parent, menu, name, level, true);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D graphics2D = (Graphics2D) g.create();
         if(isAcces){
-            Graphics2D graphics2D = (Graphics2D) g.create();
             if(isHover) graphics2D.setColor(Color.yellow);
-            else graphics2D.setColor(Color.white);
-            graphics2D.drawRoundRect(10, 10, getWidth() - 10, getHeight() - 10, 20, 20);
-            graphics2D.dispose();
+            else graphics2D.setColor(GraphiqueBuilder.composantColor());
         }else{
-            Graphics2D graphics2D = (Graphics2D) g.create();
             graphics2D.setColor(Color.RED);
-            graphics2D.drawRoundRect(10, 10, getWidth() - 10, getHeight() - 10, 20, 20);
-            graphics2D.dispose();
         }
+        graphics2D.drawRoundRect(10, 10, getWidth() - 30, getHeight() - 30, 20, 20);
     }
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         if(isAcces){
-            parent.addStackPanel(new GameJPanel(parent, level));
+            parent.addStackPanel(new GameJPanel(parent, level, menu));
             parent.update();
         }
     }
@@ -85,10 +81,14 @@ public class BoxLevelJPanel extends JPanel implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent mouseEvent) {
         this.isHover = true;
+        repaint();
+        revalidate();
     }
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
         this.isHover = false;
+        repaint();
+        revalidate();
     }
 }

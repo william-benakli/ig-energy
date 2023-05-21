@@ -154,6 +154,20 @@ public final class Level implements Serializable {
         }
     }
 
+    /**
+     * Cette fonction verifie si la plateau est vide
+     */
+    public boolean isEmpty() {
+        for (int i = 0; i < height; i++) {
+            for (int k = 0; k < width; k++) {
+                if(plateau[i][k].getComposant() !=  TuileComposant.EMPTY){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /** Setteur & G etteur **/
 
     public void setTuileAt(int i, int j, Tuile tuile){

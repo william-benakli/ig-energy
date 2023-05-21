@@ -1,6 +1,7 @@
 package vue.level;
 
 import controler.Controller;
+import controler.ControllerMenu;
 import model.Level;
 import model.Parser;
 import vue.FenetreJFrame;
@@ -43,15 +44,19 @@ public class LevelSelectedPersoJPanel extends JPanel {
 
         this.levelButton = new ArrayList<>();
         this.parent = parent;
-        chargeLevel(levelButton);
+        try {
+            chargeLevel(parent,"ressource/level/perso",levelButton);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
-        this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size() / 2, 3, new Color(12, 12, 12));
+        this.panelLevelSelector = GraphiqueBuilder.createPanelGrid(levelButton.size() / 2, 3, GraphiqueBuilder.blackBackGround());
         for (JPanel buttons : levelButton) panelLevelSelector.add(buttons);
-        panelLevelSelector.setBorder(BorderFactory.createLineBorder(Color.white));
+        panelLevelSelector.setBorder(BorderFactory.createLineBorder(GraphiqueBuilder.composantColor()));
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        JPanel p = GraphiqueBuilder.createPanelGrid(1, 3, new Color(12, 12, 12));
+        JPanel p = GraphiqueBuilder.createPanelGrid(1, 3, GraphiqueBuilder.blackBackGround());
         p.setMaximumSize(new Dimension(
                 Integer.MAX_VALUE,
                 120
@@ -68,11 +73,22 @@ public class LevelSelectedPersoJPanel extends JPanel {
         this.add(panelLevelSelector);
     }
 
-    public void chargeLevel(ArrayList<BoxLevelJPanel> listLevel) {
-        for (Level level: Controller.getPlayer().getLevel()){
-            listLevel.add(new BoxLevelJPanel(parent, level.getNameLevel(), level));
+    public void chargeLevel(FenetreJFrame parent, String cheminLevel, ArrayList<BoxLevelJPanel> listLevel) throws FileNotFoundException {
+        File dir = new File(cheminLevel);
+        if (!dir.exists()) throw new FileNotFoundException();
+        File[] liste = dir.listFiles();
+        for (File item : liste) {
+            if (item.isFile()) {
+                Level level = null;
+                try {
+                    level = new Parser().parseLineToLevel(cheminLevel + "/" + item.getName());
+
+                    BoxLevelJPanel button = new BoxLevelJPanel(parent, new ControllerMenu(), item.getName().replace(".nrg", ""), level);
+                    listLevel.add(button);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
     }
-
 }
