@@ -3,6 +3,7 @@ package vue;
 import controler.Controller;
 import model.Joueur;
 import vue.fancycomposant.FancyJButton;
+import vue.level.LevelSelectedJPanel;
 import vue.utils.GraphiqueBuilder;
 
 import javax.imageio.ImageIO;

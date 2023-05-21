@@ -4,6 +4,7 @@ import controler.ControllerInGame;
 import model.BufferedModel;
 import model.Level;
 import vue.fancycomposant.FancyJButton;
+import vue.level.LevelSelectedJPanel;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;

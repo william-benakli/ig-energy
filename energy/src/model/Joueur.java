@@ -1,6 +1,7 @@
 package model;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public final class Joueur implements Serializable {
@@ -8,6 +9,7 @@ public final class Joueur implements Serializable {
     private final String name;
     /** Cette Hasmap content l'id du level et le temps passé dessus **/
     private final HashMap<String, Long> progression;
+    private final ArrayList<Level> level;
 
     private long startTime;
 
@@ -19,17 +21,26 @@ public final class Joueur implements Serializable {
     public Joueur(String name){
         this.name = name;
         this.progression = new HashMap<>();
+        this.level = new ArrayList<>();
     }
 
     public void save() {
         File directory = new File("ressource/user/");
         if (!directory.exists()) directory.mkdirs();
-        try (FileOutputStream fileOut = new FileOutputStream("ressource/user/"+name + ".ser");
+        try (FileOutputStream fileOut = new FileOutputStream("ressource/user/"+name.toLowerCase() + ".ser");
              ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
             objectOut.writeObject(this);
         } catch (Exception e) {
             System.out.println("Impossible d'enregistrer le joueur");
         }
+    }
+
+    public void addLevel(Level level){
+        this.level.add(level);
+    }
+
+    public ArrayList<Level> getLevel(){
+        return this.level;
     }
 
     public static Joueur load(String name) {

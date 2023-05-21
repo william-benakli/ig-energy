@@ -1,5 +1,6 @@
 package vue.editor;
 
+import controler.Controller;
 import model.Level;
 import model.Parser;
 import vue.FenetreJFrame;

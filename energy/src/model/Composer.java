@@ -4,7 +4,6 @@ import model.typeenum.TuileComposant;
 import model.typeenum.TuileShape;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;

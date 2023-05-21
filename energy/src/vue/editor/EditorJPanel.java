@@ -1,11 +1,13 @@
 package vue.editor;
 
+import controler.Controller;
 import controler.ControllerEditPaintBoard;
 import model.BufferedModel;
 import model.Composer;
 import model.Level;
 import vue.BoardViewGame;
 import vue.FenetreJFrame;
+import vue.level.LevelSelectedPersoJPanel;
 import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
@@ -20,7 +22,7 @@ public class EditorJPanel extends JPanel {
         this.setBackground(new Color(12, 12, 12));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         final JPanel panelDivision = GraphiqueBuilder.createpanelBoxLayoutOpaque(false, BoxLayout.X_AXIS);
-        final JPanel panelEditeurEtButton = GraphiqueBuilder.createPanelGrid(1, 2, GraphiqueBuilder.blackBackGround());//   false, BoxLayout.X_AXIS);
+        final JPanel panelEditeurEtButton = GraphiqueBuilder.createPanelGrid(1, 2, GraphiqueBuilder.blackBackGround());
 
         final JButton goback = GraphiqueBuilder.createFancyJbutton("Retour", e -> {
             parent.goBackPanel();
@@ -29,10 +31,13 @@ public class EditorJPanel extends JPanel {
 
         final JButton save = GraphiqueBuilder.createFancyJbutton("Sauvegarder", e -> {
             if(level.endGame()){
+                Controller.getPlayer().addLevel(level);
+                Controller.getPlayer().save();
                 new Composer(level.getNameLevel().trim(), level);
                 parent.goBackPanel();
                 parent.goBackPanel();
                 parent.goBackPanel();
+                parent.addStackPanel(new LevelSelectedPersoJPanel(parent));
                 parent.update();
             }else{
                 GraphiqueBuilder.createMessageTop("Sauvegarde impossible map non terminé", this);

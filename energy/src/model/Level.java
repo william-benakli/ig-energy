@@ -1,6 +1,5 @@
 package model;
 
-
 import model.typeenum.*;
 
 import java.io.Serializable;
@@ -13,14 +12,12 @@ public final class Level implements Serializable {
      *
      */
 
-    private static int idLevelStatic = 0;
     private Tuile[][] plateau;
-    private Joueur j;
-    private int width, height;
-    private TuileShape typeTuilePlateau;
-    private String nameLevel;
+    private final int width, height;
+    private final TuileShape typeTuilePlateau;
+    private final String nameLevel;
 
-    public Level(int height, int width, TuileShape typeTuilePlateau, String nameId){
+    public  Level(int height, int width, TuileShape typeTuilePlateau, String nameId){
         this.plateau = new Tuile[height][width];
         this.width = width;
         this.height = height;
@@ -172,8 +169,8 @@ public final class Level implements Serializable {
         return this.plateau;
     }
     public TuileShape getTypeTuilePlateau() {return typeTuilePlateau;}
-
     public String getNameLevel() {
         return nameLevel;
     }
+
 }

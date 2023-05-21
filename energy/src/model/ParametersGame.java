@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.*;
 
 public class ParametersGame implements Serializable {
+
     private boolean animation;
     private Color backgroundColor;
 
