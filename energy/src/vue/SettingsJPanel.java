@@ -66,7 +66,7 @@ public final class SettingsJPanel extends JPanel {
     }
 
     void setDeletButton(){
-        deletButton = GraphiqueBuilder.createFancyJbutton("Supprimer les maps personalisé", e -> {
+        deletButton = GraphiqueBuilder.createFancyJbutton("Supprimer les maps personalisées", e -> {
             File directory = new File("ressource/level/perso");
             if (directory.exists() && directory.isDirectory()) {
                 File[] files = directory.listFiles();
