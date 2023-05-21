@@ -32,10 +32,8 @@ public class ControllerMenu {
             if (item.isFile()) {
                 Level level = null;
                 try {
-                    BoxLevelJPanel button;
                     level = new Parser().parseLineToLevel(cheminLevel + "/" + item.getName());
                     listLvl.add(level);
-                    System.out.println("on ajoute");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

@@ -28,8 +28,6 @@ public class EditorJPanel extends JPanel {
         this.add(GraphiqueBuilder.createFancyJLabel("Editeur de niveau", GraphiqueBuilder.composantColor(), 50));
         this.add(panelDivision);
         BoardViewGame boardViewGame = new BoardViewGame(level.getWidth() * 120, level.getHeight() * 120);
-        System.out.println(boardViewGame.getSize().width);
-        System.out.println(boardViewGame.getSize().height);
         BufferedModel model = new BufferedModel(parent.getWidth(), parent.getWidth(), BufferedImage.TYPE_INT_RGB);
         model.subscribe(boardViewGame);
         model.notifyObserver();

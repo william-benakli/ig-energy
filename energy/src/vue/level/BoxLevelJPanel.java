@@ -33,7 +33,7 @@ public class BoxLevelJPanel extends JPanel implements MouseListener {
         long second = (tm / 1000) % 60;
         long minute = (tm / (1000 * 60)) % 60;
         String time = String.format("%02d:%02d", minute, second);
-        this.timeInfoLabel = GraphiqueBuilder.createFancyJLabel("<html> " + name +" <br>"  + (isAcces ? "Meilleur temps :" + time: "Niveau non debloqué") + " </html>", GraphiqueBuilder.composantColor(), GraphiqueBuilder.getFontRoboto(35f));
+        this.timeInfoLabel = GraphiqueBuilder.createFancyJLabel("<html> " + name +" <br>"  + (isAcces ? ((second==0 && minute==0)?"":"Meilleur temps :" + time): "Niveau non debloqué") + " </html>", GraphiqueBuilder.composantColor(), GraphiqueBuilder.getFontRoboto(35f));
         setForeground(GraphiqueBuilder.composantColor());
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setBackground(GraphiqueBuilder.blackBackGround());
