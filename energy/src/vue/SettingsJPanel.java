@@ -6,11 +6,12 @@ import vue.utils.GraphiqueBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public final class SettingsJPanel extends JPanel {
 
     private final ParametersGame params = ParametersGame.getInstance();
-    private JButton colorPickerButton, animationButton, colorPickerComposantButton;
+    private JButton colorPickerButton, animationButton, colorPickerComposantButton, deletButton;
 
     public SettingsJPanel(FenetreJFrame jFrame) {
         JPanel menu = new JPanel();
@@ -33,6 +34,7 @@ public final class SettingsJPanel extends JPanel {
         content.setOpaque(false);
         setAnimation();
         setPicker();
+        setDeletButton();
 
         JPanel jp = new JPanel();
         jp.setBackground(GraphiqueBuilder.blackBackGround());
@@ -41,6 +43,7 @@ public final class SettingsJPanel extends JPanel {
         jp.add(colorPickerButton);
         jp.add(colorPickerComposantButton);
         jp.add(animationButton);
+        jp.add(deletButton);
         jp.setBorder(BorderFactory.createEmptyBorder(jFrame.getHeight()/2 - (fontMetrics.getHeight() + 20), 0, 0, 0));
         content.add(jp, BorderLayout.CENTER);
 
@@ -58,6 +61,22 @@ public final class SettingsJPanel extends JPanel {
             }else{
                 params.setAnimationOn(true);
                 animationButton.setText("Animation : On");
+            }
+        });
+    }
+
+    void setDeletButton(){
+        deletButton = GraphiqueBuilder.createFancyJbutton("Supprimer les maps personalisé", e -> {
+            File directory = new File("ressource/level/perso");
+            if (directory.exists() && directory.isDirectory()) {
+                File[] files = directory.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isFile()) {
+                            file.delete();
+                        }
+                    }
+                }
             }
         });
     }

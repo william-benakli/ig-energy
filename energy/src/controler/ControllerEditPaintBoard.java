@@ -47,6 +47,7 @@ public class ControllerEditPaintBoard extends Controller{
                                     tuileCourante.setEdgeBoolean(dir.getPosition(), true);
                                     neighbor.setEdgeBoolean(dir.getOpositeDirection(dir.getPosition()), true);
                                     tuileCourante = level.getPlateau()[geo.getDeducY()][geo.getDeducX()];
+                                    level.propagation();
                                     level.updateAll();
                                     model.notifyObserver();
                                     super.mouseDragged(e);
